@@ -10,13 +10,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt update -y \
     libpng-dev \
     libgif-dev \
     libavif-dev \
-    libwebp-dev
+    libwebp-dev \
+    ffmpeg
 
 # Set the production php.ini to default
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 # Remove unused files from php directory
 RUN rm -rf -r /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini-production
+
+# Install custom ini file.
+RUN cp ./zz-custom.ini /usr/local/etc/php/conf.d/zz-custom.ini
 
 RUN docker-php-ext-configure gd \
     --with-freetype \

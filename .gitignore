@@ -7,7 +7,8 @@
 /storage/logs/*
 /bin
 /storage/nginx.pid
-/public/data/videos/OBS_*
+/public/data/videos/*.mp4
+/public/data/videos/thumbs/*.webp
 
 /.VSCodeCounter
 /.setup

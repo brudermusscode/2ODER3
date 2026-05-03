@@ -1,28 +1,134 @@
+import Overlay from "./overlay";
 import * as Frontend from "./frontend";
 import * as Page from "./page";
-import Overlay from "./overlay";
+import * as Global from "../pages/global";
+
+/**
+ * Any attribute that can be attached to a form to manipulate the
+ * behaviour of submitting a form.
+ *
+ * @var array
+ */
+const SUBMIT_FORM_ATTRIBUTES = [
+  "request",
+  "request-do",
+  "submit-closest",
+  "method",
+  "responder",
+  "no-scroll-top",
+  "toggle-button-active",
+  "redirect",
+  "reload",
+  "full-reload",
+  "close-overlays",
+  "on-success",
+  "update-library",
+  "update-current-track",
+  "interchange-action",
+];
 
 $(function () {
+  /**
+   * Shadow submitting a form. It basically mimics the
+   * functionality of form[request="…"] when submitted, but as a
+   * button, where the dataset entries are being converted to
+   * hidden inputs.
+   */
+  $(document).on("click", "[request], [request-do]", function () {
+    if (!this.closest("[shadow-submit]")) return;
+
+    let form = document.createElement("form");
+    let button = document.createElement("mbutton");
+
+    button.setAttribute("submit-closest", true);
+    form.prepend(button);
+
+    /**
+     * Create an input inside the form for every dataset entry.
+     */
+    for (const [key, value] of Object.entries(this.dataset)) {
+      form.insertAdjacentHTML(
+        "afterbegin",
+        `<input type=hidden name=${key} value="${value}" />`,
+      );
+    }
+
+    /**
+     * Append all attributes from this element to the form.
+     */
+    for (const attribute of this.attributes) {
+      if (!SUBMIT_FORM_ATTRIBUTES.includes(attribute.name)) continue;
+
+      form.setAttribute(attribute.name, attribute.value);
+    }
+
+    document.body.prepend(form);
+
+    // # Submit the form!
+    button.click();
+
+    form.remove();
+
+    return;
+  });
+
   $(document).on("submit", "[request], [request-do]", function (e) {
     e.preventDefault();
 
     let request_url =
       this.getAttribute("request") || this.getAttribute("request-do");
+    let action = request_url;
 
     if (!request_url) return;
 
     let delay = this.getAttribute("delay") ?? 0;
 
     setTimeout(() => {
+      let form = this;
       let formdata = new FormData(this);
       let button = this.find("[submit-closest]");
       let method = this.getAttribute("method") ?? "POST";
       let responder = this.getAttribute("responder");
-      let redirect = this.getAttribute("redirect");
       let scroll_top = !this.hasAttribute("no-scroll-top");
+
+      /**
+       * [toggle-active] will set an attribute [active] to the
+       * forms submit button on success if none is set or remove
+       * it if one is set.
+       */
+      let toggle_button_active = this.getAttribute("toggle-button-active");
+
+      /**
+       * [redirect="value"] will redirect to the page to the value
+       * of this attribute.
+       */
+      let redirect = this.getAttribute("redirect");
+
+      /**
+       * [reload] will reload the page SPA style.
+       */
       let reload = this.getAttribute("reload");
+
+      /**
+       * [full-reload] will reload the page NO SPA style.
+       */
       let full_reload = this.getAttribute("full-reload");
+
+      /**
+       * [close-overlays] will close all opened overlays.
+       */
+      let close_overlays = this.hasAttribute("close-overlays");
+
+      /**
+       * [on-success] will execute some javascript on success.
+       */
       let execute_success = this.getAttribute("on-success");
+
+      /**
+       * [interchange-action="value] will change the action with the
+       * value of this attribute to allow adding/removing easily.
+       */
+      let interchange_action = this.getAttribute("interchange-action");
 
       /**
        * Serialize request url.
@@ -62,13 +168,33 @@ $(function () {
           Frontend.unload();
 
           if (data.status) {
+            if (toggle_button_active !== null)
+              button.hasAttribute("active")
+                ? button.deactivate()
+                : button.activate();
+            if (interchange_action !== null) {
+              form.setAttribute("request", interchange_action);
+              form.setAttribute("interchange-action", action);
+            }
+            if (close_overlays !== null) Frontend.close_overlays();
             if (reload !== null) Page.reload();
-            if (redirect !== null && full_reload === null)
-              Page.get(redirect, false, null, scroll_top);
-            else if (full_reload !== null)
-              window.location.replace(
-                redirect ?? window.location.pathname + window.location.search
-              );
+            if (redirect !== null) {
+              if (full_reload === null) {
+                Page.get(
+                  data.data?.redirect_uri ?? redirect,
+                  false,
+                  null,
+                  scroll_top,
+                );
+              } else
+                window.location.replace(
+                  data.data?.redirect_uri ??
+                    redirect ??
+                    window.location.pathname + window.location.search,
+                );
+            }
+
+            if (!redirect && !reload && !full_reload) button.enable();
 
             if (responder !== null && responder === "success")
               Frontend.create_responder(data.message, "success");
@@ -83,10 +209,13 @@ $(function () {
             button.enable();
           }
 
+          if (responder !== null && responder === "simple")
+            Frontend.ajax_response(data.status ? "success" : "error");
+
           if (responder !== null && (responder === "always" || !responder))
             Frontend.create_responder(
               data.message,
-              data.status ? "success" : "error"
+              data.status ? "success" : "error",
             );
         },
         error: function (error) {
@@ -190,7 +319,7 @@ export const dataset_build_formdata = (dataset) => {
     for (const key in dataset) {
       let transformed_key = key.replace(
         /[A-Z]/g,
-        (letter) => "_" + letter.toLowerCase()
+        (letter) => "_" + letter.toLowerCase(),
       );
 
       if (transformed_key !== "action")

@@ -1,0 +1,210 @@
+@use "../framework/var.sizes" as *;
+@use "../framework/var.utils" as *;
+@use "../abstract" as *;
+
+popup-close {
+  position: fixed;
+  height: $header-height - 2px;
+  width: $header-height - 2px;
+  top: 0;
+  right: 0;
+  border-radius: 0 0 0 64px;
+  transition: $trans-cubic;
+  padding: 18px 18px 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--mio-theme-elevation-1);
+
+  @extend .window;
+
+  &:hover {
+    background: $slight-light;
+    scale: 1.03;
+    box-shadow: var(--mio-theme-elevation-2);
+  }
+
+  mi {
+    font-size: 32px;
+  }
+}
+
+popup-container {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    background: $primary;
+    opacity: 0.2;
+    display: none;
+    height: 100%;
+    width: 100%;
+    border-radius: 42px;
+    z-index: 0;
+    animation: before 1s $cubic forwards;
+
+    @keyframes before {
+      from {
+        top: 0;
+        left: 0;
+      }
+
+      to {
+        top: -32px;
+        left: -24px;
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: $secondary;
+    opacity: 0.2;
+    height: 100%;
+    width: 100%;
+    display: none;
+    border-radius: 42px;
+    z-index: 0;
+    animation: after 1s $cubic forwards;
+
+    @keyframes after {
+      from {
+        top: 0;
+        left: 0;
+      }
+
+      to {
+        top: 42px;
+        left: 18px;
+      }
+    }
+  }
+
+  popup-container__content {
+    border-radius: 42px;
+    max-width: 500px;
+    width: 100vw;
+    max-height: calc(100svh - 94px);
+    display: flex;
+    flex-direction: column;
+    gap: $gap-std;
+    position: relative;
+    z-index: 24;
+    overflow: auto;
+    animation: zoom-in 0.6s $cubic forwards;
+
+    @keyframes zoom-in {
+      from {
+        scale: 0.98;
+      }
+
+      to {
+        scale: 1;
+      }
+    }
+
+    @extend .window;
+
+    &[smol] {
+      max-width: 300px;
+    }
+
+    &[smolplus] {
+      max-width: 400px;
+    }
+
+    &[std] {
+      max-width: 500px;
+    }
+
+    &[stdplus] {
+      max-width: 600px;
+    }
+
+    &[midler] {
+      max-width: 650px;
+    }
+
+    &[mid] {
+      max-width: 700px;
+    }
+
+    &[wide] {
+      max-width: 900px;
+    }
+  }
+}
+
+media-select {
+  background: $slighter-light;
+  color: $secondary;
+  border-radius: 40px 40px 12px 12px;
+  margin: 0 auto;
+  font-size: 82px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: $trans-cubic;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s $cubic;
+
+  &:hover {
+    background: $slighterer-light;
+  }
+
+  &:not([filled]) {
+    height: 200px;
+    width: 100%;
+    padding-top: 50%;
+  }
+
+  &[filled] {
+    width: auto;
+    height: auto;
+    padding-top: 0;
+    margin: 0 auto;
+
+    mi {
+      top: 12px;
+      bottom: initial;
+      right: 12px;
+      left: initial;
+      font-size: 24px;
+      height: 56px;
+      width: 56px;
+      z-index: 2;
+
+      @extend .window;
+
+      &:hover {
+        scale: 1.04;
+      }
+    }
+  }
+
+  video {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    min-width: 400px;
+  }
+
+  mi {
+    position: absolute;
+    bottom: -52px;
+    left: -24px;
+    font-size: 200px;
+    transition: scale 0.4s $cubic;
+  }
+}

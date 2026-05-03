@@ -32,6 +32,14 @@ export const scroll_to_top = async () => {
 };
 
 /**
+ * Scrolls to a certain place!
+ * @param {int} number
+ */
+export const scroll_to = async (number) => {
+  window.scrollTo({ top: number, behavior: "smooth" });
+};
+
+/**
  * Preloads a list of <img> elements by creating new Image
  * instances and marks them with a [loaded] tag so they will fade in.
  *
@@ -82,7 +90,7 @@ export const reload_images = () => load_images(document.find_all("img"));
 export const create_responder = (
   message,
   status = "error",
-  append_to = document.body
+  append_to = document.body,
 ) => {
   if (
     typeof message === "object" &&
@@ -92,7 +100,7 @@ export const create_responder = (
     new Responder.Responder().add(
       append_to,
       message?.message ?? "No message",
-      message?.status ? "success" : "error"
+      message?.status ? "success" : "error",
     );
   else new Responder.Responder().add(append_to, message, status);
 };
@@ -181,6 +189,23 @@ export const ajax_error = (error) => {
 };
 
 /**
+ * Animates the ajax response container based on the return of requests.
+ *
+ * @param {string} type
+ */
+export const ajax_response = (type = "success") => {
+  let container = document.find("ajax-response");
+
+  container.setAttribute(type, true);
+  container.activate();
+
+  container.addEventListener("animationend", function (e) {
+    container.removeAttribute(type);
+    container.deactivate();
+  });
+};
+
+/**
  * Finds all <get-content></get-content> elements and loads the
  * content from the specified from attribute dynamically.
  */
@@ -196,30 +221,30 @@ export const get_content = () => {
     if (from)
       $.ajax({
         url: from,
-        method: "GET",
-        contentType: false,
-        processData: false,
         success: function (data) {
           getc.insertAdjacentHTML("afterend", data?.data ?? data);
           getc.remove();
 
-          Frontend.reload_images();
+          reload_images();
+
           $.globalEval($(getc).find("script").text());
-        },
-        error: function (error) {
-          Frontend.ajax_error(error);
         },
       });
   });
 };
 
 $(function () {
+  get_content();
+
   /**
    * Close all dangling overlays on click.
    */
   $(document).on("click", "[o-closer], [close-overlay]", function () {
-    close_exception_overlay();
-    close_overlays();
+    // close_exception_overlay();
+    // close_overlays();
+
+    this.closest("exception-container")?.remove();
+    this.closest("overlay")?.remove();
   });
 
   /**
@@ -229,6 +254,8 @@ $(function () {
     if (!e.key) return;
 
     if (e.key.toLowerCase() === "escape") {
+      if (__page.file_dialog_open) return (__page.file_dialog_open = false);
+
       let has_overlays = document.find_all("overlay");
 
       if (has_overlays) close_overlays();

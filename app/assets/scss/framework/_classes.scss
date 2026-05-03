@@ -178,6 +178,7 @@
   white-space: nowrap;
   width: 100%;
   line-height: 1.4;
+  max-width: 100%;
 }
 
 [vam] {
@@ -238,6 +239,10 @@ $hw-percentage-list: 0 2 4 6 8 10 12 14 16 18 23 24 28 30 32 34 36 38 40 42 44
 
 [w100] {
   width: 100%;
+}
+
+[maxw100] {
+  max-width: 100%;
 }
 
 // * Display properties

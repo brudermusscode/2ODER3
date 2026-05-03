@@ -10,7 +10,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt update -y \
     libpng-dev \
     libgif-dev \
     libavif-dev \
-    libwebp-dev
+    libwebp-dev \
+    ffmpeg
 
 # Set the production php.ini to default
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
@@ -27,8 +28,8 @@ RUN docker-php-ext-configure gd \
 RUN docker-php-ext-install pdo_mysql intl exif curl zip
 RUN docker-php-ext-enable pdo_mysql intl exif curl zip gd
 
-# Copy the php fpm docker configuration with a different exposed port
-# which should be the port being exposed in the end of this file
+# Install custom config files.
+COPY zz-custom.ini /usr/local/etc/php/conf.d/zz-custom.ini
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 EXPOSE 9000

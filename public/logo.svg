@@ -1,0 +1,48 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background -->
+  <!-- <rect width="512" height="512" rx="50%" fill="#0b1220"/> -->
+
+  <!-- Subtle grid glow -->
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer ring (progress / cycle) -->
+  <!-- <circle cx="256" cy="256" r="150"
+          stroke="#1e293b"
+          stroke-width="18"
+          opacity=".6"
+          fill="none"/> -->
+
+  <!-- Progress arc -->
+  <path d="M256 106
+           A150 152 0 1 1 136 346"
+        stroke="url(#accent)"
+        stroke-width="20"
+        stroke-linecap="round"
+        fill="none"
+        filter="url(#softGlow)"/>
+
+  <!-- Play triangle (center) -->
+  <path d="M230 200 L230 312 L330 256 Z"
+        fill="url(#accent)"
+        filter="url(#softGlow)"/>
+
+  <!-- Small code indicator dots -->
+  <circle cx="146" filter="url(#softGlow)" cy="256" r="12" fill="#38bdf8"/>
+  <circle cx="188" filter="url(#softGlow)" cy="256" r="12" fill="#a855f7"/>
+
+</svg>

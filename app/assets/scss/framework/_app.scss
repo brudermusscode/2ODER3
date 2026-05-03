@@ -176,7 +176,7 @@ exception-container {
   backdrop-filter: blur(10px);
   color: #ffdad9;
   font-size: 100%;
-  overflow: hidden;
+  overflow: auto;
 
   inside {
     overflow: scroll;

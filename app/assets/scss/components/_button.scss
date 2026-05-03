@@ -34,33 +34,35 @@ mbutton {
     opacity: 0 !important;
   }
 
-  &[background="slight-light"] {
-    &:hover {
-      background: $slighter-light;
+  &[background] {
+    &[background="slight-light"] {
+      &:hover {
+        background: $slighter-light;
+      }
     }
-  }
 
-  &[background="slighter-light"] {
-    &:hover {
-      background: $slighterer-light;
+    &[background="slighter-light"] {
+      &:hover {
+        background: $slighterer-light;
+      }
     }
-  }
 
-  &[background="slight-dark"] {
-    &:hover {
-      background: $slighter-dark;
+    &[background="slight-dark"] {
+      &:hover {
+        background: $slighter-dark;
+      }
     }
-  }
 
-  &[background="slighter-dark"] {
-    &:hover {
-      background: $slighterer-dark;
+    &[background="slighter-dark"] {
+      &:hover {
+        background: $slighterer-dark;
+      }
     }
-  }
 
-  &[background="red"] {
-    &:hover {
-      background: rgb(222, 93, 93);
+    &[background="red"] {
+      &:hover {
+        background: rgb(222, 93, 93);
+      }
     }
   }
 
@@ -108,7 +110,7 @@ mbutton {
     min-height: $mbutton-std-size;
 
     img {
-      height: $font-size-midler;
+      height: $font-size-mid;
     }
 
     i:not([size]),

@@ -2,11 +2,7 @@ import * as Router from "./router";
 import * as Frontend from "./frontend";
 import * as Responder from "./responder";
 import Overlay from "./overlay";
-
-/**
- * Page settings
- */
-let scroll_interval;
+import * as Global from "../pages/global";
 
 /**
  * Reloads the page by calling the get function and setting the
@@ -19,7 +15,7 @@ export const reload = (keep_overlays = false) => {
     null,
     false,
     true,
-    keep_overlays
+    keep_overlays,
   );
 };
 
@@ -45,6 +41,20 @@ export const get_route = async (url) => {
   return await Router.router(route);
 };
 
+function wait() {
+  return new Promise((resolve) => {
+    const check = () => {
+      if (window.scrollY < 1) {
+        return resolve(1);
+      } else {
+        setTimeout(check, 100);
+      }
+    };
+
+    check();
+  });
+}
+
 /**
  *
  * @param {string} href
@@ -61,7 +71,7 @@ export const get = async (
   anchor = null,
   scroll_top = true,
   reload = false,
-  keep_overlays = false
+  keep_overlays = false,
 ) => {
   /**
    * If the page is in loading state, return.
@@ -69,8 +79,8 @@ export const get = async (
   if (__page.is_loading && !reload) return;
   if (__page.current === "maintenance") return;
 
+  let current_scrollY = window.scrollY;
   let url = href;
-
   let main_container = document.body.querySelector("main");
   let title;
 
@@ -92,12 +102,6 @@ export const get = async (
    * Get the current route.
    */
   let Route = await get_route(url);
-
-  /**
-   * Create the object for the history.
-   */
-  let history_params = {};
-  history_params["href"] = url;
 
   /**
    * Check if the current location is the same as the
@@ -129,16 +133,18 @@ export const get = async (
   Frontend.load();
 
   /**
-   * Scroll to the top if the param is set to true.
-   */
-  if (scroll_top) Frontend.scroll_to_top();
-
-  /**
    * Get CSRF token.
    */
   const __csrf_token = document
     .find("head meta[name=csrf_token]")
     ?.getAttribute("content");
+
+  /**
+   * Create the object for the history.
+   */
+  let history_params = {};
+  history_params["href"] = url;
+  history_params["scrollY"] = window.scrollY;
 
   $.ajax({
     url: url,
@@ -146,15 +152,19 @@ export const get = async (
     contentType: false,
     processData: false,
     success: async function (data) {
-      /**
-       * Close overlays if.
-       */
+      //
+      //
       if (!keep_overlays) Frontend.close_overlays();
 
       /**
-       * Scroll to the top.
+       * Scroll to the top, wait for it and set the body's
+       * scrolling to disabled.
        */
-      if (scroll_top && !state) window.scrollTo(0, 0);
+      if (!state && scroll_top) {
+        window.scrollTo(0, 0);
+        Frontend.scroll_to_top();
+        await wait();
+      }
 
       /**
        * Update the page global.
@@ -185,13 +195,13 @@ export const get = async (
             : "Unknown Page";
       }
 
-      clearInterval(scroll_interval);
-
       /**
        * Set header to scrolled.
        */
       if (window.scrollY >= 20)
-        document.find("[scroll-manipulated]")?.setAttribute("scrolled", "true");
+        document.find_all("[scroll-manipulated]")?.forEach((elem) => {
+          elem.setAttribute("scrolled", true);
+        });
 
       /**
        * Check for an exception and move it to a direct child of
@@ -218,11 +228,16 @@ export const get = async (
        */
       if (
         typeof Route.execute_once === "function" &&
-        !document.body.hasAttribute(Route.key)
+        !document.body.hasAttribute(Route.key, Route)
       )
         Route.execute_once(url);
 
-      // TODO: Implement execute() for always firing functions.
+      /**
+       * A function that should be fired everytime a new page even
+       * inside a subpage is loaded.
+       */
+      if (typeof Route.execute_always === "function")
+        Route.execute_always(url, Route);
 
       /**
        * Remove all route attributes from any section where it will be
@@ -241,7 +256,7 @@ export const get = async (
           : Route.body_attribute !== undefined
             ? Route.body_attribute
             : Route.key,
-        ""
+        "",
       );
 
       /**
@@ -272,13 +287,9 @@ export const get = async (
        * Set any navigation button carrying the [page] attribute
        * with the name of the currently processed page to active.
        */
-      if (Route.mark)
+      if (Route.mark !== undefined && Route.mark)
         document
           .find_all(`[page="${Route.mark}"]`)
-          ?.forEach((button) => button.activate());
-      else
-        document
-          .find_all(`[page="${Route.key}"]`)
           ?.forEach((button) => button.activate());
 
       // Set the current page to be marked.
@@ -310,6 +321,24 @@ export const get = async (
        */
       Frontend.reload_images();
 
+      /**
+       * Now at the end of execution, we give the router the
+       * option to execute something.
+       */
+      if (typeof Route.execute_last === "function")
+        Route.execute_last(url, Route);
+
+      /**
+       * Scroll to the previously set scrollY position, only if we
+       * are going back or forth in history.
+       */
+      if (state) Frontend.scroll_to(__page.scrollY);
+
+      /**
+       * Set the new scrollY only if it is not a reload.
+       */
+      if (!reload) __page.scrollY = current_scrollY;
+
       return true;
     },
     error: function (error) {
@@ -323,7 +352,7 @@ export const get_component = async (
   url,
   data = null,
   empty_container = false,
-  where = "top"
+  where = "top",
 ) => {
   $.ajax({
     url: url,
@@ -336,7 +365,7 @@ export const get_component = async (
         return new Responder.Responder().add(
           document.body,
           data.message,
-          "error"
+          "error",
         );
 
       if (empty_container) {
@@ -353,7 +382,7 @@ export const get_component = async (
         document.body,
         data.message,
         "error",
-        "user"
+        "user",
       );
     },
   });

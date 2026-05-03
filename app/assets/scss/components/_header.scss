@@ -6,4 +6,20 @@ header {
   left: 0;
   width: 100%;
   height: $header-height;
+  padding-inline: $main-distance;
+
+  logo {
+    $logo-size: 38px;
+
+    @extend .window;
+
+    display: block;
+    height: $logo-size;
+    width: $logo-size;
+
+    picture {
+      height: $logo-size;
+      margin-top: -1px;
+    }
+  }
 }

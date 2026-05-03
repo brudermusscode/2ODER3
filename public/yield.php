@@ -30,8 +30,8 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 <head>
   <link rel="canonical" href="<?= $canonical ?>" />
   <link rel="home" href="<?php echo HOME_URL; ?>" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -61,16 +61,29 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
 <body toggled="true" initialized="false" mobile="false" style="background-image: url(colors.svg);">
 
+  <ajax-response></ajax-response>
+
   <background-blur></background-blur>
 
-  <header fl alic jucsb pinline24>
-    <div></div>
+  <header fl alic jucsb>
+    <div fl alic gap=smol+>
+      <logo>
+        <picture>
+          <img src="/logo.svg" />
+        </picture>
+      </logo>
+      <p text smol ttup><strong>DEV</strong>Log</p>
+    </div>
     <div fl alic gap=smol>
       <a href="https://github.com/brudermusscode/MusikBruder" extern target="_blank">
-        <mbutton window size=mid icon-only>
+        <mbutton size=std icon-only>
           <img src="/assets/images/github-white.svg" />
         </mbutton>
       </a>
+
+      <mbutton request-get="log:new" background=green color=dark size=std icon-only>
+        <mi>arrow_upload_ready</mi>
+      </mbutton>
     </div>
   </header>
 

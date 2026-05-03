@@ -13,6 +13,7 @@
     current: "<?= filter_input(INPUT_GET, "page", FILTER_SANITIZE_SPECIAL_CHARS); ?>",
     marked: "home",
     is_loading: false,
+    file_dialog_open: false,
   };
 
   let __current_overlay = null;
