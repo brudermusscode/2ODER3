@@ -8,7 +8,10 @@ interessieren!
 
 Schaut vorbei auf <a href="https://www.heia.kim"
 target="_blank">www.heia.kim</a> und last euch inspirieren.
+
 <br>
+<br>
+
 <p align="center">…………… 👀 ……………</p>
 
 >[!Note]
