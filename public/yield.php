@@ -63,15 +63,23 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
   <background-blur></background-blur>
 
+  <header fl alic jucsb pinline24>
+    <div></div>
+    <div fl alic gap=smol>
+      <a href="https://github.com/brudermusscode/MusikBruder" extern target="_blank">
+        <mbutton window size=mid icon-only>
+          <img src="/assets/images/github-white.svg" />
+        </mbutton>
+      </a>
+    </div>
+  </header>
+
   <?php
 
   /**
-   * Include the page loader which will appear whenever
-   * Frontend.load() is called in your js.
+   * + Page loader
    */
-  include TEMPLATE . "/global/_page-loader.html"; ?>
-
-  <?php
+  include TEMPLATE . "/global/_page-loader.html";
 
   /**
    * Where all the dynamic content change magic happens! Include
