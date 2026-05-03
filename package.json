@@ -1,0 +1,37 @@
+{
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "dev": "rspack serve --config xbundler.dev.js",
+    "prod": "rspack --config xbundler.prod.js"
+  },
+  "dependencies": {
+    "axios": "^1.14.0",
+    "dotenv": "^17.4.1",
+    "expose-loader": "^5.0.1",
+    "js-cookie": "^3.0.5",
+    "material-symbols": "^0.44.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@prettier/plugin-php": "^0.25.0",
+    "@rspack/cli": "^1.7.11",
+    "@rspack/core": "^1.7.11",
+    "autoprefixer": "^10.4.27",
+    "babel-loader": "^10.1.1",
+    "css-loader": "^7.1.4",
+    "cssnano": "^7.1.4",
+    "postcss": "^8.5.9",
+    "postcss-cli": "^11.0.1",
+    "postcss-loader": "^8.2.1",
+    "postcss-nested": "^7.0.2",
+    "prettier": "^3.8.1",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.99.0",
+    "sass-embedded": "^1.99.0",
+    "sass-loader": "^16.0.7",
+    "style-loader": "^4.0.0"
+  }
+}
