@@ -1,0 +1,23 @@
+@use "../abstract" as *;
+
+body {
+  color: white;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+background-blur {
+  z-index: -1;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(64px);
+  background: rgba(0, 0, 0, 0.48);
+}
