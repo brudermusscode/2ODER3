@@ -62,20 +62,22 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   include TEMPLATE . "/global/_yield-requires.php"; ?>
 </head>
 
-<body toggled="true" initialized="false" mobile="false" style="background-image: url(/colors.svg);">
+<body toggled="true" initialized="false" mobile="false">
 
   <ajax-response></ajax-response>
 
   <background-blur></background-blur>
 
   <header fl alic jucsb>
-    <div fl alic gap=smol+>
-      <logo>
-        <picture>
-          <img src="/logo.svg" />
-        </picture>
-      </logo>
-      <p text smol ttup><strong>DEV</strong>Log</p>
+    <div fl alic gap>
+      <div fl alic gap=smol>
+        <logo>
+          <picture>
+            <img src="/logo.svg" />
+          </picture>
+        </logo>
+        <p text smol ttup><strong>DEV</strong>Log</p>
+      </div>
 
       <div style="height:24px;width:3px;" rounded background=slight-light></div>
 
@@ -135,6 +137,12 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
       $_INCLUDE_TEMPLATE
     </main>
   HTML; ?>
+
+
+  <div window style="position:fixed;bottom:24px;left:24px;height:56px;padding-inline:18px 24px;" rounded fl alic gap=smol color=primary>
+    <mi midler>deployed_code</mi>
+    <p text smolplus>Webseite befindet sich noch im Aufbau</p>
+  </div>
 
 </body>
 

@@ -11,7 +11,7 @@ $video_path = "/data/videos";
 
 ?>
 
-<div fl alistart gap>
+<div fl alistart gap=smol+>
 
   <?php if (!$Logs->count()) : ?>
 
@@ -25,19 +25,35 @@ $video_path = "/data/videos";
 
   <?php else : ?>
 
-    <current-log fl fldircol gap>
+    <current-log fl fldircol>
       <video controls elevated poster="<?= "$video_path/thumbs/$SelectedLog->thumb_name" ?>">
         <source src="<?= "$video_path/$SelectedLog->file_name" ?>" type="video/mp4" />
       </video>
 
-      <div fl fldircol gap=smoler pinline8>
+      <div fl alic jucsb gap=smol pinline12 pblock18>
+        <div fl alic gap=smol>
+          <p text smol slight color=primary>Vor <?= Time::ago($SelectedLog->created_at) ?></p>
+          &middot;
+          <p text smol slight>? Aufrufe</p>
+        </div>
+        <mbutton window disabled size=std color=secondary has-icon=left text smol>
+          <mi color=light style="font-size:24px;">voting_chip</mi>
+          2.000
+        </mbutton>
+      </div>
+
+      <div fl fldircol gap pinline12>
         <p text mid bold><?= $SelectedLog->name ?></p>
-        <p text smolplus regular><?= $SelectedLog->description ?></p>
+        <div fl fldircol gap=smol>
+          <p text smoler ttup bold slight>Beschreibung</p>
+          <p text smolplus regular><?= $SelectedLog->description ?></p>
+        </div>
       </div>
 
     </current-log>
 
     <more-logs>
+      <p text smoler ttup bold pinline12 mb8 slight>Devlogs zu <?= $Project->name ?></p>
       <?php foreach ($Logs as $Log) : ?>
         <a href="/project/<?= $Project->id ?>/log/<?= $Log->id ?>">
           <log>
@@ -45,11 +61,11 @@ $video_path = "/data/videos";
               <img src="/data/videos/thumbs/<?= $Log->thumb_name ?>" />
             </picture>
             <div fl fldircol pblock12 posrel flex-truncate>
-              <p text bold trimt><?= $Log->name ?></p>
+              <p text smolplus semibold trimt><?= $Log->name ?? "Kein Titel" ?></p>
               <div fl alic gap=smoler>
-                <p text smol regular slight>1.200 views</p>
+                <p text smoler regular slight><?= Time::ago($Log->created_at) ?></p>
                 &middot;
-                <p text smol regular slight><?= Time::ago($Log->created_at) ?></p>
+                <p text smoler regular slight>1.200 Aufrufe</p>
               </div>
             </div>
           </log>
