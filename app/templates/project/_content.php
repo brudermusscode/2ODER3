@@ -43,10 +43,10 @@ $video_path = "/data/videos";
       </div>
 
       <div fl fldircol gap pinline12>
-        <p text mid bold><?= $SelectedLog->name ?></p>
+        <p text mid bold><?= $SelectedLog->name ?? "Ohne Nameee" ?></p>
         <div fl fldircol gap=smol>
           <p text smoler ttup bold slight>Beschreibung</p>
-          <p text smolplus regular><?= $SelectedLog->description ?></p>
+          <p text smolplus regular><?= $SelectedLog->description ?? "Nichts Beschreibung 😭" ?></p>
         </div>
       </div>
 
