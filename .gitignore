@@ -9,6 +9,7 @@
 /storage/nginx.pid
 /public/data/videos/*.mp4
 /public/data/videos/thumbs/*.webp
+/config/keys/*
 
 /.VSCodeCounter
 /.setup
@@ -18,3 +19,4 @@
 !/storage/logs
 !/storage/logs/.gitkeep
 !/config/keys
+!*/**/.gitkeep

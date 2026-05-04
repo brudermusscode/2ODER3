@@ -108,7 +108,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
       </a>
 
 
-      <?php if (Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY")) : ?>
+      <?php if (authorized()) : ?>
         <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
 
         <mbutton request-get="log:new" background=green color=dark size=std icon-only>

@@ -71,10 +71,8 @@ class Log extends Bruder
   {
 
     # ? Video file
-    if (!empty($params->file["tmp_name"])) {
-      $upload = $this->upload_video($params->file);
-      if (!$upload) return error("Upload failed");
-    }
+    if (!empty($params->file["tmp_name"]))
+      $this->upload_video($params->file);
 
     # ? Name
     if (!empty($params->name)) {
@@ -124,7 +122,7 @@ class Log extends Bruder
       $moved = move_uploaded_file($file["tmp_name"], $final_path);
 
       // ! Moving failed
-      if (!$moved) return false;
+      if (!$moved) return error("Could not move file");
 
       # ? File name
       $this->file_name = $file_name;
@@ -143,7 +141,7 @@ class Log extends Bruder
       if (isset($save_path, $filename) && file_exists("$save_path/$filename"))
         unlink("$save_path/$filename");
 
-      return false;
+      return error($e->getMessage());
     }
   }
 

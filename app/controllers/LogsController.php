@@ -15,12 +15,12 @@ class LogsController extends Controller
   public function create()
   {
 
-    authorize();
-
     $this->validate_params(
       strict: ["project_id"],
       optional: ["file", "name", "description",],
     );
+
+    $this->authorize();
 
     /**
      * @var ?Project

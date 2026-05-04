@@ -1,6 +1,13 @@
 <?php
 
+use Bruder\Utils\Utils;
+
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
+
+/**
+ * Authorize the client and exit the error as JSON, if fails.
+ */
+authorize(exit_as: JSON);
 
 /**
  * Begin output buffer.
@@ -16,7 +23,7 @@ ob_start();
 
 <popup-container>
   <popup-container__content p4 posrel style=z-index:2; elevated stdplus>
-    <form request="log:create" reload responder=simple
+    <form data-action="log:create" reload responder=simple
       fl fldircol gap=mid
       enctype="multipart/form-data">
 
@@ -35,6 +42,8 @@ ob_start();
             <textarea tabindex="2" crazy placeholder="Beschreibuuuung" name=description></textarea>
           </div>
         </div>
+
+        <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />
 
         <div fl jucend alic>
           <mbutton tabindex="3" material size=mid icon-only background=tertiary color=tertiary-text submit-closest>

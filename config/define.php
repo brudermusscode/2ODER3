@@ -27,6 +27,9 @@ define("JSON_RESPONSE", 'Content-type: application/json');
 define("HTML_RESPONSE", 'Content-type: text/html');
 define(false, 0);
 define(true, 1);
+define("JSON", 1);
+define("HTML", 2);
+define("BOOLER", 3);
 
 /**
  * Templates.

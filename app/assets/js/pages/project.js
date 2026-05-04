@@ -28,4 +28,31 @@ $(function () {
     Page.get(`/project/${id}`);
     Cookie.set("__project_id", id, 365);
   });
+
+  /**
+   * Create a new Log.
+   *
+   * @action CREATE
+   * @controller LogsController
+   */
+  $(document).on("submit", '[data-action="log:create"]', function (e) {
+    e.preventDefault();
+
+    let formdata = new FormData(this);
+    let url = __env === "dev" ? "/log/create" : "https://uploads.heia.kim";
+
+    Frontend.load();
+
+    $.ajax({
+      url: url,
+      data: formdata,
+      method: "POST",
+      success: function (data) {
+        if (data.status) Page.reload();
+
+        Frontend.ajax_response(data.status ? "success" : "error");
+        Frontend.unload();
+      },
+    });
+  });
 });

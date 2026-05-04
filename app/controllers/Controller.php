@@ -47,6 +47,19 @@ class Controller
   }
 
   /**
+   * Authorizes the client which has to send a secret key that
+   * needs to match the one in the .env file. Otherwise it
+   * instantly dies the php processing.
+   *
+   * @return true|die
+   */
+  public function authorize()
+  {
+    $valid = !empty($this->params->__admin_key) && $this->params->__admin_key === _env("WEB_ADMIN_KEY");
+    return $valid ?: die(error("Nö Bruder. Einfach nö."));
+  }
+
+  /**
    * Validates given params having keys specified and sets the
    * result to the protected params object to make it available in
    * the scope of this classes and those inheriting it.
@@ -96,7 +109,7 @@ class Controller
     /**
      * @var array
      */
-    $always_pass = ["csrf_token", "habibi"];
+    $always_pass = ["csrf_token", "habibi", "__admin_key"];
 
     // Check if all required parameters are set in the post request
     foreach ($necessary as $param)
