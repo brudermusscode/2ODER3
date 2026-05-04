@@ -80,27 +80,3 @@ services:
   #   ports:
   #     - 1080:1080
   #     - 1025:1025
-
-  # Development server for fast updates.
-  node:
-    image: node:latest
-    working_dir: /data
-    volumes_from:
-      - php
-    command: npm run dev
-    environment:
-      NODE_ENV: "development"
-      WATCHPACK_POLLING: "true"
-      NODE_BUNDLE_ENTRY_FILE: ${NODE_BUNDLE_ENTRY_FILE}
-      NODE_BUNDLE_OUTPUT_PATH: ${NODE_BUNDLE_OUTPUT_PATH}
-      NODE_BUNDLE_OUTPUT_FILENAME: ${NODE_BUNDLE_OUTPUT_FILENAME}
-      NODE_BUNDLE_OUTPUT_PUBLIC_PATH: ${NODE_BUNDLE_OUTPUT_PUBLIC_PATH}
-      NODE_DEVSERVER_HOST: ${NODE_DEVSERVER_HOST}
-      NODE_DEVSERVER_PORT: ${NODE_DEVSERVER_PORT}
-      NODE_DEVSERVER_STATIC: ${NODE_DEVSERVER_STATIC}
-      NODE_DEVSERVER_PROXY_ROOT: ${NODE_DEVSERVER_PROXY_ROOT}
-    depends_on:
-      - php
-    restart: always
-    ports:
-      - "${NODE_DEVSERVER_PORT}:${NODE_DEVSERVER_PORT}"
