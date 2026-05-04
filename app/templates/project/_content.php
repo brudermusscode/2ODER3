@@ -65,7 +65,7 @@ $video_path = "/data/videos";
               <div fl alic gap=smoler>
                 <p text smoler regular slight><?= Time::ago($Log->created_at) ?></p>
                 &middot;
-                <p text smoler regular slight>1.200 Aufrufe</p>
+                <p text smoler regular slight>Bald viele Aufrufe</p>
               </div>
             </div>
           </log>

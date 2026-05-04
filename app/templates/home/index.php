@@ -9,11 +9,10 @@ use Bruder\Model\Log;
  */
 $Project = $GLOBALS["CurrentProject"];
 
-
 /**
  * @var Collection<Log>
  */
-$Logs = $Project->logs;
+$Logs = $Project->fresh()->logs->sortByDesc("created_at");
 
 /**
  * @var Log
