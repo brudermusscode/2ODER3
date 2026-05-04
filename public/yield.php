@@ -107,7 +107,6 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
         </mbutton>
       </a>
 
-
       <?php if (authorized()) : ?>
         <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
 

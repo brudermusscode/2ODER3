@@ -42,7 +42,7 @@ class Session
 
   /**
    * @param string $name
-   * @return ?string
+   * @return ?mixed
    */
   public static function get(string|int $name)
   {
@@ -149,7 +149,7 @@ class Session
      * PHPSESSID cookie parameter.
      */
     session_set_cookie_params([
-      'lifetime' => 438000 * 60,
+      'lifetime' => 438000 * 60 * 200,
       'path' => '/',
       'domain' => Domain::clean($_SERVER['HTTP_HOST']),
 
