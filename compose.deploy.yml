@@ -33,7 +33,6 @@ services:
       - php
 
   mysql:
-    container_name: mysql
     image: mysql:8.0
     command: >
       --max_connections=${MYSQL_MAX_CONNECTIONS}
@@ -44,20 +43,21 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_MAX_CONNECTIONS: ${MYSQL_MAX_CONNECTIONS}
+      # MYSQL_USER: ${MYSQL_USER}
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     expose:
       - ${MYSQL_PORT}
     volumes:
       - devlog-mysql-data:/var/lib/mysql
 
   phpmyadmin:
-    container_name: phpmyadmin
     image: phpmyadmin:latest
     restart: unless-stopped
     environment:
       PMA_HOST: ${MYSQL_HOST}
-      PMA_USER: ${MYSQL_USER}
       PMA_PORT: ${MYSQL_PORT}
-      PMA_PASSWORD: ""
+      # PMA_USER: ${MYSQL_USER}
+      # PMA_PASSWORD: ""
       UPLOAD_LIMIT: ${PMA_UPLOAD_LIMIT}
       PMA_ARBITRARY: 1
     ports:
