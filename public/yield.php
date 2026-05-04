@@ -62,7 +62,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   include TEMPLATE . "/global/_yield-requires.php"; ?>
 </head>
 
-<body toggled="true" initialized="false" mobile="false" style="background-image: url(colors.svg);">
+<body toggled="true" initialized="false" mobile="false" style="background-image: url(/colors.svg);">
 
   <ajax-response></ajax-response>
 

@@ -28,7 +28,7 @@ $Router->get(
   constraints: ["id" => "\d+",],
   title: function ($params) {
     $Project = Project::find($params["id"]);
-    return $Project->name . " \\\\ Projekt" ?? "Keine Ahnung, Bruder.";
+    return "MeinProjekt\\" . $Project->name ?? "Keine Ahnung, Bruder.";
   }
 );
 
@@ -41,6 +41,6 @@ $Router->get(
   ],
   title: function ($params) {
     $Project = Project::find($params["id"]);
-    return $Project->name . " \\\\ Projekt" ?? "Keine Ahnung, Bruder.";
+    return "MeinProjekt\\" . $Project->name ?? "Keine Ahnung, Bruder.";
   }
 );

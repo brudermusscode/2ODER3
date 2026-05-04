@@ -38,7 +38,7 @@ else :
 
     <?php if (!$Logs->count()) : ?>
 
-      <div window pblock82 pinline42 flone fl alic jucc gap>
+      <div window pblock124 pinline42 flone fl alic jucc gap>
         <mi wider color=tertiary>deployed_code_history</mi>
         <div fl fldircol gap=smolest>
           <p text midler bold>Keine Logs</p>
