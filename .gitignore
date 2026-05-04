@@ -10,6 +10,7 @@
 /public/data/videos/*.mp4
 /public/data/videos/thumbs/*.webp
 /config/keys/*
+/.vscode
 
 /.VSCodeCounter
 /.setup
