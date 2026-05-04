@@ -35,7 +35,7 @@ $video_path = "/data/videos";
         <picture size=mid>
           <img src="/data/videos/thumbs/<?= $Log->thumb_name ?>" />
         </picture>
-        <div fl fldircol posrel pblock12>
+        <div fl fldircol pblock12 posrel flex-truncate>
           <p text bold trimt><?= $Log->name ?></p>
           <div fl alic gap=smoler>
             <p text smol regular slight>1.200 views</p>

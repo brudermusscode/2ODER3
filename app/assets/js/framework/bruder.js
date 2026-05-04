@@ -32,7 +32,7 @@ $(function () {
           href,
           false,
           anchor,
-          !anchor.hasAttribute("no-scroll-top")
+          !anchor.hasAttribute("no-scroll-top"),
         );
       }
     }
@@ -57,28 +57,18 @@ $(function () {
  * of this application.
  */
 const init_application = async () => {
-  console.log("Starte App Bruder…");
-
   // let Route = await Page.get_route(window.location.pathname);
 
-  /**
-   * Show any exception if one should appear in the content of the
-   * loaded page.
-   */
   Frontend.extract_exception(document.body);
-
-  /**
-   * Load images.
-   */
   Frontend.reload_images();
 
-  /**
-   * // TODO: Fix first page to second won't allow history
-   */
+  document.body.setAttribute("toggled", false);
+
+  // TODO: Fix first page to second won't allow history
 
   console.log(
     "%c🌞 Bruder, alles geladen!",
     "color:light-blue;font-size:1.32em;font-weight:800;",
-    "\nJustin Seidel ©️ 2022-" + new Date().getFullYear()
+    "\nJustin Seidel ©️ 2022-" + new Date().getFullYear(),
   );
 };

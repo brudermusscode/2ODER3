@@ -5,7 +5,7 @@
 overlay {
   display: block;
   position: fixed;
-  z-index: $endless-z-index + 3;
+  z-index: 1000;
   height: 100vh;
   width: 100vw;
   top: 0;
@@ -38,7 +38,6 @@ overlay {
     visibility: visible;
     opacity: 1;
     z-index: $endless-z-index + 2000;
-    background: $framework_overlay;
 
     [logo-icon],
     [logo-text] {

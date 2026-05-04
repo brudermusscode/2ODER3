@@ -17,6 +17,17 @@ $.ajaxSetup({
 // document.addEventListener("DOMContentLoaded", async (e) => {});
 
 $(function () {
+  //
+  //
+
+  /**
+   * General click event handler.
+   */
+  $(document).on("click", function (e) {});
+
+  /**
+   * Swithcing the theme from dark to light and other way around.
+   */
   $(document).on("click", "theme-switcher", function (e) {
     if (this.hasAttribute("active")) {
       this.deactivate();

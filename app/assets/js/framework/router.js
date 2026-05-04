@@ -27,6 +27,11 @@ export const routes = {
 
     // TODO: implement execute_always.
   },
+
+  project: {
+    mark: "projects",
+    params: ":id",
+  },
 };
 
 export const router = async (route) => {

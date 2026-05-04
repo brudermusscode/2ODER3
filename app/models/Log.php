@@ -93,6 +93,14 @@ class Log extends Bruder
   }
 
   /**
+   * @return Project
+   */
+  public function project()
+  {
+    return $this->belongsTo(Project::class);
+  }
+
+  /**
    * @param array $file
    * @return bool
    */

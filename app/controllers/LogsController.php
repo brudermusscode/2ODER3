@@ -15,6 +15,8 @@ class LogsController extends Controller
   public function create()
   {
 
+    authorize();
+
     $this->validate_params(
       strict: ["project_id"],
       optional: ["file", "name", "description",],
@@ -35,6 +37,8 @@ class LogsController extends Controller
   public function update()
   {
 
+    authorize();
+
     $this->validate_params(
       strict: ["id"],
       optional: ["name", "description", "file"],
@@ -53,6 +57,8 @@ class LogsController extends Controller
    */
   public function delete()
   {
+
+    authorize();
 
     $this->validate_params(
       strict: ["id"],

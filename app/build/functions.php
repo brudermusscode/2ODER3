@@ -1,6 +1,21 @@
 <?php
 
+use Bruder\Application\Cookie;
 use Bruder\Http\Request;
+
+/**
+ * WEB_ADMIN_KEY has to match the __admin_key cookie to be able to
+ * authorize for higher level actions like video uploading.
+ */
+function authorize()
+{
+  $env = _env("WEB_ADMIN_KEY");
+  $cookie = Cookie::get("__admin_key");
+
+  return !$env || !$cookie ? die(error("Nicht authorisiert! Polizei!")) : (
+    Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY") ?: die(error("Nicht authorisiert! Polizei!"))
+  );
+}
 
 /**
  * @param ?string $message

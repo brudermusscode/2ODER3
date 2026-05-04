@@ -2,10 +2,13 @@
 
 header {
   position: fixed;
+  z-index: 100;
   top: 0;
-  left: 0;
+  left: 50%;
+  translate: -50% 0;
   width: 100%;
   height: $header-height;
+  max-width: $content-width;
   padding-inline: $main-distance;
 
   logo {

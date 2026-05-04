@@ -255,7 +255,7 @@ page-loader {
 
   &[loading] {
     transition: all 0.2s linear;
-    background: $framework_overlay;
+    background: rgba(0, 0, 0, 0.42);
     z-index: $endless-z-index + 100;
   }
 

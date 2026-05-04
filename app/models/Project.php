@@ -3,6 +3,7 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use Illuminate\Support\Collection;
 
 class Project extends Bruder
 {
@@ -17,6 +18,10 @@ class Project extends Bruder
   ];
 
   /**
-   * @return
+   * @return Collection<Log>
    */
+  public function logs()
+  {
+    return $this->hasMany(Log::class);
+  }
 }
