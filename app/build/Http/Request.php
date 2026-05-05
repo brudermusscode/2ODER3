@@ -151,20 +151,18 @@ class Request
   public static function get_remote_address()
   {
 
-    // if user from the share internet
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    if (!empty($_SERVER['HTTP_CLIENT_IP']))
       return $_SERVER['HTTP_CLIENT_IP'];
-    }
 
-    //if user is from the proxy
+    # When it's being proxied. It returns most likely always two
+    # IP addresses where the first one is the client's one. So I
+    # need to extract it.
     else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-      return $_SERVER['HTTP_X_FORWARDED_FOR'];
+      $addresses = explode(",", $_SERVER['HTTP_X_FORWARDED_FOR']);
+      return array_first($addresses);
     }
 
-    //if user is from the remote address
-    else {
-      return $_SERVER['REMOTE_ADDR'];
-    }
+    return $_SERVER['REMOTE_ADDR'];
   }
 
   /**
