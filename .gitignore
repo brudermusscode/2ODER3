@@ -13,6 +13,7 @@
 /public/data/videos/thumbs/*.webp
 /config/keys/*
 /.vscode
+/public/MusikBruder
 
 /.VSCodeCounter
 /.setup
