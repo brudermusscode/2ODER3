@@ -6,6 +6,8 @@ use Bruder\Bruder;
 use Bruder\Utils\Utils;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\Media\Video;
+use FFMpeg\FFProbe\DataMapping\Format;
 
 class Log extends Bruder
 {
@@ -129,8 +131,21 @@ class Log extends Bruder
 
       # Create thumbnail.
       $ffmpeg = FFMpeg::create();
+
+      /**
+       * @var Video
+       */
       $video = $ffmpeg->open($final_path);
-      $video->frame(TimeCode::fromSeconds(20))
+
+      /**
+       * @var Format
+       */
+      $Format = $video->getFormat();
+      $duration = $Format->get("duration");
+      $video->frame(TimeCode::fromSeconds(match (true) {
+        $duration < 20 => 6,
+        default => 20,
+      }))
         ->save("$thumb_path/$thumb_name");
 
       # ? thumb_name
