@@ -92,6 +92,7 @@ $video_path = "/data/videos";
           <log>
             <picture size=mid>
               <img src="/data/videos/thumbs/<?= $Log->thumb_name ?>" />
+              <div count>#<?= $Log->id ?></div>
             </picture>
             <div fl fldircol pblock12 posrel flex-truncate>
               <p text smolplus semibold trimt><?= $Log->name ?? "Kein Titel" ?></p>

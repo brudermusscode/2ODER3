@@ -3,6 +3,7 @@ START TRANSACTION;
 CREATE TABLE `reactions` (
   `id` int NOT NULL,
   `visitor_id` int NOT NULL,
+  `log_id` int NOT NULL,
   `type` VARCHAR(24) NOT NULL,
   `emote` VARCHAR(32) NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
