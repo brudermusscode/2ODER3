@@ -3,6 +3,7 @@
 use Illuminate\Support\Collection;
 use Bruder\Model\Log;
 use Bruder\Model\Project;
+use Bruder\Model\Visitor;
 
 /**
  * @var int
@@ -19,7 +20,8 @@ $log_id = filter_var($GLOBALS["route_param_log_id"] ?? 0, FILTER_VALIDATE_INT);
  */
 $Project = Project::with(["logs" => function ($q) {
   $q->orderBy("created_at", "DESC");
-}])->find($id);
+}])
+  ->find($id);
 
 if (!$Project) :
   include UNAVAILABLE;

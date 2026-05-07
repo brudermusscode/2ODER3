@@ -3,7 +3,6 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
-use Bruder\Utils\Utils;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Media\Video;
@@ -98,6 +97,17 @@ class Log extends Bruder
   public function project()
   {
     return $this->belongsTo(Project::class);
+  }
+
+  /**
+   * @return ?Collection<Reactions>
+   */
+  public function reactions()
+  {
+    return $this->hasMany(Reaction::class)
+      // ->selectRaw('*, COUNT(*) as count')
+      // ->groupBy("emote")
+    ;
   }
 
   /**

@@ -36,10 +36,43 @@ $video_path = "/data/videos";
           &middot;
           <p text smol slight>? Aufrufe</p>
         </div>
-        <mbutton window disabled size=std color=secondary has-icon=left text smol>
-          <mi color=light style="font-size:24px;">voting_chip</mi>
-          2.000
-        </mbutton>
+
+
+        <reactions-container fl alic gap=smol>
+          <active-reactions fl alic gap=smoler>
+            <?php
+
+            $Reactions = $SelectedLog->reactions()
+              ->selectRaw("*, COUNT(*) as count")
+              ->groupBy("emote")
+              ->withExists([
+                'visitor as reacted' => fn($q) => $q->where('visitors.id', CURRENT_VISITOR->id)
+              ])
+              ->get();
+
+            foreach ($Reactions as $Reaction) :
+              include TEMPLATE . "/reaction/_reaction.php";
+            endforeach ?>
+          </active-reactions>
+
+          <reactions>
+            <mi>add_reaction</mi>
+            <reactions-choose
+              data-action="reaction:create"
+              data-log-id="<?= $SelectedLog->id ?>"
+              data-type="emote">
+              <reaction>😃</reaction>
+              <reaction>🤣</reaction>
+              <reaction>😍</reaction>
+              <reaction>🤯</reaction>
+              <reaction>😭</reaction>
+              <reaction>🤡</reaction>
+              <reaction>🤬</reaction>
+            </reactions-choose>
+          </reactions>
+
+        </reactions-container>
+
       </div>
 
       <div fl fldircol gap pinline12>

@@ -16,10 +16,10 @@ $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 
 # ? Logs
 $Router->get("/log/new", "log/new", return: "JSON");
-$Router->get("/log/edit", "log/edit", return: "JSON");
+// $Router->get("/log/edit", "log/edit", return: "JSON");
 $Router->post("/log/create", "log/create", return: "JSON");
-$Router->post("/log/update", "log/update", return: "JSON");
-$Router->post("/log/delete", "log/delete", return: "JSON");
+// $Router->post("/log/update", "log/update", return: "JSON");
+// $Router->post("/log/delete", "log/delete", return: "JSON");
 
 # ? Projects
 $Router->get(
@@ -31,7 +31,6 @@ $Router->get(
     return "MeinProjekt\\" . $Project->name ?? "Keine Ahnung, Bruder.";
   }
 );
-
 $Router->get(
   "/project/:id/log/:log_id",
   "project/one",
@@ -44,3 +43,7 @@ $Router->get(
     return "MeinProjekt\\" . $Project->name ?? "Keine Ahnung, Bruder.";
   }
 );
+
+# ? Reactions
+$Router->post("/reaction/create", "reaction/create", return: "JSON");
+$Router->post("/reaction/delete", "reaction/delete", return: "JSON");

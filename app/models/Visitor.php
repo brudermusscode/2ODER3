@@ -14,4 +14,12 @@ class Visitor extends Bruder
   protected $fillable = [
     "ip",
   ];
+
+  /**
+   * @return ?Collection<Reaction>
+   */
+  public function reactions()
+  {
+    return $this->hasMany(Reaction::class);
+  }
 }

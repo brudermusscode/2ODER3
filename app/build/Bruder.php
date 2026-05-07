@@ -79,4 +79,14 @@ class Bruder extends Model
     return static::find($id)
       ?? die((new self)->error($die_message ?? "<strong>Model Instance not found.</strong>"));
   }
+
+  /**
+   * Dies when it finds a model instance.
+   */
+  public static function findAndReturn(mixed $id = null, ?string $die_message = null)
+  {
+    return static::find($id)
+      ? die((new self)->error($die_message ?? "<strong>Model Instance not found.</strong>"))
+      : null;
+  }
 }

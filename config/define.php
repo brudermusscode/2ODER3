@@ -1,6 +1,7 @@
 <?php
 
 use Bruder\Application\Application;
+use Bruder\Application\Session as SessionManager;
 
 /**
  * Environmental.
@@ -53,3 +54,6 @@ define("FONT", HOME_URL . "/assets/fonts");
  * Pathing.
  */
 define("ASSET", ROOT . "/public/assets");
+
+
+define("CURRENT_VISITOR", SessionManager::get("Visitor"));

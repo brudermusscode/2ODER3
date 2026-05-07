@@ -14,6 +14,8 @@
 /config/keys/*
 /.vscode
 /public/MusikBruder
+/Dockerfile.dev
+/docker/dev
 
 /.VSCodeCounter
 /.setup
