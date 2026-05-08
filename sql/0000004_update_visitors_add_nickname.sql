@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+ALTER TABLE `visitors`
+  ADD `nickname` VARCHAR(32) NULL AFTER `id`;
+
+COMMIT;

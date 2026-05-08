@@ -42,12 +42,19 @@ if (!$CurrentVisitor) {
     ?? Visitor::create([
       "ip" => $remote_address,
     ]);
-
-  /**
-   * Add everything to the session.
-   */
-  SessionManager::set("Visitor", $CurrentVisitor);
 }
+
+/**
+ * @var Visitor $CurrentVisitor
+ */
+
+# Save a new nickname to the Visitor, in case none has been set
+# by now.
+if (!$CurrentVisitor->nickname)
+  $CurrentVisitor->set_unique_name();
+
+# Add the Visitor to their Session.
+SessionManager::set("Visitor", $CurrentVisitor->fresh());
 
 /**
  * Touch the visitors profile every 5 minutes to create something
