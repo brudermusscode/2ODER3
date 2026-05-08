@@ -28,7 +28,7 @@ $Router->get(
   constraints: ["id" => "\d+",],
   title: function ($params) {
     $Project = Project::find($params["id"]);
-    return $Project ? "Projekt\\" . $Project->name : "Keine Ahnung, Bruder.";
+    return $Project ? "⌞Projekt\\{$Project->name}⌝" : "Keine Ahnung, Bruder.";
   }
 );
 $Router->get(
@@ -42,9 +42,9 @@ $Router->get(
     $Project = Project::find($params["id"]);
     $Log = $Project->logs()->where("id", $params["log_id"])->first();
     return $Project && $Log?->name
-      ? "$Log->name" . " ▓ " . "Projekt" . "\\" . $Project->name
+      ? "{$Log->name} · ⌞Projekt\\{$Project->name}⌝"
       : (
-        $Project ? "Devlog ▓ Projekt\\" . $Project->name : "Keine Ahnung, Bruder."
+        $Project ? "Devlog · ⌞Projekt\\{$Project->name}⌝" : "Keine Ahnung, Bruder."
       );
   }
 );
