@@ -15,7 +15,6 @@ class Log extends Bruder
    * @var array
    */
   protected $fillable = [
-    "project_id",
     "src",
     "file_name",
     "name",
@@ -71,6 +70,8 @@ class Log extends Bruder
   public function edit(object $params)
   {
 
+    return success();
+
     # ? Video file
     if (!empty($params->file["tmp_name"]))
       $this->upload_video($params->file);
@@ -100,14 +101,19 @@ class Log extends Bruder
   }
 
   /**
-   * @return ?Collection<Reactions>
+   * @return ?Collection<Reaction>
    */
   public function reactions()
   {
-    return $this->hasMany(Reaction::class)
-      // ->selectRaw('*, COUNT(*) as count')
-      // ->groupBy("emote")
-    ;
+    return $this->hasMany(Reaction::class);
+  }
+
+  /**
+   * @return ?Collection<Comment>
+   */
+  public function comments()
+  {
+    return $this->hasMany(Comment::class);
   }
 
   /**

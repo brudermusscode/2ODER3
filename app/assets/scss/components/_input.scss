@@ -28,6 +28,12 @@ input {
     font-weight: 600;
     color: white;
 
+    &[smol] {
+      font-size: $font-size-std;
+      padding-block: 0;
+      height: 48px;
+    }
+
     &:focus {
       border-bottom: 2px solid white;
     }

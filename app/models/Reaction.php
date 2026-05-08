@@ -28,6 +28,11 @@ class Reaction extends Bruder
   {
 
     /**
+     * @var Visitor
+     */
+    $Visitor = $params->Visitor;
+
+    /**
      * @var Log
      */
     $Log = $params->Log;
@@ -49,7 +54,7 @@ class Reaction extends Bruder
 
     $Reaction->type = $params->type;
     $Reaction->log_id = $Log->id;
-    $Reaction->visitor_id = 1;
+    $Reaction->visitor_id = $Visitor->id;
     $Reaction->save();
 
     # For the frontend manipulation, I include the reaction
@@ -69,17 +74,6 @@ class Reaction extends Bruder
       "HTML" => ob_get_clean(),
       "Object" => $Reaction,
     ]);
-  }
-
-  /**
-   * @param object $params
-   * @return string
-   */
-  public function edit(object $params)
-  {
-
-
-    return success(data: $this);
   }
 
   /**

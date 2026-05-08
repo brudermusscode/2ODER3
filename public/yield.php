@@ -1,6 +1,5 @@
 <?php
 
-use Bruder\Application\Cookie;
 use Bruder\Model\Project;
 
 /**
@@ -62,14 +61,15 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   include TEMPLATE . "/global/_yield-requires.php"; ?>
 </head>
 
-<body toggled="true" initialized="false" mobile="false">
+<body toggled="true" initialized="false" mobile="false"
+  style="background-image:url(/colors.svg);">
 
   <ajax-response></ajax-response>
 
   <background-blur></background-blur>
 
-  <header fl alic jucsb>
-    <div fl alic gap>
+  <header fl alic jucsb scroll-manipulated>
+    <div fl alic gap z>
       <div fl alic gap=smol>
         <logo>
           <picture>
@@ -102,7 +102,8 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
         </options>
       </option-select>
     </div>
-    <div fl alic gap=smol>
+
+    <div fl alic gap=smol z>
       <a href="https://github.com/brudermusscode" extern target="_blank">
         <mbutton size=std icon-only background=slighter-light>
           <img src="/assets/images/github-white.svg" />
@@ -139,7 +140,8 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   HTML; ?>
 
 
-  <div window style="position:fixed;bottom:24px;left:24px;height:56px;padding-inline:18px 24px;" rounded fl alic gap=smol color=primary>
+  <div window rounded fl alic gap=smol color=primary
+    style="position:fixed;bottom:24px;left:24px;height:56px;padding-inline:18px 24px;z-index:110;">
     <mi midler>deployed_code</mi>
     <p text smolplus>Webseite befindet sich noch im Aufbau</p>
   </div>

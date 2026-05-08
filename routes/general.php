@@ -15,6 +15,7 @@ $Router->get("/not-found", "error/404", title: "Bruder, was geht jetzt?");
 $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 
 # ? Logs
+$Router->get("/get/log/comments", "log/_comments", return: "JSON");
 $Router->get("/log/new", "log/new", return: "JSON");
 // $Router->get("/log/edit", "log/edit", return: "JSON");
 $Router->post("/log/create", "log/create", return: "JSON");
@@ -52,3 +53,6 @@ $Router->get(
 # ? Reactions
 $Router->post("/reaction/create", "reaction/create", return: "JSON");
 $Router->post("/reaction/delete", "reaction/delete", return: "JSON");
+
+# ? Comments
+$Router->post("/comment/create", "comment/create", return: "JSON");

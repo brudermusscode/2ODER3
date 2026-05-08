@@ -1,4 +1,5 @@
 import * as Responder from "./responder";
+import * as Comment from "../elements/comment";
 
 /**
  * Sets the frontend to be loading.
@@ -210,24 +211,24 @@ export const ajax_response = (type = "success") => {
  * content from the specified from attribute dynamically.
  */
 export const get_content = () => {
-  let get_contents = document.find_all("get-content");
+  let elements = document.find_all("get-content");
   let from;
 
-  // return;
-
-  get_contents.forEach((getc) => {
-    from = getc.getAttribute("from");
+  elements.forEach((c) => {
+    from = c.getAttribute("from");
 
     if (from)
       $.ajax({
         url: from,
         success: function (data) {
-          getc.insertAdjacentHTML("afterend", data?.data ?? data);
-          getc.remove();
+          c.insertAdjacentHTML("afterend", data?.data ?? data);
+          c.remove();
 
           reload_images();
 
-          $.globalEval($(getc).find("script").text());
+          let elem = document.createElement("div");
+          elem.insertAdjacentHTML("afterbegin", data?.data ?? data);
+          $.globalEval($(elem).find("script").text());
         },
       });
   });

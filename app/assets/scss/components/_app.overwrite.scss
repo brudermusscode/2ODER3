@@ -4,111 +4,19 @@
 
 body {
   color: white;
-  // background-color: transparent;
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  // background-attachment: fixed;
-  background: #101012;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #101012;
   min-height: 100vh;
   font-weight: 400;
-}
-
-background-blur {
-  z-index: -1;
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  backdrop-filter: blur(42px);
-  background: rgba(0, 0, 0, 0.68);
-}
-
-ajax-response {
-  content: "";
-  display: block;
-  position: fixed;
-  top: 100%;
-  left: 0;
-  height: 0%;
-  width: 100%;
-  z-index: 1001;
-
-  &[success] {
-    background: rgba(37, 241, 71, 0.24);
-  }
-
-  &[error] {
-    background: rgba(237, 29, 92, 0.24);
-  }
-
-  &[success],
-  &[error] {
-    backdrop-filter: blur(4px);
-  }
-
-  &[active] {
-    animation: ajax-response 0.8s $cubic forwards;
-
-    @keyframes ajax-response {
-      from {
-        height: 0%;
-        top: 100%;
-        opacity: 1;
-      }
-
-      50% {
-        height: 100%;
-        top: 0;
-      }
-
-      to {
-        height: 0%;
-        top: 0;
-        // opacity: 0;
-      }
-    }
-  }
-}
-
-main {
-  padding-inline: $main-distance;
-  padding-top: $header-height;
-  max-width: $content-width;
-  margin: 0 auto;
-}
-
-current-log {
-  display: block;
-  overflow: hidden;
-  width: calc(100% - $more-logs-width);
-  padding-bottom: $main-distance * 5;
-
-  video {
-    max-width: 100%;
-    border-radius: 24px;
-    border: 1px solid $slight-light;
-  }
-}
-
-more-logs {
-  position: sticky;
-  top: 0;
-  margin-top: -$header-height;
-  padding-top: $header-height;
-  height: 100vh;
-  overflow: auto;
-  display: block;
-  width: $more-logs-width;
-  padding-bottom: $main-distance * 5;
 
   &:before {
     content: "";
     display: block;
     position: fixed;
-    z-index: 2;
+    z-index: 109;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -120,82 +28,53 @@ more-logs {
       rgba(16, 16, 18, 0) 100%
     );
   }
-
-  &:after {
-    content: "";
-    display: block;
-    position: fixed;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: $header-height;
-    background: #101012;
-    background: linear-gradient(
-      180deg,
-      rgba(16, 16, 18, 1) 32%,
-      rgba(16, 16, 18, 0) 100%
-    );
-  }
 }
 
-log {
-  display: block;
-  padding: 4px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: $gap-smol-plus;
+background-blur {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(42px);
+  background: rgba(0, 0, 0, 0.78);
+}
 
-  picture {
-    $log-image-height: 80px;
+main {
+  padding-inline: $main-distance;
+  padding-top: $header-height;
+  max-width: $content-width;
+  margin: 0 auto;
+}
 
-    position: relative;
-    width: 110px;
-    height: $log-image-height;
-    border-radius: 18px;
-    border: 1px solid $slighter-light;
-    overflow: hidden;
+section[colored] {
+  position: relative;
+  border-radius: 28px;
 
-    img {
-      height: $log-image-height;
-      vertical-align: middle;
-      object-fit: cover;
-    }
-
-    &::before {
-      display: block;
-      content: "";
-      z-index: 2;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(0.8px);
-      background: $slight-dark;
-    }
-
-    [count] {
-      position: absolute;
-      left: 8px;
-      top: 8px;
-      padding-inline: 8px;
-      padding-block: 4px;
-      border-radius: 12px;
-      z-index: 3;
-      font-size: 12px;
-
-      @extend .window;
-    }
+  &::before {
+    border-radius: 28px;
+    display: block;
+    content: "";
+    position: absolute;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(12px);
   }
 
-  &:hover {
-    background: $slighter-light;
+  & > * {
+    z-index: 1;
+    position: relative;
   }
 }
 
 option-select {
+  @extend .window;
+
   padding-inline: 16px 16px;
   height: $mbutton-mid-size;
   display: flex;
@@ -203,8 +82,9 @@ option-select {
   gap: $gap-smol;
   border-radius: 18px;
   position: relative;
-  background: $slighter-light;
-  transition: background 0.6s $cubic;
+  transition:
+    background 0.6s $cubic,
+    scale 0.6s $cubic;
   cursor: pointer;
 
   &:hover {
@@ -212,30 +92,36 @@ option-select {
   }
 
   &[active] {
+    background: $slight-light;
+    scale: 1.02;
+
     options {
       opacity: 1;
       visibility: visible;
       scale: 1;
+      top: calc(100% + 4px);
     }
   }
 
   options {
-    @extend .window;
-
     cursor: default;
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: calc(100% - 8px);
+    left: 50%;
+    translate: -50% 0;
     // background: white;
     border-radius: 12px;
     padding-block: 12px;
     opacity: 0;
     visibility: hidden;
     transition:
-      opacity 0.2s $cubic,
-      scale 0.2s $cubic;
+      scale 0.2s $cubic,
+      opacity 0.4s $cubic,
+      top 0.6s $cubic;
     min-width: 220px;
-    scale: 0.98;
+    scale: 0.94;
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(62px);
 
     option {
       padding-inline: 20px 16px;

@@ -2,45 +2,31 @@
 
 namespace Bruder\Controller;
 
-use Bruder\Model\User;
 use Bruder\Utils\Arr;
 use Bruder\Trait\ProcessesRequests;
-
 
 class Controller
 {
   use ProcessesRequests;
 
-  /**
-   * Keys that are valid for prequests even tho not explicitly
-   * noted down in the controller
-   *
-   * @var array
-   */
-  protected $valid_passthrough_keys = ["habibi", "csrf_token"];
+  # Keys that are valid for prequests even tho not explicitly
+  # noted down in the controller.
+  protected static array $valid_passthrough_keys = ["habibi", "csrf_token", "__admin_key"];
 
-  /**
-   * @var array|object
-   */
-  protected $params = [];
+  protected array|object|null $params = [];
 
-  protected $files = [];
-
-  /**
-   * @var ?User
-   */
-  protected $current_user;
+  protected array $files = [];
 
   /**
    * @param array $request - GET/POST/REQUEST
    */
   public function __construct(array $params = [], array $files = [])
   {
-    /**
-     * Set the input parameter.
-     */
+
+    # Set input params.
     $this->params = $params;
 
+    # Set possible files to params.
     foreach ($files as $key => $file) {
       $this->params[$key] = $file;
     }
@@ -74,6 +60,7 @@ class Controller
     array $optional,
     ?array $input_params = null
   ) {
+
     /**
      * @var ?object
      */
@@ -109,7 +96,7 @@ class Controller
     /**
      * @var array
      */
-    $always_pass = ["csrf_token", "habibi", "__admin_key"];
+    $always_pass = self::$valid_passthrough_keys;
 
     // Check if all required parameters are set in the post request
     foreach ($necessary as $param)
@@ -125,6 +112,9 @@ class Controller
       )
         return null;
 
-    return (object) Arr::sanitize_special_chars($post_params);
+    $final = (object) Arr::sanitize_special_chars($post_params);
+    $final->Visitor = CURRENT_VISITOR;
+
+    return $final;
   }
 }

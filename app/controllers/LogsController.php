@@ -37,12 +37,14 @@ class LogsController extends Controller
   public function update()
   {
 
-    authorize();
+    return error();
 
     $this->validate_params(
       strict: ["id"],
       optional: ["name", "description", "file"],
     );
+
+    $this->authorize();
 
     /**
      * @var ?Log
@@ -58,12 +60,14 @@ class LogsController extends Controller
   public function delete()
   {
 
-    authorize();
+    return error();
 
     $this->validate_params(
       strict: ["id"],
       optional: [],
     );
+
+    $this->authorize();
 
     /**
      * @var ?Log
