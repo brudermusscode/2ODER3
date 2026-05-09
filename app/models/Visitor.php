@@ -89,6 +89,14 @@ class Visitor extends Bruder
   }
 
   /**
+   * @return ?Collection<View>
+   */
+  public function views()
+  {
+    return $this->hasMany(View::class);
+  }
+
+  /**
    * @return bool
    */
   public function set_unique_name()

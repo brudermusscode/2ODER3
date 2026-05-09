@@ -3,6 +3,7 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use Illuminate\Support\Collection;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Media\Video;
@@ -19,6 +20,7 @@ class Log extends Bruder
     "file_name",
     "name",
     "description",
+    "views",
   ];
 
   /**
@@ -114,6 +116,47 @@ class Log extends Bruder
   public function comments()
   {
     return $this->hasMany(Comment::class);
+  }
+
+  /**
+   * @return ?Collection<View>
+   */
+  public function views()
+  {
+    return $this->hasMany(View::class);
+  }
+
+  /**
+   * @return ?string
+   */
+  public function increase_views(Visitor $Visitor)
+  {
+
+    /**
+     * @var ?View
+     */
+    $LastView = $Visitor->views()
+      ->where([
+        "log_id" => $this->id,
+      ])
+      ->latest()
+      ->first();
+
+    # Last view has to be 5 minutes in the past to generate a
+    # new one.
+    if ($LastView && time() - $LastView->created_at->getTimestamp() < 300)
+      return null;
+
+    # # Create it!
+    $View = new View;
+    $View->visitor()->associate($Visitor);
+    $View->log()->associate($this);
+    $View->save();
+
+    # Increase views for easy and resource saving access.
+    $this->increment("views");
+
+    return success(data: $View->fresh());
   }
 
   /**

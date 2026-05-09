@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+ALTER TABLE `logs`
+  ADD `views` INT NOT NULL DEFAULT 0 AFTER `description`;
+
+COMMIT;

@@ -37,7 +37,13 @@ $video_path = "/data/videos";
             <div fl alic gap=smol>
               <p text smol slight color=primary>Vor <?= Time::ago($SelectedLog->created_at) ?></p>
               &middot;
-              <p text smol slight>? Aufrufe</p>
+
+              <?php
+
+              $views = $SelectedLog->views;
+
+              ?>
+              <p text smol slight><?= $views ?> Aufruf<?= $views > 1 || $views < 1 ? "e" : "" ?></p>
             </div>
 
 
@@ -107,7 +113,13 @@ $video_path = "/data/videos";
                     <div fl alic gap=smoler>
                       <p text smoler regular slight><?= Time::ago($Log->created_at) ?></p>
                       &middot;
-                      <p text smoler regular slight>Bald viele Aufrufe</p>
+
+                      <?php
+
+                      $views = $Log->views;
+
+                      ?>
+                      <p text smoler regular slight><?= $views ?> Aufruf<?= $views > 1 || $views < 1 ? "e" : "" ?></p>
                     </div>
                   </div>
                 </log>
