@@ -11,6 +11,7 @@ body {
   background-color: #101012;
   min-height: 100vh;
   font-weight: 400;
+  transition: none;
 
   &:before {
     content: "";
@@ -39,6 +40,7 @@ background-blur {
   width: 100%;
   backdrop-filter: blur(42px);
   background: rgba(0, 0, 0, 0.78);
+  transition: none;
 }
 
 main {
@@ -46,6 +48,7 @@ main {
   padding-top: $header-height;
   max-width: $content-width;
   margin: 0 auto;
+  transition: none;
 }
 
 section[colored] {

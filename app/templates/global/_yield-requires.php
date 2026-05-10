@@ -16,6 +16,12 @@
     file_dialog_open: false,
   };
 
+  let __player = {
+    playing: false,
+    object: null,
+    volume: 0.5,
+  };
+
   let __current_overlay = null;
   let __current_second_overlay;
   let __current_audio_element;

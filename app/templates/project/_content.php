@@ -26,10 +26,40 @@ $video_path = "/data/videos";
 
   <?php else : ?>
 
-    <current-log fl fldircol>
-      <video controls elevated poster="<?= "$video_path/thumbs/$SelectedLog->thumb_name" ?>">
-        <source src="<?= "$video_path/$SelectedLog->file_name" ?>" type="video/mp4" />
-      </video>
+    <current-log fl fldircol <?= DEV ? "flone" : "" ?>>
+      <video-wrapper>
+        <video poster="<?= "$video_path/thumbs/$SelectedLog->thumb_name" ?>">
+          <source src="<?= "$video_path/$SelectedLog->file_name" ?>" type="video/mp4" />
+        </video>
+
+        <video-top-toolbar>
+          <volume>
+            <mi></mi>
+            <contains>
+              <volume-track></volume-track>
+            </contains>
+          </volume>
+
+          <cinema-mode>
+            <mi>aspect_ratio</mi>
+          </cinema-mode>
+
+          <fullscreen>
+            <mi>open_in_full</mi>
+          </fullscreen>
+        </video-top-toolbar>
+
+        <video-toggle>
+          <mi></mi>
+        </video-toggle>
+        <video-toolbar>
+          <vt-duration-track-wrapper>
+            <contains>
+              <vt-duration-track></vt-duration-track>
+            </contains>
+          </vt-duration-track-wrapper>
+        </video-toolbar>
+      </video-wrapper>
 
       <div fl fldircol gap=mid>
         <div fl fldircol gap=smol+>
@@ -132,21 +162,24 @@ $video_path = "/data/videos";
 
     <?php
 
-    /**
-     * @var ?Collection<Comment>
-     */
-    $Comments = $SelectedLog->comments->sortByDesc("created_at");
+    if (!DEV) :
+
+      /**
+       * @var ?Collection<Comment>
+       */
+      $Comments = $SelectedLog->comments->sortByDesc("created_at");
 
     ?>
 
-    <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol+>
-      <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
-        <div background=slight-dark rounded=mid flone>
-          <?php include TEMPLATE . "/global/_loader.html" ?>
-        </div>
-      </get-content>
-    </comments>
+      <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol+>
+        <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
+          <div background=slight-dark rounded=mid flone>
+            <?php include TEMPLATE . "/global/_loader.html" ?>
+          </div>
+        </get-content>
+      </comments>
 
-  <?php endif ?>
+  <?php endif;
+  endif; ?>
 
 </div>

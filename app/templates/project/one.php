@@ -38,7 +38,7 @@ else :
   $SelectedLog = $Logs->where("id", $log_id)->first() ?? $Logs->first();
 
   # Inscrease Log views by one.
-  $SelectedLog->increase_views(CURRENT_VISITOR);
+  $SelectedLog?->increase_views(CURRENT_VISITOR);
 
   include __DIR__ . "/_content.php";
 
