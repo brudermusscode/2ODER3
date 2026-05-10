@@ -19,6 +19,7 @@
 
 /.VSCodeCounter
 /.setup
+/deploy.sh
 
 /compose.yml
 

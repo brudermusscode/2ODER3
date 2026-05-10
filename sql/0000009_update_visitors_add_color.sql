@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+ALTER TABLE `visitors`
+  ADD `color` VARCHAR(18) NULL AFTER `nickname`;
+
+COMMIT;

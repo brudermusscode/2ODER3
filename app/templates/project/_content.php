@@ -63,7 +63,7 @@ $video_path = "/data/videos";
 
       <div fl fldircol gap=mid>
         <div fl fldircol gap=smol+>
-          <div fl alic jucsb gap=smol pinline12 pt18>
+          <div fl alic jucsb gap=smol pinline32 pt18>
             <div fl alic gap=smol>
               <p text smol slight color=primary>Vor <?= Time::ago($SelectedLog->created_at) ?></p>
               &middot;
@@ -113,7 +113,7 @@ $video_path = "/data/videos";
             </reactions-container>
           </div>
 
-          <div fl fldircol gap pinline12>
+          <div fl fldircol gap p32 window>
             <p text mid bold><?= $SelectedLog->name ?? "Ohne Nameee" ?></p>
             <div fl fldircol gap=smol>
               <p text smoler ttup bold slight>Beschreibung</p>
@@ -122,9 +122,9 @@ $video_path = "/data/videos";
           </div>
         </div>
 
-        <div pinline12>
+        <!-- <div pinline12>
           <div style="height:6px;" rounded background=slighter-light></div>
-        </div>
+        </div> -->
 
         <!-- <section colored style="background: url(/colors.svg);" p32 rounded=wide fl fldircol gap></section> -->
 
@@ -133,7 +133,7 @@ $video_path = "/data/videos";
           <more-logs fl gap=smol flex-wrap>
             <?php foreach ($Logs as $Log) : ?>
               <a href="/project/<?= $Project->id ?>/log/<?= $Log->id ?>">
-                <log fl fldircol gap=smol>
+                <log fl fldircol gap=smol flex-truncate>
                   <picture size=mid>
                     <img src="/data/videos/thumbs/<?= $Log->thumb_name ?>" />
                     <div count>#<?= $Log->id ?></div>
@@ -169,7 +169,7 @@ $video_path = "/data/videos";
 
     ?>
 
-    <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol+>
+    <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol>
       <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
         <div background=slight-dark rounded=mid flone>
           <?php include TEMPLATE . "/global/_loader.html" ?>

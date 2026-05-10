@@ -1,7 +1,6 @@
 <?php
 
 use Bruder\Model\Log;
-use Bruder\Model\Comment;
 
 /**
  * @var int
@@ -20,6 +19,9 @@ if (!$SelectedLog)
 
 ob_start(); ?>
 
+<comments-top-bar fl alic gap=smol pinline12>
+  <p text smoler ttup bold slight>Bemerkungen</p>
+</comments-top-bar>
 
 <div none fl alic jucc window>
   <div>
@@ -37,6 +39,14 @@ ob_start(); ?>
   </div>
 </div>
 
+<?php
+
+foreach ($SelectedLog->comments->sortByDesc("created_at") as $Comment) :
+  include TEMPLATE . "/comment/_comment.php";
+endforeach;
+
+?>
+
 <composer-contain>
   <composer>
     <form data-action="comment:create" fl alic gap=smol+>
@@ -52,13 +62,6 @@ ob_start(); ?>
   </composer>
 </composer-contain>
 
-<?php
-
-foreach ($SelectedLog->comments->sortByDesc("created_at") as $Comment) :
-  include TEMPLATE . "/comment/_comment.php";
-endforeach;
-
-?>
 <!--
 <script>
   $(function() {

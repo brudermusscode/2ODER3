@@ -6,7 +6,7 @@
 body {
   &[cinema-mode] {
     comments {
-      margin-top: -1 * ($header-height - $main-distance);
+      margin-top: -1 * ($header-height - $main-distance) - 6px;
     }
   }
 }
@@ -14,14 +14,14 @@ body {
 comments {
   position: sticky;
   top: 0;
-  z-index: 101;
+  // z-index: 101;
   width: $comments-width;
   max-height: 100vh;
   min-height: 100vh;
   overflow: auto;
   scrollbar-width: 0px;
   margin-top: -$header-height;
-  padding-top: calc($header-height + $composer-height);
+  // padding-top: $header-height;
   padding-bottom: $main-distance;
 
   &[is-empty] {
@@ -33,21 +33,33 @@ comments {
       flex: 1;
     }
 
-    composer {
-      top: initial;
-      bottom: 0;
-    }
+    // composer {
+    //   top: initial;
+    //   bottom: 0;
+    // }
   }
 
   [none] {
     display: none;
-    margin-bottom: $composer-height;
+    // margin-bottom: $composer-height;
+  }
+
+  comments-top-bar {
+    display: block;
+    // position: sticky;
+    // top: 0;
+    margin-top: $header-height;
+    z-index: 2;
   }
 
   composer-contain {
     display: block;
     position: sticky;
-    top: -$header-height + calc(($header-height - $composer-height) / 2) + 1px;
+    // bottom: $main-distance;
+    bottom: 0;
+    // margin-bottom: -$main-distance;
+    // top: -$header-height + calc(($header-height -
+    // $composer-height) / 2) + 1px;
     z-index: 2;
   }
 
@@ -56,9 +68,9 @@ comments {
 
     display: block;
     background: rgba(255, 255, 255, 0.12);
-    position: absolute;
+    // position: absolute;
     width: 100%;
-    top: calc(-1 * ($composer-height));
+    // top: calc(-1 * ($composer-height));
 
     &[active] {
       box-shadow: var(--mio-theme-elevation-3);
@@ -105,6 +117,18 @@ current-log {
 more-logs {
   a {
     flex-basis: calc(33.33% - $gap-smol);
+    max-width: calc(33.33% - $gap-smol);
+
+    @media screen and (max-width: 1120px) {
+      flex-basis: calc(50% - $gap-smol);
+      max-width: calc(50% - $gap-smol);
+    }
+
+    @media screen and (max-width: 888px) {
+      flex-basis: calc(100%);
+      max-width: calc(100%);
+      width: 100%;
+    }
   }
 }
 

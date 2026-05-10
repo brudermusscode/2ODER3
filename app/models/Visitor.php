@@ -15,7 +15,20 @@ class Visitor extends Bruder
    */
   protected $fillable = [
     "nickname",
+    "color",
     "ip",
+  ];
+
+  public static array $colors = [
+    "#fff158",
+    "#9c3fff",
+    "#f154fc",
+    "#ff27c9",
+    "#ff2386",
+    "#40f65e",
+    "#3ff0be",
+    "#26cdeb",
+    "#2391ff",
   ];
 
   /**
@@ -96,11 +109,30 @@ class Visitor extends Bruder
     return $this->hasMany(View::class);
   }
 
+
+  /**
+   * @return true
+   */
+  public function set_color()
+  {
+
+    # Nothing to do if there is a color already.
+    if ($this->color) return true;
+
+    $this->color = self::$colors[array_rand(self::$colors)];
+    $this->save();
+
+    return true;
+  }
+
   /**
    * @return bool
    */
   public function set_unique_name()
   {
+
+    # Nothing to do when there's a nickname already.
+    if ($this->nickname) return true;
 
     # No valid name by now, add a number at the end.
     if (!$this->while_exists_by_nickname(return_at_count: 625))

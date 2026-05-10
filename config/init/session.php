@@ -41,6 +41,7 @@ if (!$CurrentVisitor) {
   $CurrentVisitor = Visitor::where("ip", $remote_address)->first()
     ?? Visitor::create([
       "ip" => $remote_address,
+      "color" => array_rand(Visitor::$colors),
     ]);
 }
 
@@ -48,12 +49,11 @@ if (!$CurrentVisitor) {
  * @var Visitor $CurrentVisitor
  */
 
-# Save a new nickname to the Visitor, in case none has been set
-# by now.
-if (!$CurrentVisitor->nickname)
-  $CurrentVisitor->set_unique_name();
+# Set various things for a unique visitor.
+$CurrentVisitor->set_unique_name();
+$CurrentVisitor->set_color();
 
-# Add the Visitor to their Session.
+# Add the Visitor Instance to their Session.
 SessionManager::set("Visitor", $CurrentVisitor->fresh());
 
 /**
