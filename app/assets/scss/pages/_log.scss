@@ -3,6 +3,14 @@
 @use "../framework/var.sizes" as *;
 @use "../framework/var.utils" as *;
 
+body {
+  &[cinema-mode] {
+    comments {
+      margin-top: -1 * ($header-height - $main-distance);
+    }
+  }
+}
+
 comments {
   position: sticky;
   top: 0;

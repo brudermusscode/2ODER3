@@ -26,6 +26,7 @@ export const start = (wrapper) => {
   video.addEventListener("ended", () => {
     stop(wrapper);
     set_time(wrapper, 0);
+    wrapper.removeAttribute("has-played");
   });
 };
 

@@ -162,24 +162,21 @@ $video_path = "/data/videos";
 
     <?php
 
-    if (!DEV) :
-
-      /**
-       * @var ?Collection<Comment>
-       */
-      $Comments = $SelectedLog->comments->sortByDesc("created_at");
+    /**
+     * @var ?Collection<Comment>
+     */
+    $Comments = $SelectedLog->comments->sortByDesc("created_at");
 
     ?>
 
-      <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol+>
-        <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
-          <div background=slight-dark rounded=mid flone>
-            <?php include TEMPLATE . "/global/_loader.html" ?>
-          </div>
-        </get-content>
-      </comments>
+    <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol+>
+      <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
+        <div background=slight-dark rounded=mid flone>
+          <?php include TEMPLATE . "/global/_loader.html" ?>
+        </div>
+      </get-content>
+    </comments>
 
-  <?php endif;
-  endif; ?>
+  <?php endif;  ?>
 
 </div>
