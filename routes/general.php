@@ -16,6 +16,7 @@ $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 
 # ? Logs
 $Router->get("/get/log/comments", "log/_comments", return: "JSON");
+$Router->get("/get/log/reactions", "log/_reactions", return: "JSON");
 $Router->get("/log/new", "log/new", return: "JSON");
 // $Router->get("/log/edit", "log/edit", return: "JSON");
 $Router->post("/log/create", "log/create", return: "JSON");

@@ -79,19 +79,14 @@ $video_path = "/data/videos";
 
             <reactions-container fl alic gap=smol>
               <active-reactions fl alic gap=smoler>
-                <?php
-
-                $Reactions = $SelectedLog->reactions()
-                  ->selectRaw("*, COUNT(*) as count")
-                  ->groupBy("emote")
-                  ->withExists([
-                    'visitor as reacted' => fn($q) => $q->where('visitor_id', CURRENT_VISITOR->id)
-                  ])
-                  ->get();
-
-                foreach ($Reactions as $Reaction) :
-                  include TEMPLATE . "/reaction/_reaction.php";
-                endforeach ?>
+                <get-content from="/get/log/reactions?log_id=<?= $SelectedLog->id ?>">
+                  <div fl alic gap=smoler>
+                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                  </div>
+                </get-content>
               </active-reactions>
 
               <reactions>

@@ -15,7 +15,7 @@ $.ajaxSetup({
   },
 });
 
-export const close_reactions = () => {
+export const close_reactions = (log_id) => {
   let cont = document.find("reactions");
   if (!cont) return;
 
@@ -25,6 +25,24 @@ export const close_reactions = () => {
     .closest("reactions-container")
     .find("active-reactions")
     ?.removeAttribute("behind");
+};
+
+export const load_reactions = (log_id) => {
+  let container = document.find("reactions-container active-reactions");
+
+  if (!container) return;
+
+  container.disable();
+
+  $.ajax({
+    url: "/get/log/reactions?log_id=" + log_id,
+    success: function (data) {
+      if (!data.status) return Frontend.ajax_response("error");
+
+      container.innerHTML = data.data;
+      container.enable();
+    },
+  });
 };
 
 // document.addEventListener("DOMContentLoaded", async (e) => {});
@@ -90,16 +108,14 @@ $(function () {
     if (e.target.closest("reactions") && !e.target.closest("reaction")) return;
 
     let reaction = e.target.closest("reaction") ?? this.find("reaction");
-    let reactions_container = this.closest("reactions-container");
-    let active_reactions = reactions_container.find("active-reactions");
-    let find_reaction = reactions_container.find(
-      "[contains-reaction=" + reaction.innerHTML + "]",
-    );
 
     let formdata = new FormData();
     formdata.append("log_id", this.dataset.logId);
     formdata.append("type", this.dataset.type);
     formdata.append("emote", reaction.innerHTML);
+
+    // Disable reactions container to prevent action.
+    document.find("active-reactions")?.disable();
 
     $.ajax({
       url: Request.url(this),
@@ -108,12 +124,7 @@ $(function () {
       success: function (data) {
         if (!data.status) return Frontend.ajax_response("error");
 
-        if (!find_reaction)
-          active_reactions.insertAdjacentHTML("afterbegin", data.data.HTML);
-        else {
-          find_reaction.insertAdjacentHTML("afterend", data.data.HTML);
-          find_reaction.remove();
-        }
+        load_reactions(data.data.Object.log_id);
       },
     });
   });
@@ -132,11 +143,16 @@ $(function () {
     let formdata = new FormData();
     formdata.append("id", this.dataset.id);
 
+    // Disable reactions container to prevent actions.
+    this.closest("active-reactions")?.disable();
+
     $.ajax({
       url: Request.url(this),
       data: formdata,
       method: "POST",
       success: function (data) {
+        button.closest("active-reactions")?.enable();
+
         if (new_count < 1) {
           button.setAttribute("removed", true);
           setTimeout(() => {
@@ -146,6 +162,7 @@ $(function () {
           return;
         }
 
+        // Enable reactinons container again
         button.setAttribute("data-action", "reaction:create");
         button.deactivate();
         countHTML.innerHTML = count - 1;

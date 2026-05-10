@@ -20,15 +20,21 @@ class ReactionsController extends Controller
       optional: [],
     );
 
-    // ! Reaction exists for this Visitor
-    if (
-      CURRENT_VISITOR->reactions()
+    /**
+     * @var ?Reaction
+     */
+    $Reaction = CURRENT_VISITOR->reactions()
       ->where([
         "log_id" => $this->params->log_id,
         "emote" => $this->params->emote,
         "type" => $this->params->type,
-      ])->first()
-    ) return error("Du hast damit schon reagiert");
+      ])->first();
+
+    # Rebuild params and delete the Reaction if one exists.
+    if ($Reaction) {
+      $this->params = ["id" => $Reaction->id];
+      return $this->delete();
+    }
 
     /**
      * @var ?Log
@@ -75,12 +81,16 @@ class ReactionsController extends Controller
      * Delete the reaction in one run or return an error, if no
      * reaction exists here with the given id.
      */
-    CURRENT_VISITOR->reactions()
+    $Reaction = CURRENT_VISITOR->reactions()
       ->where("id", $this->params->id)
-      ->first()
-      ?->delete()
-      ?? error("Keine Reaction");
+      ->first();
 
-    return success();
+    if (!$Reaction)
+      return error("Kein Log");
+
+    $log_id = $Reaction->log_id;
+    $Reaction->delete();
+
+    return success(data: ["Object" => ["log_id" => $log_id]]);
   }
 }

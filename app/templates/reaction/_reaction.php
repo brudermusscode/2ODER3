@@ -11,7 +11,7 @@ use Bruder\Model\Reaction;
 ?>
 
 <outer-reaction fl alic
-  <?= $Reaction->reacted
+  <?= $Reaction->current_visitor_has_reacted
     ? 'data-action="reaction:delete" active'
     : 'data-action="reaction:create"' ?>
   data-id="<?= $Reaction->id ?>"
