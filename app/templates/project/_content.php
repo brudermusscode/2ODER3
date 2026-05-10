@@ -85,7 +85,7 @@ $video_path = "/data/videos";
                   ->selectRaw("*, COUNT(*) as count")
                   ->groupBy("emote")
                   ->withExists([
-                    'visitor as reacted' => fn($q) => $q->where('visitors.id', CURRENT_VISITOR->id)
+                    'visitor as reacted' => fn($q) => $q->where('visitor_id', CURRENT_VISITOR->id)
                   ])
                   ->get();
 
