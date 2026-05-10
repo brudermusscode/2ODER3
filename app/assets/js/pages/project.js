@@ -141,7 +141,8 @@ $(function () {
     let new_count = count - 1;
 
     let formdata = new FormData();
-    formdata.append("id", this.dataset.id);
+    formdata.append("log_id", this.dataset.logId);
+    formdata.append("emote", this.dataset.emote);
 
     // Disable reactions container to prevent actions.
     this.closest("active-reactions")?.disable();

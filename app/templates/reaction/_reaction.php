@@ -16,8 +16,9 @@ use Bruder\Model\Reaction;
     : 'data-action="reaction:create"' ?>
   data-id="<?= $Reaction->id ?>"
   data-log-id="<?= $SelectedLog->id ?>"
-  contains-reaction="<?= $Reaction->emote ?>"
-  data-type="emote">
+  data-emote="<?= $Reaction->emote ?>"
+  data-type="emote"
+  contains-reaction="<?= $Reaction->emote ?>">
   <reaction>
     <?= $Reaction->emote ?>
   </reaction>

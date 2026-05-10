@@ -33,7 +33,10 @@ class ReactionsController extends Controller
     # Rebuild params and delete the Reaction if one exists.
     if ($Reaction) {
       $this->params = ["id" => $Reaction->id];
-      return $this->delete();
+      $log_id = $Reaction->log_id;
+      $Reaction->delete();
+
+      return success(data: ["Object" => ["log_id" => $log_id]]);
     }
 
     /**
@@ -73,17 +76,24 @@ class ReactionsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["id"],
+      strict: ["log_id", "emote"],
       optional: [],
     );
+
+    // pdie($this->params);
 
     /**
      * Delete the reaction in one run or return an error, if no
      * reaction exists here with the given id.
      */
     $Reaction = CURRENT_VISITOR->reactions()
-      ->where("id", $this->params->id)
+      ->where([
+        "log_id" => $this->params->log_id,
+        "emote" => $this->params->emote,
+      ])
       ->first();
+
+    // pdie($Reaction);
 
     if (!$Reaction)
       return error("Kein Log");
