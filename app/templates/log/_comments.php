@@ -19,10 +19,6 @@ if (!$SelectedLog)
 
 ob_start(); ?>
 
-<comments-top-bar fl alic gap=smol pinline12>
-  <p text smoler ttup bold slight>Bemerkungen</p>
-</comments-top-bar>
-
 <div none fl alic jucc window>
   <div>
     <div fl fldircol alic>
@@ -38,6 +34,10 @@ ob_start(); ?>
     <p text slight semibold smol ttup tac mt24>Sei der Erste!</p>
   </div>
 </div>
+
+<comments-top-bar fl alic gap=smol pinline12>
+  <p text smoler ttup bold slight>Bemerkungen</p>
+</comments-top-bar>
 
 <?php
 

@@ -28,6 +28,10 @@ comments {
     justify-content: stretch;
     padding-top: $header-height;
 
+    comments-top-bar {
+      display: none;
+    }
+
     [none] {
       display: flex;
       flex: 1;
