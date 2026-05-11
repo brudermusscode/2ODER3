@@ -10,6 +10,12 @@ let __ui_shown = true;
 
 let __check_actual_playback = null;
 
+/**
+ * Heart & Soul. Starts a given video, while caring about buffer
+ * state and UI state. It sets various Event Handlers.
+ *
+ * @param {HTMLElement} wrapper
+ */
 export const start = (wrapper) => {
   let video = wrapper.find("video");
 
@@ -21,12 +27,12 @@ export const start = (wrapper) => {
   __player.active = true;
   __player.object = video;
 
-  let track = wrapper.find("vt-duration-track");
+  let track = wrapper.find("duration-track");
   let progress;
 
   // Start a first buffering in cases where the video doesn't
   // start directly, as well as when pausing the player in a
-  // buffer state and replaying again. Cooler
+  // buffer state and replaying again. you're so cool.
   buffer_w_timeout(wrapper);
 
   // Manipulate the duration track on running video.
@@ -41,9 +47,6 @@ export const start = (wrapper) => {
   });
 
   // video.addEventListener("playing", () => {
-  //   console.log("playing");
-  //   release_buffer(wrapper);
-  //   hide_ui_w_timeout(wrapper);
   // });
 
   // Occasionally check for waiting being true. Sometimes the
@@ -74,6 +77,11 @@ export const start = (wrapper) => {
   });
 };
 
+/**
+ * Stops given video.
+ *
+ * @param {HTMLElement} wrapper
+ */
 export const stop = (wrapper) => {
   let video = wrapper.find("video");
 
@@ -83,6 +91,14 @@ export const stop = (wrapper) => {
   __player.object = video;
 };
 
+/**
+ * Hard to determine, if a video is actually progressing in
+ * playback. This was an attempt but not the best. Relying
+ * on Event Handler »timeupdate« makes more sense, I feel.
+ *
+ * @param {HTMLElement} wrapper
+ * @returns {bool}
+ */
 const is_playing = (wrapper) => {
   let video = wrapper.find("video");
 
@@ -94,6 +110,12 @@ const is_playing = (wrapper) => {
   );
 };
 
+/**
+ * Starts a countdown to show visual buffer state for given video.
+ *
+ * @param {HTMLElement} wrapper
+ * @returns
+ */
 const buffer_w_timeout = (wrapper) => {
   if (__buffering) return false;
 
@@ -107,6 +129,11 @@ const buffer_w_timeout = (wrapper) => {
   }, __buffer_timeout_ms);
 };
 
+/**
+ * Removes visual and hidden state of buffering for given video.
+ *
+ * @param {HTMLElement} wrapper
+ */
 const release_buffer = (wrapper) => {
   console.log("released buffer…");
 
@@ -116,6 +143,13 @@ const release_buffer = (wrapper) => {
   clearTimeout(__buffer_timeout);
 };
 
+/**
+ * Sets new watch progression on given video.
+ *
+ * @param {HTMLElement} wrapper
+ * @param {float} sec
+ * @returns
+ */
 export const set_time = (wrapper, sec) => {
   let video = wrapper.find("video");
 
@@ -125,6 +159,11 @@ export const set_time = (wrapper, sec) => {
   video.currentTime = sec;
 };
 
+/**
+ * Mutes given video.
+ *
+ * @param {HTMLElement} wrapper
+ */
 export const mute = (wrapper) => {
   let video = wrapper.find("video");
   let volume = wrapper.find("volume");
@@ -135,6 +174,11 @@ export const mute = (wrapper) => {
   volume.setAttribute("muted", "");
 };
 
+/**
+ * Unmutes given video.
+ *
+ * @param {HTMLElement} wrapper
+ */
 export const unmute = (wrapper) => {
   let video = wrapper.find("video");
   let volume = wrapper.find("volume");
@@ -142,10 +186,22 @@ export const unmute = (wrapper) => {
   volume.removeAttribute("muted");
 };
 
+/**
+ * Checks if the given video  is muted.
+ *
+ * @param {HTMLElement} wrapper
+ * @returns {bool}
+ */
 export const is_muted = (wrapper) => {
   return wrapper.find("volume").hasAttribute("muted");
 };
 
+/**
+ * Sets the volume of given video.
+ *
+ * @param {HTMLElement} wrapper
+ * @param {float} volume <= 1.0 && >= 0.0
+ */
 export const set_volume = (wrapper, volume) => {
   let track = wrapper.find("volume volume-track");
   let volume = Number(volume);
@@ -160,6 +216,11 @@ export const set_volume = (wrapper, volume) => {
   localStorage.setItem("__player_volume", volume);
 };
 
+/**
+ * Un/Sets the fullscreen mode.
+ *
+ * @param {HTMLElement} wrapper
+ */
 const fullscreen = (wrapper) => {
   if (document.fullscreenElement) {
     document.exitFullscreen();
@@ -168,6 +229,9 @@ const fullscreen = (wrapper) => {
   }
 };
 
+/**
+ * Un/Sets the cinema mode.
+ */
 const cinema_mode = () => {
   if (document.body.hasAttribute("cinema-mode")) {
     document.body.removeAttribute("cinema-mode");
@@ -178,6 +242,12 @@ const cinema_mode = () => {
   }
 };
 
+/**
+ * Begins a countdown to hide the video UI.
+ *
+ * @param {HTMLElement} wrapper
+ * @returns
+ */
 const hide_ui_w_timeout = (wrapper) => {
   console.log("hiding ui");
   if (!__ui_shown) return;
@@ -191,13 +261,27 @@ const hide_ui_w_timeout = (wrapper) => {
   }, __hide_ui_timeout_ms);
 };
 
+/**
+ * Shows the UI for given video.
+ *
+ * @param {HTMLElement} wrapper
+ */
 const show_ui = (wrapper) => {
   clearTimeout(__hide_ui_timeout);
   __ui_shown = true;
   wrapper.removeAttribute("inactive");
 };
 
+/**
+ * Initializes an in DOM existing video wrapper with a video
+ * source attached to it.
+ *
+ * @param {HTMLElement} wrapper
+ * @returns
+ */
 const init = (wrapper) => {
+  if (wrapper === undefined || !wrapper) return;
+
   let video = wrapper.find("video");
   let volume = localStorage.getItem("__player_volume") ?? DEFAULT_VOLUME;
 
@@ -207,27 +291,49 @@ const init = (wrapper) => {
     document.body.setAttribute("cinema-mode", "");
 };
 
+/**
+ * DOMContentLoaded
+ */
 $(function () {
   //
   //
+
   let video_wrapper = document.find("video-wrapper");
 
   init(video_wrapper);
 
   let __mouse_down = false;
 
+  /**
+   * Tell UI the mouse is currently being pressed down.
+   *
+   * @event mousedown
+   */
   document.addEventListener("mousedown", () => {
     __mouse_down = true;
   });
 
+  /**
+   * Tell the UI the mouse is not being pressed anymore.
+   *
+   * @event mouseup
+   */
   document.addEventListener("mouseup", () => {
     __mouse_down = false;
   });
 
+  /**
+   * @event mousedown
+   * @this {HTMLElement} <video-wrapper></video-wrapper>
+   */
   $(document).on("mousedown", "video-wrapper", function (e) {
     show_ui(this);
   });
 
+  /**
+   * @event click
+   * @this {HTMLElement} <video-wrapper></video-wrapper>
+   */
   $(document).on("click", "video-wrapper", function (e) {
     show_ui(this);
 
@@ -236,6 +342,10 @@ $(function () {
     hide_ui_w_timeout(this);
   });
 
+  /**
+   * @event mousemove
+   * @this {HTMLElement} <video-wrapper></video-wrapper>
+   */
   $(document).on("mousemove", "video-wrapper", function (e) {
     show_ui(this);
 
@@ -246,6 +356,9 @@ $(function () {
 
   /**
    * Toggle cinema mode / fullscreen.
+   *
+   * @event click
+   * @this {HTMLElement} <fullscreen></fullscreen>, <cinema-mode></cinema-mode>
    */
   $(document).on(
     "click",
@@ -260,6 +373,9 @@ $(function () {
 
   /**
    * Volume handling.
+   *
+   * @event mousedown
+   * @this {HTMLElement} <volume></volume>
    */
   $(document).on("mousedown", "video-wrapper volume", function (e) {
     let wrapper = this.closest("video-wrapper");
@@ -293,6 +409,9 @@ $(function () {
 
   /**
    * Toggle play/pause.
+   *
+   * @event click
+   * @this {HTMLElement} <video-toggle></video-toggle>
    */
   $(document).on("click", "video-wrapper video-toggle", function (e) {
     let wrapper = this.closest("video-wrapper");
@@ -306,10 +425,13 @@ $(function () {
    * Click on duration track, manipulate the width of it and set
    * the currentTime of the video to the requested time based on
    * the click position inside the duration track.
+   *
+   * @event mousedown
+   * @this {HTMLElement} <duration-track-wrapper></duration-track-wrapper>
    */
   $(document).on(
     "mousedown",
-    "video-wrapper vt-duration-track-wrapper",
+    "video-wrapper duration-track-wrapper",
     function (e) {
       const dragging = (e) => {
         // Set width of the duration track.
@@ -320,7 +442,7 @@ $(function () {
 
         if (track_w >= 100 || track_w <= 0) return;
 
-        this.find("vt-duration-track").style.width = track_w + "%";
+        this.find("duration-track").style.width = track_w + "%";
 
         // Set currentTime of the video.
         let video = this.closest("video-wrapper").find("video");

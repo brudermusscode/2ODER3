@@ -64,11 +64,11 @@ $video_path = "/data/videos";
               <div></div>
             </div>
           </buffer>
-          <vt-duration-track-wrapper>
+          <duration-track-wrapper>
             <contains>
-              <vt-duration-track></vt-duration-track>
+              <duration-track></duration-track>
             </contains>
-          </vt-duration-track-wrapper>
+          </duration-track-wrapper>
         </video-toolbar>
       </video-wrapper>
 
