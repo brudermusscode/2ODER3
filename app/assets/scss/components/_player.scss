@@ -64,6 +64,13 @@ video-wrapper {
     }
   }
 
+  &[buffering] {
+    video-toolbar buffer {
+      opacity: 1;
+      margin-left: 0;
+    }
+  }
+
   video {
     display: block;
     border-radius: 25px;
@@ -109,6 +116,7 @@ video-wrapper {
     align-items: flex-start;
     gap: $gap-smol;
     transition: opacity 0.2s linear;
+    z-index: 2;
 
     $video-volume-border-radius: 32px;
 
@@ -245,6 +253,26 @@ video-wrapper {
     justify-content: stretch;
     align-items: center;
     gap: $gap-smol-plus;
+    z-index: 3;
+
+    buffer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: -40px - 16px;
+      height: 40px;
+      width: 40px;
+      opacity: 0;
+      transition:
+        opacity 0.4s $cubic,
+        margin-left 0.6s $cubic;
+      // position: absolute;
+      // top: 50%;
+      // left: 50%;
+      // translate: -50% -50%;
+      // height: 140px;
+      // width: 140px;
+    }
 
     $track-border-radius: 18px 18px 24px 24px;
 
@@ -254,6 +282,7 @@ video-wrapper {
       transition: height 0.4s $cubic;
       flex: 1;
       height: 22px;
+      position: relative;
 
       &:hover {
         height: 28px;

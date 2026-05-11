@@ -2,6 +2,13 @@ const DEFAULT_VOLUME = 0.5;
 let __hide_ui_timeout = null;
 let __hide_ui_timeout_ms = 3000;
 
+let __buffer_timeout = null;
+let __buffer_timeout_ms = 2000;
+let __buffering = false;
+let __waiting = false;
+
+let __check_actual_playback = null;
+
 export const start = (wrapper) => {
   let video = wrapper.find("video");
 
@@ -16,10 +23,47 @@ export const start = (wrapper) => {
   let track = wrapper.find("vt-duration-track");
   let progress;
 
+  // Start a first buffering in cases where the video doesn't
+  // start directly, as well as when pausing the player in a
+  // buffer state and replaying again. Cooler
+  buffer_w_timeout(wrapper);
+
   // Manipulate the duration track on running video.
   video.addEventListener("timeupdate", () => {
+    console.log("time updated…");
+
+    __waiting = false;
+
+    if (__buffering) release_buffer(wrapper);
+
     progress = (video.currentTime / video.duration) * 100;
     track.style.width = `${progress}%`;
+  });
+
+  // video.addEventListener("playing", () => {
+  //   console.log("playing");
+  //   release_buffer(wrapper);
+  //   hide_ui_w_timeout(wrapper);
+  // });
+
+  // Occasionally check for waiting being true. Sometimes the
+  // player stops but doesn't trigger the waiting event listener.
+  __check_actual_playback = setInterval(() => {
+    if (__waiting) buffer_w_timeout(wrapper);
+  }, __buffer_timeout_ms);
+
+  video.addEventListener("pause", () => {
+    console.log("pause");
+
+    if (__buffering) release_buffer(wrapper);
+  });
+
+  video.addEventListener("waiting", () => {
+    if (__waiting) return;
+    __waiting = true;
+
+    if (!__buffering) buffer_w_timeout(wrapper);
+    show_ui(wrapper);
   });
 
   // Stop the video, when ended.
@@ -37,6 +81,39 @@ export const stop = (wrapper) => {
   video.pause();
   __player.active = false;
   __player.object = video;
+};
+
+const is_playing = (wrapper) => {
+  let video = wrapper.find("video");
+
+  return (
+    !video.paused &&
+    !video.ended &&
+    video.currentTime > 0 &&
+    video.readyState > 3
+  );
+};
+
+const buffer_w_timeout = (wrapper) => {
+  if (__buffering) return false;
+
+  console.log("buffering…");
+
+  __buffering = true;
+
+  // Start a timeout to show everything.
+  __buffer_timeout = setTimeout(() => {
+    wrapper.setAttribute("buffering", "");
+  }, __buffer_timeout_ms);
+};
+
+const release_buffer = (wrapper) => {
+  console.log("released buffer…");
+
+  __buffering = false;
+  wrapper.removeAttribute("buffering");
+  // wrapper.find("[loader]")?.remove();
+  clearTimeout(__buffer_timeout);
 };
 
 export const set_time = (wrapper, sec) => {
@@ -141,19 +218,22 @@ $(function () {
   $(document).on("click", "video-wrapper", function (e) {
     show_ui(this);
 
-    if (__player.active && !__mouse_down) {
-      hide_ui_w_timeout(this);
-    }
+    if (!__player.active || __mouse_down || __buffering) return;
+
+    hide_ui_w_timeout(this);
   });
 
   $(document).on("mousemove", "video-wrapper", function (e) {
     show_ui(this);
 
-    if (!__player.active || __mouse_down) return;
+    if (!__player.active || __mouse_down || __buffering) return;
 
     hide_ui_w_timeout(this);
   });
 
+  /**
+   * Toggle cinema mode / fullscreen.
+   */
   $(document).on(
     "click",
     "video-wrapper fullscreen, video-wrapper cinema-mode",
@@ -165,6 +245,9 @@ $(function () {
     },
   );
 
+  /**
+   * Volume handling.
+   */
   $(document).on("mousedown", "video-wrapper volume", function (e) {
     let wrapper = this.closest("video-wrapper");
 
@@ -200,9 +283,10 @@ $(function () {
    */
   $(document).on("click", "video-wrapper video-toggle", function (e) {
     let wrapper = this.closest("video-wrapper");
+    let video = wrapper.find("video");
 
-    if (wrapper.hasAttribute("active")) return stop(wrapper);
-    return start(wrapper);
+    if (video.paused) return start(wrapper);
+    return stop(wrapper);
   });
 
   /**
@@ -227,6 +311,9 @@ $(function () {
 
         // Set currentTime of the video.
         let video = this.closest("video-wrapper").find("video");
+
+        console.log(track_w, video.duration);
+
         video.currentTime = (track_w * video.duration) / 100;
       };
 

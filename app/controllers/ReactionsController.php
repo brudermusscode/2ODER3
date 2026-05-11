@@ -80,8 +80,6 @@ class ReactionsController extends Controller
       optional: [],
     );
 
-    // pdie($this->params);
-
     /**
      * Delete the reaction in one run or return an error, if no
      * reaction exists here with the given id.
@@ -92,8 +90,6 @@ class ReactionsController extends Controller
         "emote" => $this->params->emote,
       ])
       ->first();
-
-    // pdie($Reaction);
 
     if (!$Reaction)
       return error("Kein Log");

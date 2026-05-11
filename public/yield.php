@@ -62,7 +62,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 </head>
 
 <body toggled="true" initialized="false" mobile="false"
-  style="background-image:url(/colors.svg);">
+  style="background-image:url(/colors.svg);" cinema-mode>
 
   <ajax-response></ajax-response>
 

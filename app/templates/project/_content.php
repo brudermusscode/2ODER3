@@ -52,7 +52,18 @@ $video_path = "/data/videos";
         <video-toggle>
           <mi></mi>
         </video-toggle>
+
         <video-toolbar>
+          <buffer>
+            <div smol primary class="spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </buffer>
           <vt-duration-track-wrapper>
             <contains>
               <vt-duration-track></vt-duration-track>
@@ -164,7 +175,7 @@ $video_path = "/data/videos";
 
     ?>
 
-    <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol gap=smol>
+    <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol jucsb gap=smol>
       <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
         <div background=slight-dark rounded=mid flone>
           <?php include TEMPLATE . "/global/_loader.html" ?>

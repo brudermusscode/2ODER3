@@ -35,17 +35,19 @@ ob_start(); ?>
   </div>
 </div>
 
-<comments-top-bar fl alic gap=smol pinline12>
-  <p text smoler ttup bold slight>Bemerkungen</p>
-</comments-top-bar>
+<div fl fldircol gap=smoler>
+  <comments-top-bar fl alic gap=smol pinline12>
+    <p text smoler ttup bold slight>Bemerkungen</p>
+  </comments-top-bar>
 
-<?php
+  <?php
 
-foreach ($SelectedLog->comments->sortByDesc("created_at") as $Comment) :
-  include TEMPLATE . "/comment/_comment.php";
-endforeach;
+  foreach ($SelectedLog->comments->sortByDesc("created_at") as $Comment) :
+    include TEMPLATE . "/comment/_comment.php";
+  endforeach;
 
-?>
+  ?>
+</div>
 
 <composer-contain>
   <composer>

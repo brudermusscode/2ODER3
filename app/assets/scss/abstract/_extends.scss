@@ -40,3 +40,7 @@ $window-border-radius: 32px;
   height: 100%;
   width: 100%;
 }
+
+[cover-full] {
+  @extend .cover-full;
+}
