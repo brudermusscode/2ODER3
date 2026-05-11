@@ -46,6 +46,8 @@ video-wrapper {
   }
 
   &[inactive] {
+    cursor: none;
+
     video-top-toolbar,
     video-toggle {
       opacity: 0;

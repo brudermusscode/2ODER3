@@ -6,6 +6,7 @@ let __buffer_timeout = null;
 let __buffer_timeout_ms = 2000;
 let __buffering = false;
 let __waiting = false;
+let __ui_shown = true;
 
 let __check_actual_playback = null;
 
@@ -30,11 +31,10 @@ export const start = (wrapper) => {
 
   // Manipulate the duration track on running video.
   video.addEventListener("timeupdate", () => {
-    console.log("time updated…");
-
     __waiting = false;
 
     if (__buffering) release_buffer(wrapper);
+    if (__ui_shown) hide_ui_w_timeout(wrapper);
 
     progress = (video.currentTime / video.duration) * 100;
     track.style.width = `${progress}%`;
@@ -177,6 +177,13 @@ const cinema_mode = () => {
 };
 
 const hide_ui_w_timeout = (wrapper) => {
+  console.log("hiding ui");
+  if (!__ui_shown) return;
+
+  console.log("hiding ui acrually");
+
+  __ui_shown = false;
+
   __hide_ui_timeout = setTimeout(() => {
     wrapper.setAttribute("inactive", "");
   }, __hide_ui_timeout_ms);
@@ -184,6 +191,7 @@ const hide_ui_w_timeout = (wrapper) => {
 
 const show_ui = (wrapper) => {
   clearTimeout(__hide_ui_timeout);
+  __ui_shown = true;
   wrapper.removeAttribute("inactive");
 };
 
