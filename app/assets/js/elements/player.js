@@ -171,8 +171,10 @@ const fullscreen = (wrapper) => {
 const cinema_mode = () => {
   if (document.body.hasAttribute("cinema-mode")) {
     document.body.removeAttribute("cinema-mode");
+    localStorage.removeItem("__player_cinema_mode");
   } else {
     document.body.setAttribute("cinema-mode", "");
+    localStorage.setItem("__player_cinema_mode", true);
   }
 };
 
@@ -200,6 +202,9 @@ const init = (wrapper) => {
   let volume = localStorage.getItem("__player_volume") ?? DEFAULT_VOLUME;
 
   set_volume(wrapper, volume);
+
+  if (localStorage.getItem("__player_cinema_mode"))
+    document.body.setAttribute("cinema-mode", "");
 };
 
 $(function () {
