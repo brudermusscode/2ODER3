@@ -117,7 +117,7 @@ class Visitor extends Bruder
   {
 
     # Nothing to do if there is a color already.
-    if ($this->color) return true;
+    if ($this->color && !is_numeric($this->color)) return true;
 
     $this->color = self::$colors[array_rand(self::$colors)];
     $this->save();

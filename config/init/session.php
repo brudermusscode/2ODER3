@@ -38,10 +38,11 @@ if (!$CurrentVisitor) {
    *
    * @var Visitor
    */
-  $CurrentVisitor = Visitor::where("ip", $remote_address)->first()
+  $CurrentVisitor =
+    Visitor::where("ip", $remote_address)->first()
     ?? Visitor::create([
       "ip" => $remote_address,
-      "color" => array_rand(Visitor::$colors),
+      "color" => Visitor::$colors[array_rand(Visitor::$colors)],
     ]);
 }
 
