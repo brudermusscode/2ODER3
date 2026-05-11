@@ -25,9 +25,6 @@ body {
         width: 100%;
         border-radius: 0;
       }
-
-      vt-duration-track-wrapper contains {
-      }
     }
   }
 }
@@ -96,14 +93,16 @@ video-wrapper {
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    height: 4.2em;
-    width: 4.2em;
+    height: 4.8em;
+    width: 4.8em;
     border-radius: 50%;
     z-index: 1;
     transition:
       scale 0.6s $cubic,
       opacity 0.2s linear;
-    background: $video-tools-background;
+    // background: $video-tools-background;
+    background: $primary;
+    border: 1px solid rgba(255, 255, 255, 0.24);
 
     &:hover {
       scale: 1.08;
@@ -121,12 +120,13 @@ video-wrapper {
     z-index: 2;
 
     $video-volume-border-radius: 32px;
+    $video-top-toolbar-option-size: 56px;
 
     volume {
       position: relative;
       display: block;
-      height: 62px;
-      width: 62px;
+      height: $video-top-toolbar-option-size;
+      width: $video-top-toolbar-option-size;
       border-radius: $video-volume-border-radius;
       background: $video-tools-background;
       cursor: pointer;
@@ -142,9 +142,11 @@ video-wrapper {
         mi::after {
           width: calc(100% + 4px);
           opacity: 1;
+          background: $red;
         }
 
         mi::before {
+          color: $red;
           content: "volume_up";
         }
       }
@@ -177,7 +179,7 @@ video-wrapper {
         opacity: 0;
         top: 50%;
         left: 50%;
-        margin-top: 8px;
+        margin-top: 6px;
         translate: -50% -50%;
         height: 8px;
         width: 0%;
@@ -191,8 +193,8 @@ video-wrapper {
 
       mi::before {
         display: block;
-        margin-top: 14px;
-        font-size: 32px;
+        margin-top: 12px;
+        font-size: 28px;
         content: "volume_up";
       }
 
@@ -225,8 +227,8 @@ video-wrapper {
     fullscreen {
       cursor: pointer;
       display: block;
-      height: 62px;
-      width: 62px;
+      height: $video-top-toolbar-option-size;
+      width: $video-top-toolbar-option-size;
       position: relative;
       border-radius: 50%;
       display: flex;
@@ -241,7 +243,7 @@ video-wrapper {
       }
 
       mi {
-        font-size: 32px;
+        font-size: 28px;
       }
     }
   }
@@ -250,7 +252,7 @@ video-wrapper {
     position: absolute;
     bottom: 12px;
     left: 12px;
-    width: calc(100% - 2 * 12px);
+    width: calc(100% - 2 * 18px);
     display: flex;
     justify-content: stretch;
     align-items: center;
@@ -261,7 +263,7 @@ video-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: -40px - 16px;
+      margin-left: -40px - 8px;
       height: 40px;
       width: 40px;
       opacity: 0;
