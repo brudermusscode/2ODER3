@@ -177,9 +177,9 @@ $video_path = "/data/videos";
 
     <comments <?= $Comments->count() ? "" : "is-empty" ?> fl fldircol jucsb gap=smol>
       <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
-        <div background=slight-dark rounded=mid flone>
+        <loading flone>
           <?php include TEMPLATE . "/global/_loader.html" ?>
-        </div>
+        </loading>
       </get-content>
     </comments>
 

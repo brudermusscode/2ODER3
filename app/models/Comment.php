@@ -81,4 +81,12 @@ class Comment extends Bruder
   {
     return $this->belongsTo(Log::class);
   }
+
+  /**
+   * @return Collection<Report>
+   */
+  public function reports()
+  {
+    return $this->hasMany(Report::class, "reference_id", "id");
+  }
 }

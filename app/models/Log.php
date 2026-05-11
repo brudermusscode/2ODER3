@@ -8,6 +8,10 @@ use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Media\Video;
 use FFMpeg\FFProbe\DataMapping\Format;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Format as InterventionImageFormat;
+
 
 class Log extends Bruder
 {
@@ -176,6 +180,7 @@ class Log extends Bruder
     $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
     $file_name = $microtime . "." . $extension;
     $final_path = $save_path . "/" . $file_name;
+    $final_thumb_path = "$thumb_path/$thumb_name";
 
     try {
 
@@ -205,7 +210,13 @@ class Log extends Bruder
         $duration < 20 => 6,
         default => 20,
       }))
-        ->save("$thumb_path/$thumb_name");
+        ->save($final_thumb_path);
+
+      # Decrease quality of image.
+      $ImageManager = ImageManager::usingDriver(GdDriver::class);
+      $Image = $ImageManager->decodePath($final_thumb_path);
+      $EncodedImage = $Image->encodeUsingFormat(InterventionImageFormat::WEBP, quality: 80);
+      $EncodedImage->save($final_thumb_path);
 
       # ? thumb_name
       $this->thumb_name = $thumb_name;

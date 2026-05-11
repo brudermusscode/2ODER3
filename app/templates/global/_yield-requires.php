@@ -6,7 +6,8 @@
 <!-- Javascript -->
 <script src="<?= SCRIPT . "/jquery371.js" ?>"></script>
 <script src="<?= SCRIPT . "/utility.js" ?>"></script>
-<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.14/dist/dotlottie-wc.js"
+  type="module"></script>
 
 <script>
   let __page = {

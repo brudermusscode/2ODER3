@@ -104,7 +104,8 @@ mbutton {
      * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
      */
   &[size="std"],
-  &:not([size]) {
+  &[std],
+  &:not([smol], [std], [stdplus], [midler], [mid], [wide]) {
     height: $mbutton-std-size;
     max-height: $mbutton-std-size;
     min-height: $mbutton-std-size;
@@ -159,209 +160,211 @@ mbutton {
     }
   }
 
-  &[size] {
-    &[size="smol"] {
-      height: $mbutton-smol-size;
-      max-height: $mbutton-smol-size;
-      min-height: $mbutton-smol-size;
+  &[size="smol"],
+  &[smol] {
+    height: $mbutton-smol-size;
+    max-height: $mbutton-smol-size;
+    min-height: $mbutton-smol-size;
 
-      i,
-      mi {
-        font-size: $font-size-std;
-      }
+    i,
+    mi {
+      font-size: $font-size-std;
+    }
 
-      &:not([icon-only]) {
-        padding-inline: 12px;
-      }
+    &:not([icon-only]) {
+      padding-inline: 12px;
+    }
 
-      &[has-icon]:not([icon-only]) {
-        display: flex;
-        gap: 2px;
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 2px;
 
-        &[has-icon="left"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-smol-size;
-              min-width: $mbutton-smol-size;
-            }
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-smol-size;
+            min-width: $mbutton-smol-size;
           }
-
-          padding-inline: 4px 12px;
         }
 
-        &[has-icon="right"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-smol-size;
-              min-width: $mbutton-smol-size;
-            }
-          }
-
-          padding-inline: 12px 4px;
-        }
+        padding-inline: 4px 12px;
       }
 
-      &[icon-only] {
-        width: $mbutton-smol-size;
-        max-width: $mbutton-smol-size;
-        min-width: $mbutton-smol-size;
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-smol-size;
+            min-width: $mbutton-smol-size;
+          }
+        }
+
+        padding-inline: 12px 4px;
       }
     }
 
-    &[size="std+"],
-    &[size="midler"] {
-      height: $mbutton-std-plus-size;
-      max-height: $mbutton-std-plus-size;
-      min-height: $mbutton-std-plus-size;
+    &[icon-only] {
+      width: $mbutton-smol-size;
+      max-width: $mbutton-smol-size;
+      min-width: $mbutton-smol-size;
+    }
+  }
 
-      i:not([size]),
-      mi:not([size]) {
-        font-size: $font-size-mid;
-      }
+  &[size="stdplus"],
+  &[size="midler"],
+  &[midler] {
+    height: $mbutton-std-plus-size;
+    max-height: $mbutton-std-plus-size;
+    min-height: $mbutton-std-plus-size;
 
-      &:not([icon-only]) {
-        padding-inline: 24px;
-      }
+    i:not([size]),
+    mi:not([size]) {
+      font-size: $font-size-mid;
+    }
 
-      &[has-icon]:not([icon-only]) {
-        display: flex;
-        gap: 8px;
+    &:not([icon-only]) {
+      padding-inline: 24px;
+    }
 
-        &[has-icon="left"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-std-plus-size;
-              min-width: $mbutton-std-plus-size;
-            }
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 8px;
+
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-std-plus-size;
+            min-width: $mbutton-std-plus-size;
           }
-
-          padding-inline: 12px 24px;
         }
 
-        &[has-icon="right"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-std-plus-size;
-              min-width: $mbutton-std-plus-size;
-            }
+        padding-inline: 12px 24px;
+      }
+
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-std-plus-size;
+            min-width: $mbutton-std-plus-size;
           }
-
-          padding-inline: 24px 12px;
         }
-      }
 
-      &[icon-only]:not([has-icon]) {
-        width: $mbutton-std-plus-size;
-        max-width: $mbutton-std-plus-size;
-        min-width: $mbutton-std-plus-size;
-        padding: 0;
-      }
-
-      &[has-image] {
-        padding-left: 4px;
-        gap: 8px;
-      }
-
-      &[image-only] {
-        padding: 4px;
-        gap: 0;
+        padding-inline: 24px 12px;
       }
     }
 
-    &[size="mid"] {
-      height: $mbutton-mid-size;
-      max-height: $mbutton-mid-size;
-      min-height: $mbutton-mid-size;
+    &[icon-only]:not([has-icon]) {
+      width: $mbutton-std-plus-size;
+      max-width: $mbutton-std-plus-size;
+      min-width: $mbutton-std-plus-size;
+      padding: 0;
+    }
 
-      img {
-        height: $font-size-wide;
-      }
+    &[has-image] {
+      padding-left: 4px;
+      gap: 8px;
+    }
 
-      i,
-      mi {
-        font-size: $font-size-mid;
-      }
+    &[image-only] {
+      padding: 4px;
+      gap: 0;
+    }
+  }
 
-      &:not([icon-only]) {
-        padding-inline: 28px;
-      }
+  &[size="mid"],
+  &[mid] {
+    height: $mbutton-mid-size;
+    max-height: $mbutton-mid-size;
+    min-height: $mbutton-mid-size;
 
-      &[has-icon]:not([icon-only]) {
-        display: flex;
-        gap: 8px;
+    img {
+      height: $font-size-wide;
+    }
 
-        &[has-icon="left"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-mid-size;
-              min-width: $mbutton-mid-size;
-            }
+    i,
+    mi {
+      font-size: $font-size-mid;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 28px;
+    }
+
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 8px;
+
+      &[has-icon="left"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-mid-size;
+            min-width: $mbutton-mid-size;
           }
-
-          padding-inline: 20px 28px;
         }
 
-        &[has-icon="right"] {
-          &[show-text-active] {
-            &:not([active]) {
-              padding-inline: 0;
-              width: $mbutton-mid-size;
-              min-width: $mbutton-mid-size;
-            }
-          }
-
-          padding-inline: 28px 20px;
-        }
+        padding-inline: 20px 28px;
       }
 
-      &[icon-only] {
-        width: $mbutton-mid-size;
-        max-width: $mbutton-mid-size;
-        min-width: $mbutton-mid-size;
+      &[has-icon="right"] {
+        &[show-text-active] {
+          &:not([active]) {
+            padding-inline: 0;
+            width: $mbutton-mid-size;
+            min-width: $mbutton-mid-size;
+          }
+        }
+
+        padding-inline: 28px 20px;
       }
     }
 
-    &[size="wide"] {
-      height: $mbutton-wide-size;
-      max-height: $mbutton-wide-size;
-      min-height: $mbutton-wide-size;
+    &[icon-only] {
+      width: $mbutton-mid-size;
+      max-width: $mbutton-mid-size;
+      min-width: $mbutton-mid-size;
+    }
+  }
 
-      &:not([rounded]) {
-        border-radius: 24px;
+  &[size="wide"],
+  &[wide] {
+    height: $mbutton-wide-size;
+    max-height: $mbutton-wide-size;
+    min-height: $mbutton-wide-size;
+
+    &:not([rounded]) {
+      border-radius: 24px;
+    }
+
+    i,
+    mi {
+      font-size: 32px;
+    }
+
+    &:not([icon-only]) {
+      padding-inline: 38px;
+    }
+
+    &[has-icon]:not([icon-only]) {
+      display: flex;
+      gap: 10px;
+
+      &[has-icon="left"] {
+        padding-inline: 28px 38px;
       }
 
-      i,
-      mi {
-        font-size: 32px;
+      &[has-icon="right"] {
+        padding-inline: 38px 28px;
       }
+    }
 
-      &:not([icon-only]) {
-        padding-inline: 38px;
-      }
-
-      &[has-icon]:not([icon-only]) {
-        display: flex;
-        gap: 10px;
-
-        &[has-icon="left"] {
-          padding-inline: 28px 38px;
-        }
-
-        &[has-icon="right"] {
-          padding-inline: 38px 28px;
-        }
-      }
-
-      &[icon-only] {
-        width: $mbutton-wide-size;
-        max-width: $mbutton-wide-size;
-        min-width: $mbutton-wide-size;
-      }
+    &[icon-only] {
+      width: $mbutton-wide-size;
+      max-width: $mbutton-wide-size;
+      min-width: $mbutton-wide-size;
     }
   }
 

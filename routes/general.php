@@ -57,3 +57,8 @@ $Router->post("/reaction/delete", "reaction/delete", return: "JSON");
 
 # ? Comments
 $Router->post("/comment/create", "comment/create", return: "JSON");
+$Router->post("/comment/delete", "comment/delete", return: "JSON");
+
+# ? Report
+$Router->get("/report/new", "report/new", return: "JSON");
+$Router->post("/report/create", "report/create", return: "JSON");

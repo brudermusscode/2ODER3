@@ -39,7 +39,7 @@ class Time
       if ($diff->$key)
         return $diff->$key . ($key == "i" ? "min" : ($key == "s" ? "sec" : $key)) . ($full ? " her" : "");
 
-    return 'just now';
+    return 'gerade eben';
   }
 
   /**

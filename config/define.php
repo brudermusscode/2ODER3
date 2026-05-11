@@ -32,6 +32,12 @@ define("JSON", 1);
 define("HTML", 2);
 define("BOOLER", 3);
 
+# ? Requesting
+define("OK", success());
+define("SUCCESS", success());
+define("ERROR", error());
+define("NEIN", error());
+
 /**
  * Templates.
  */

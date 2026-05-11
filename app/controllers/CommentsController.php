@@ -35,14 +35,12 @@ class CommentsController extends Controller
   public function update()
   {
 
-    return error();
+    return NEIN;
 
     $this->validate_params(
       strict: ["id", "type", "emote"],
       optional: [],
     );
-
-    return error();
 
     return $Reaction->edit($this->params);
   }
@@ -58,8 +56,15 @@ class CommentsController extends Controller
       optional: [],
     );
 
-    return error();
+    /**
+     * @var ?Comment
+     */
+    $Comment = CURRENT_VISITOR->comments()
+      ->where("id", $this->params->id)
+      ->first();
 
-    return success();
+    $Comment?->delete();
+
+    return OK;
   }
 }

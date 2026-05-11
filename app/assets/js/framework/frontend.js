@@ -217,6 +217,8 @@ export const get_content = () => {
   elements.forEach((c) => {
     from = c.getAttribute("from");
 
+    // return;
+
     if (from)
       $.ajax({
         url: from,

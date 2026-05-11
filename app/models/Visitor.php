@@ -94,7 +94,7 @@ class Visitor extends Bruder
   ];
 
   /**
-   * @return ?Collection<Reaction>
+   * @return Collection<Reaction>
    */
   public function reactions()
   {
@@ -102,13 +102,28 @@ class Visitor extends Bruder
   }
 
   /**
-   * @return ?Collection<View>
+   * @return Collection<View>
    */
   public function views()
   {
     return $this->hasMany(View::class);
   }
 
+  /**
+   * @return Collection<Comment>
+   */
+  public function comments()
+  {
+    return $this->hasMany(Comment::class);
+  }
+
+  /**
+   * @return Collection<Report>
+   */
+  public function reports()
+  {
+    return $this->hasMany(Report::class);
+  }
 
   /**
    * @return true

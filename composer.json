@@ -16,7 +16,8 @@
     "laravel/serializable-closure": "^2.0",
     "paragonie/constant_time_encoding": "^3.0",
     "dev-kraken/env-validator": "^1.0",
-    "php-ffmpeg/php-ffmpeg": "^1.4"
+    "php-ffmpeg/php-ffmpeg": "^1.4",
+    "intervention/image": "^4.0"
   },
   "autoload": {
     "files": [

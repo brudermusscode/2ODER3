@@ -52,9 +52,9 @@ ob_start(); ?>
 <composer-contain>
   <composer>
     <form data-action="comment:create" fl alic gap=smol+>
-      <div fl aliend flone gap=smol+ pr10>
+      <div fl aliend flone gap=smol+ pr14>
         <textarea auto-resize rows=1 flone name=comment placeholder="Was denkst du?"></textarea>
-        <mbutton mb10 size=std background=green icon-only submit-closest>
+        <mbutton mb14 size=std background=green icon-only submit-closest>
           <mi>keyboard_return</mi>
         </mbutton>
       </div>
