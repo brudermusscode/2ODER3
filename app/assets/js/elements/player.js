@@ -16,7 +16,7 @@ let __check_actual_playback = null;
  *
  * @param {HTMLElement} wrapper
  */
-export const start = (wrapper) => {
+const start = (wrapper) => {
   let video = wrapper.find("video");
 
   if (!wrapper.hasAttribute("has-played"))
@@ -82,7 +82,7 @@ export const start = (wrapper) => {
  *
  * @param {HTMLElement} wrapper
  */
-export const stop = (wrapper) => {
+const stop = (wrapper) => {
   let video = wrapper.find("video");
 
   wrapper.deactivate();
@@ -150,7 +150,7 @@ const release_buffer = (wrapper) => {
  * @param {float} sec
  * @returns
  */
-export const set_time = (wrapper, sec) => {
+const set_time = (wrapper, sec) => {
   let video = wrapper.find("video");
 
   if (sec >= video.duration) return (video.currentTime = video.duration);
@@ -164,7 +164,7 @@ export const set_time = (wrapper, sec) => {
  *
  * @param {HTMLElement} wrapper
  */
-export const mute = (wrapper) => {
+const mute = (wrapper) => {
   let video = wrapper.find("video");
   let volume = wrapper.find("volume");
   let track = volume.find("volume-track");
@@ -179,7 +179,7 @@ export const mute = (wrapper) => {
  *
  * @param {HTMLElement} wrapper
  */
-export const unmute = (wrapper) => {
+const unmute = (wrapper) => {
   let video = wrapper.find("video");
   let volume = wrapper.find("volume");
 
@@ -192,7 +192,7 @@ export const unmute = (wrapper) => {
  * @param {HTMLElement} wrapper
  * @returns {bool}
  */
-export const is_muted = (wrapper) => {
+const is_muted = (wrapper) => {
   return wrapper.find("volume").hasAttribute("muted");
 };
 
@@ -202,7 +202,7 @@ export const is_muted = (wrapper) => {
  * @param {HTMLElement} wrapper
  * @param {float} volume <= 1.0 && >= 0.0
  */
-export const set_volume = (wrapper, volume) => {
+const set_volume = (wrapper, volume) => {
   let track = wrapper.find("volume volume-track");
   let volume = Number(volume);
 
@@ -299,10 +299,9 @@ $(function () {
   //
 
   let video_wrapper = document.find("video-wrapper");
+  let __mouse_down = false;
 
   init(video_wrapper);
-
-  let __mouse_down = false;
 
   /**
    * Tell UI the mouse is currently being pressed down.
