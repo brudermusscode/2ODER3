@@ -31,6 +31,7 @@ content[log] {
       translate: calc(($comments-width - 32px)) 0;
       margin-left: calc(-1 * ($comments-width - 32px));
       overflow: visible;
+      padding-bottom: calc($composer-height + $main-distance + $gap-smol);
 
       &:hover {
         [panel-open] {
