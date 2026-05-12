@@ -21,7 +21,7 @@ ob_start(); ?>
 
 <comments-top-bar fl alic jucsb gap=smol pinline10>
   <p text smoler ttup bold slight>Bemerkungen</p>
-  <mbutton panel-close std icon-only hoverable>
+  <mbutton panel-close=comments std icon-only hoverable>
     <mi>right_panel_close</mi>
   </mbutton>
 </comments-top-bar>
@@ -43,7 +43,7 @@ ob_start(); ?>
 </div>
 
 <div fl fldircol gap=smoler>
-  <div panel-open fl alic jucc>
+  <div panel-open=comments fl alic jucc>
     <mi mid>right_panel_open</mi>
   </div>
 

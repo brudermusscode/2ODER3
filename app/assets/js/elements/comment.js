@@ -22,25 +22,30 @@ $(function () {
   //
   //
 
-  // Set the comments panel to collapsed state, if it is saved in
-  // localStorage.
+  // ? Panel: Comments
   if (localStorage.getItem("panel-comments-collapsed"))
-    document.find("comments[panel]")?.setAttribute("collapsed", true);
+    document
+      .find("content[log]")
+      ?.setAttribute("panel-comments-collapsed", true);
 
   /**
    * @event click
    * @this {HTMLElement}
    */
   $(document).on("click", "[panel-open], [panel-close]", function (e) {
-    let panel = this.closest("[panel]");
+    let content = this.closest("content");
+    let panel =
+      this.getAttribute("panel-open") ?? this.getAttribute("panel-close");
 
-    if (!panel) return;
+    if (!content || !panel) return;
 
-    if (panel.hasAttribute("collapsed")) {
-      panel.removeAttribute("collapsed");
+    let attribute = `panel-${panel}-collapsed`;
+
+    if (content.hasAttribute(attribute)) {
+      content.removeAttribute(attribute);
       localStorage.removeItem("panel-comments-collapsed");
     } else {
-      panel.setAttribute("collapsed", "");
+      content.setAttribute(attribute, "");
       localStorage.setItem("panel-comments-collapsed", true);
     }
   });

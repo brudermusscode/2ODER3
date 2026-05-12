@@ -2,7 +2,6 @@
 
 use Bruder\Time\Time;
 use Bruder\Model\Log;
-use Bruder\Model\Comment;
 
 /**
  * @var Log $SelectedLog
@@ -12,7 +11,7 @@ $video_path = "/data/videos";
 
 ?>
 
-<div fl alistart gap=smol+>
+<content log>
 
   <?php if (!$Logs->count()) : ?>
 
@@ -166,6 +165,8 @@ $video_path = "/data/videos";
       </div>
     </current-log>
 
+
+
     <?php
 
     /**
@@ -175,7 +176,8 @@ $video_path = "/data/videos";
 
     ?>
 
-    <comments <?= $Comments->count() ? "" : "is-empty" ?> panel fl fldircol jucsb gap=smol>
+    <comments panel=comments fl fldircol jucsb gap=smol
+      <?= $Comments->count() ? "" : "is-empty" ?>>
       <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
         <loading flone>
           <?php include TEMPLATE . "/global/_loader.html" ?>
@@ -184,5 +186,4 @@ $video_path = "/data/videos";
     </comments>
 
   <?php endif;  ?>
-
-</div>
+</content>

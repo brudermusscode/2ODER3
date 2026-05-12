@@ -3,7 +3,7 @@
 use Illuminate\Support\Collection;
 use Bruder\Model\Log;
 use Bruder\Model\Project;
-use Bruder\Model\Visitor;
+use Bruder\Model\Comment;
 
 /**
  * @var int
@@ -42,4 +42,6 @@ else :
 
   include __DIR__ . "/_content.php";
 
-endif;
+?>
+
+<?php endif;
