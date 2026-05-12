@@ -26,10 +26,13 @@ comments {
   scrollbar-width: 0px;
   margin-top: -$header-height;
   padding-bottom: $main-distance;
-  transition: margin-right 0.6s $cubic;
+  transition:
+    translate 0.6s $cubic,
+    margin 0.6s $cubic;
 
   &[collapsed] {
-    margin-right: calc(-1 * ($comments-width - 32px));
+    translate: calc(($comments-width - 32px)) 0;
+    margin-left: calc(-1 * ($comments-width - 32px));
     overflow: visible;
 
     &:hover {
@@ -90,21 +93,11 @@ comments {
 
   &[is-empty] {
     justify-content: stretch;
-    padding-top: $header-height;
-
-    comments-top-bar {
-      display: none;
-    }
 
     [none] {
       display: flex;
       flex: 1;
     }
-
-    // composer {
-    //   top: initial;
-    //   bottom: 0;
-    // }
   }
 
   loading {

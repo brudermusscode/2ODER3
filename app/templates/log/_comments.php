@@ -19,6 +19,13 @@ if (!$SelectedLog)
 
 ob_start(); ?>
 
+<comments-top-bar fl alic jucsb gap=smol pinline10>
+  <p text smoler ttup bold slight>Bemerkungen</p>
+  <mbutton panel-close std icon-only hoverable>
+    <mi>right_panel_close</mi>
+  </mbutton>
+</comments-top-bar>
+
 <div none fl alic jucc window>
   <div>
     <div fl fldircol alic>
@@ -39,13 +46,6 @@ ob_start(); ?>
   <div panel-open fl alic jucc>
     <mi mid>right_panel_open</mi>
   </div>
-
-  <comments-top-bar fl alic jucsb gap=smol pinline10>
-    <p text smoler ttup bold slight>Bemerkungen</p>
-    <mbutton panel-close std icon-only hoverable>
-      <mi>right_panel_close</mi>
-    </mbutton>
-  </comments-top-bar>
 
   <?php
 
