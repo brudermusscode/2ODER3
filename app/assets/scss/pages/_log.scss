@@ -19,43 +19,14 @@ loading {
 comments {
   position: sticky;
   top: 0;
-  // z-index: 101;
   width: $comments-width;
   max-height: 100vh;
   min-height: 100vh;
   overflow: auto;
   scrollbar-width: 0px;
   margin-top: -$header-height;
-  // padding-top: $header-height;
   padding-bottom: $main-distance;
   transition: margin-right 0.6s $cubic;
-
-  [panel-open] {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: $main-distance + 32px;
-    z-index: 10;
-    cursor: pointer;
-
-    mi {
-      height: 1.8em;
-      width: 2em;
-      border-radius: 12px 0 0 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition:
-        padding-right 0.6s $cubic,
-        width 0.6s $cubic,
-        margin-left 0.6s $cubic;
-
-      @extend .window;
-    }
-  }
 
   &[collapsed] {
     margin-right: calc(-1 * ($comments-width - 32px));
@@ -142,6 +113,37 @@ comments {
     margin-top: $header-height;
   }
 
+  [panel-open] {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: $main-distance + 32px;
+    z-index: 10;
+    cursor: pointer;
+
+    mi {
+      height: 1.8em;
+      width: 2em;
+      border-radius: 12px 0 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        padding-right 0.6s $cubic,
+        width 0.6s $cubic,
+        margin-left 0.6s $cubic;
+
+      @extend .window;
+    }
+  }
+
+  [panel-close] {
+    display: flex;
+  }
+
   [none] {
     display: none;
     // margin-bottom: $composer-height;
@@ -154,14 +156,6 @@ comments {
     margin-top: $header-height;
     z-index: 2;
     transition: opacity 0.2s linear;
-
-    [panel-open] {
-      display: none;
-    }
-
-    [panel-close] {
-      display: flex;
-    }
   }
 
   composer-contain {
