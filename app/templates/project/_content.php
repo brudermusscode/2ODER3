@@ -176,7 +176,7 @@ $video_path = "/data/videos";
 
     ?>
 
-    <comments panel=comments fl fldircol jucsb gap=smol
+    <comments panel=comments fl fldircol jucsb alistretch jucstretch gap=smol
       <?= $Comments->count() ? "" : "is-empty" ?>>
       <get-content from="/get/log/comments?log_id=<?= $SelectedLog->id ?>" fl alistretch>
         <loading flone>

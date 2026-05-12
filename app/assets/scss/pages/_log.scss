@@ -72,6 +72,7 @@ content[log] {
       }
 
       composer-contain {
+        position: absolute;
         bottom: $main-distance;
       }
 
@@ -124,6 +125,10 @@ comments {
     [none] {
       display: flex;
       flex: 1;
+    }
+
+    comments-contain {
+      display: none;
     }
   }
 
@@ -188,30 +193,8 @@ comments {
     transition: none;
   }
 
-  composer {
-    @extend .window;
-
+  comments-contain {
     display: block;
-    background: rgba(255, 255, 255, 0.12);
-    // position: absolute;
-    width: 100%;
-    // top: calc(-1 * ($composer-height));
-
-    &[active] {
-      box-shadow: var(--mio-theme-elevation-3);
-    }
-
-    textarea {
-      background: transparent;
-      border: none;
-      outline: none;
-      height: $composer-height;
-      padding-inline: 24px 0px;
-      color: white;
-      resize: none;
-      padding-block: 20px;
-      overflow: hidden;
-    }
   }
 
   comment {
@@ -240,6 +223,32 @@ comments {
           opacity: 1;
         }
       }
+    }
+  }
+
+  composer {
+    @extend .window;
+
+    display: block;
+    background: rgba(255, 255, 255, 0.12);
+    // position: absolute;
+    width: 100%;
+    // top: calc(-1 * ($composer-height));
+
+    &[active] {
+      box-shadow: var(--mio-theme-elevation-3);
+    }
+
+    textarea {
+      background: transparent;
+      border: none;
+      outline: none;
+      height: $composer-height;
+      padding-inline: 24px 0px;
+      color: white;
+      resize: none;
+      padding-block: 20px;
+      overflow: hidden;
     }
   }
 }

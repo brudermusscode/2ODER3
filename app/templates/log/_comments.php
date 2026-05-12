@@ -19,41 +19,43 @@ if (!$SelectedLog)
 
 ob_start(); ?>
 
-<comments-top-bar fl alic jucsb gap=smol pinline10>
-  <p text smoler ttup bold slight>Bemerkungen</p>
-  <mbutton panel-close=comments std icon-only hoverable>
-    <mi>right_panel_close</mi>
-  </mbutton>
-</comments-top-bar>
-
-<div none fl alic jucc window>
-  <div>
-    <div fl fldircol alic>
-      <div fl alic style="margin-left:-24px;margin-bottom:-8px;">
-        <div style="height:2.8em;width:2.8em;margin-right:-18px;" background=slighter-light circled></div>
-        <div window pblock32 rounded style="max-width:182px;width:182px;"></div>
-      </div>
-      <div fl alic style="margin-left:24px;">
-        <div style="height:2.8em;width:2.8em;margin-right:-18px;" background=slighter-light circled></div>
-        <div window pblock28 rounded style="max-width:182px;width:182px;"></div>
-      </div>
-    </div>
-    <p text slight semibold smol ttup tac mt24>Sei der Erste!</p>
-  </div>
-</div>
-
-<div fl fldircol gap=smoler>
+<div fl fldircol flone gap=smoler>
   <div panel-open=comments fl alic jucc>
     <mi mid>right_panel_open</mi>
   </div>
 
-  <?php
+  <comments-top-bar fl alic jucsb gap=smol pinline10>
+    <p text smoler ttup bold slight>Bemerkungen</p>
+    <mbutton panel-close=comments std icon-only hoverable>
+      <mi>right_panel_close</mi>
+    </mbutton>
+  </comments-top-bar>
 
-  foreach ($SelectedLog->comments->sortByDesc("created_at") as $Comment) :
-    include TEMPLATE . "/comment/_comment.php";
-  endforeach;
+  <div none fl alic jucc window flone>
+    <div>
+      <div fl fldircol alic>
+        <div fl alic style="margin-left:-24px;margin-bottom:-8px;">
+          <div style="height:2.8em;width:2.8em;margin-right:-18px;" background=slighter-light circled></div>
+          <div window pblock32 rounded style="max-width:182px;width:182px;"></div>
+        </div>
+        <div fl alic style="margin-left:24px;">
+          <div style="height:2.8em;width:2.8em;margin-right:-18px;" background=slighter-light circled></div>
+          <div window pblock28 rounded style="max-width:182px;width:182px;"></div>
+        </div>
+      </div>
+      <p text slight semibold smol ttup tac mt24>Sei der Erste!</p>
+    </div>
+  </div>
 
-  ?>
+  <comments-contain fl fldircol gap=smoler>
+    <?php
+
+    foreach ($SelectedLog->comments->sortByDesc("created_at") as $Comment) :
+      include TEMPLATE . "/comment/_comment.php";
+    endforeach;
+
+    ?>
+  </comments-contain>
 </div>
 
 <composer-contain>
