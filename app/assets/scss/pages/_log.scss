@@ -33,8 +33,6 @@ comments {
     overflow: visible;
 
     &:hover {
-      opacity: 1;
-
       [panel-open] {
         mi {
           width: calc(2em + 12px);
