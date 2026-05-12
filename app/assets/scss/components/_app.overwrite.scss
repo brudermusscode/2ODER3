@@ -12,6 +12,7 @@ body {
   min-height: 100vh;
   font-weight: 400;
   transition: none;
+  overflow-x: hidden;
 
   &:before {
     content: "";
@@ -25,8 +26,8 @@ body {
     background: #101012;
     background: linear-gradient(
       0deg,
-      rgba(16, 16, 18, 1) 18%,
-      rgba(16, 16, 18, 0) 100%
+      rgba(0, 0, 0, 1) 18%,
+      rgba(0, 0, 0, 0) 100%
     );
   }
 }

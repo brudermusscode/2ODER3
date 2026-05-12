@@ -36,8 +36,15 @@ ob_start(); ?>
 </div>
 
 <div fl fldircol gap=smoler>
-  <comments-top-bar fl alic gap=smol pinline12>
+  <div panel-open fl alic jucc>
+    <mi mid>right_panel_open</mi>
+  </div>
+
+  <comments-top-bar fl alic jucsb gap=smol pinline10>
     <p text smoler ttup bold slight>Bemerkungen</p>
+    <mbutton panel-close std icon-only hoverable>
+      <mi>right_panel_close</mi>
+    </mbutton>
   </comments-top-bar>
 
   <?php
