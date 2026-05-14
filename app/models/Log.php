@@ -188,6 +188,19 @@ class Log extends Bruder
   }
 
   /**
+   * Programm has evolved and some things around thumbnails have
+   * changed. So I need a function to recreate thumbs for all my
+   * devlogs.
+   *
+   * @return void
+   */
+  public function reacreate_thumbs()
+  {
+    $this->save_thumbs(amount: 3);
+    $this->save();
+  }
+
+  /**
    * @param int $amount
    * @return array string
    */

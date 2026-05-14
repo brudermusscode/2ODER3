@@ -110,10 +110,12 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
         </mbutton>
       </a>
 
-      <?php if (authorized()) : ?>
-        <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
+      <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
 
-        <a href="/log/new">
+      <p text semibold smol><?= CURRENT_VISITOR->nickname ?></p>
+
+      <?php if (authorized()) : ?>
+        <a ml12 href="/log/new">
           <mbutton background=green color=dark size=std icon-only>
             <mi>arrow_upload_ready</mi>
           </mbutton>

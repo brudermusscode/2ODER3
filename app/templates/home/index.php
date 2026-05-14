@@ -1,30 +1,20 @@
 <?php
 
+use Bruder\File\Upload;
 use Illuminate\Support\Collection;
 use Bruder\Model\Log;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver as GdDriver;
-use Intervention\Image\Format;
 
 
 if (CURRENT_VISITOR->id === 1) {
-  $dir = _root() . "/public/data/videos/thumbs";
 
-  foreach (Log::all() as $L) {
-    $fpath = "$dir/$L->thumb_name";
+  # Delete all old thumbs
+  $thumbs = glob(Upload::data_save_path(for: "thumbs") . "/*");
+  foreach ($thumbs as $thumb)
+    unlink($thumb);
 
-    if (!file_exists($fpath))
-      continue;
-
-    $filename_no_ext = explode(".", $L->thumb_name)[0];
-
-    $manager = ImageManager::usingDriver(GdDriver::class);
-    $image = $manager->decodePath($fpath);
-
-    $image->scale(width: 350);
-
-    $encoded = $image->encodeUsingFormat(Format::JPEG, quality: 100);
-    $encoded->save("$dir/$filename_no_ext" . "-350.webp");
+  # Create new thumbs.
+  foreach (Log::all() as $Log) {
+    $Log->reacreate_thumbs();
   }
 }
 
