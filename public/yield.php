@@ -115,10 +115,6 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
       <p text semibold><?= CURRENT_VISITOR->nickname ?></p>
 
       <?php if (authorized()) : ?>
-        <mbutton background=slight-light std request-get="fire:job" data-method=recreate_thumbs reload>
-          Recreate Thumbs
-        </mbutton>
-
         <a href="/log/new">
           <mbutton background=green color=dark size=std icon-only>
             <mi>arrow_upload_ready</mi>
