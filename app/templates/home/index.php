@@ -30,7 +30,7 @@ use Bruder\Model\Project;
         <a fl alic gap=smol href="/project/<?= $Project->id ?>">
           <div background=quadro color=quadro-text rounded=smolplus pinline10 pblock6>
             <p text smol semibold ttup>
-              <strong><?= $Project->logs->count() ?></strong> logs
+              <strong><?= $Project->logs_count ?></strong> logs
             </p>
           </div>
 
