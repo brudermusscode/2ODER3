@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Support\Collection;
 use Bruder\Model\Log;
 use Bruder\Model\Project;
-use Bruder\Model\Comment;
 
 /**
  * @var int
@@ -21,6 +19,7 @@ $log_id = filter_var($GLOBALS["route_param_log_id"] ?? 0, FILTER_VALIDATE_INT);
 $Project = Project::with(["logs" => function ($q) {
   $q->orderBy("created_at", "DESC");
 }])
+  ->withCount("logs")
   ->find($id);
 
 if (!$Project) :

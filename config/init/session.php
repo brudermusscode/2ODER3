@@ -3,29 +3,12 @@
 use Bruder\Application\Cookie;
 use Bruder\Application\Session as SessionManager;
 use Bruder\Http\Request;
-use Bruder\Model\Project;
 use Bruder\Model\Visitor;
 
 /**
  * Initialize a new session.
  */
 new SessionManager;
-
-
-# Set the CurrentProject to 1, the very first one if the user has
-# none set in their session.
-if (!SessionManager::get("CurrentProject") || !SessionManager::get("CurrentProject")?->exists())
-  SessionManager::set(
-    "CurrentProject",
-    Project::with(["logs" => function ($q) {
-      $q->orderBy("created_at", "DESC");
-    }])->find(1)
-  );
-
-$CurrentProject = SessionManager::get("CurrentProject");
-
-global $CurrentProject;
-
 
 # Check if the Visitor is revisiting or a new comer.
 $remote_address = Request::get_remote_address();

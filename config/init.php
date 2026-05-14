@@ -53,3 +53,10 @@ $csrf_token = Utils::create_unique_token(24);
  * been completly initialized.
  */
 define("APP_INIT", true);
+
+/**
+ * Include all opengraph files. These make Model instances
+ * available in all template files.
+ */
+foreach (glob(__DIR__ . "/opengraph/*.php") as $filename)
+  include_once $filename;

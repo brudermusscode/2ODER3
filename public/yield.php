@@ -70,31 +70,43 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
   <header fl alic jucsb scroll-manipulated>
     <div fl alic gap z>
-      <div fl alic gap=smol>
+      <a fl alic gap=smol href="/">
         <logo>
           <picture>
             <img src="/logo.svg" />
           </picture>
         </logo>
         <p text smol ttup><strong>DEV</strong>Log</p>
-      </div>
+      </a>
 
       <div style="height:24px;width:3px;" rounded background=slight-light></div>
 
       <?php
 
+      /**
+       * @var Collection<Project>
+       */
       $Projects = Project::orderBy("created_at", "DESC")->get();
 
       ?>
 
       <option-select>
         <mi stdplus color=tertiary>deployed_code</mi>
-        <current-option><?= $CurrentProject->name ?></current-option>
+        <current-option>
+          <?php if (isset($Project)) : ?>
+            <?= $Project->name ?>
+          <?php else : ?>
+            Projekt wählen
+          <?php endif ?>
+        </current-option>
         <mi midler>arrow_drop_down</mi>
         <options data-action="project:get">
           <p pinline20 pt8 pb6 text smoler ttup semibold color=tertiary>Meine Projekte</p>
           <?php foreach ($Projects as $Project) : ?>
-            <option data-id=<?= $Project->id ?> <?= $CurrentProject->is($Project) ? "active" : "" ?>>
+            <option data-id=<?= $Project->id ?>
+              <?= CURRENT_PAGE === "project" && isset($_GET["id"]) && $_GET["id"] === $Project->id
+                ? "active"
+                : "" ?>>
               <p text><?= $Project->name ?></p>
               <mi></mi>
             </option>
