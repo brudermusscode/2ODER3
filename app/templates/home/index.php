@@ -6,7 +6,7 @@ use Bruder\Model\Project;
 
 ?>
 
-<div fl fldircol gap>
+<div fl fldircol gap pb142>
 
   <?php foreach (
     Project::with(["logs" => function ($q) {
