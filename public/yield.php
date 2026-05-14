@@ -103,7 +103,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
       </option-select>
     </div>
 
-    <div fl alic gap=smol z>
+    <div fl alic gap=smol+ z>
       <a href="https://github.com/brudermusscode" extern target="_blank">
         <mbutton size=std icon-only background=slighter-light>
           <img src="/assets/images/github-white.svg" />
@@ -112,10 +112,14 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
       <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
 
-      <p text semibold smol><?= CURRENT_VISITOR->nickname ?></p>
+      <p text semibold><?= CURRENT_VISITOR->nickname ?></p>
 
       <?php if (authorized()) : ?>
-        <a ml12 href="/log/new">
+        <mbutton background=slight-light std request-get="fire:job" data-method=recreate_thumbs reload>
+          Recreate Thumbs
+        </mbutton>
+
+        <a href="/log/new">
           <mbutton background=green color=dark size=std icon-only>
             <mi>arrow_upload_ready</mi>
           </mbutton>

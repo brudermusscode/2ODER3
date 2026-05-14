@@ -13,6 +13,7 @@ use Bruder\Model\Project;
 
 $Router->get("/not-found", "error/404", title: "Bruder, was geht jetzt?");
 $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
+$Router->get("/fire/job", "job", return: "JSON");
 
 # ? Logs
 $Router->get("/get/log/comments", "log/_comments", return: "JSON");
