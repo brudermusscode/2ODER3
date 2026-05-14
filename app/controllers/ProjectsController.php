@@ -3,7 +3,6 @@
 namespace Bruder\Controller;
 
 use Bruder\Controller\Controller;
-use Bruder\Model\Log;
 use Bruder\Model\Project;
 
 class ProjectsController extends Controller
@@ -28,27 +27,26 @@ class ProjectsController extends Controller
   /**
    * @return string
    */
+  // TODO: update()
   public function update()
   {
 
     $this->validate_params(
       strict: ["id"],
-      optional: ["project_id", "name", "description", "file", "thumb_selected"],
+      optional: ["name", "url", "file"],
     );
 
     $this->authorize();
 
-    /**
-     * @var ?Log
-     */
-    $Log = Log::findOrReturn($this->params->id, "No log");
+    return success();
 
-    return $Log->edit($this->params);
+    // return $Project->edit($this->params);
   }
 
   /**
    * @return string
    */
+  // TODO: delete()
   public function delete()
   {
 
@@ -58,24 +56,6 @@ class ProjectsController extends Controller
     );
 
     $this->authorize();
-
-    /**
-     * @var ?Log
-     */
-    $Log = Log::findOrReturn($this->params->id, "No log");
-
-    # Find video file and delete it.
-    if (file_exists($Log->raw_file_path())) {
-      unlink($Log->raw_file_path());
-
-      for ($i = 1; $i <= $Log->thumb_count; $i++) {
-        $file_path = $Log->save_path("thumbs") . "/" . $Log->raw_file_name() . "_$i";
-        file_exists($file_path . ".webp") ? unlink($file_path . ".webp") : null;
-        file_exists($file_path . "_350.webp") ? unlink($file_path . "_350.webp") : null;
-      }
-    }
-
-    $Log->delete();
 
     return success();
   }
