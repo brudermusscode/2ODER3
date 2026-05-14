@@ -30,6 +30,12 @@ body {
       rgba(0, 0, 0, 0) 100%
     );
   }
+
+  &[cinema-mode] {
+    main {
+      min-height: 2 * 100vh;
+    }
+  }
 }
 
 img {
