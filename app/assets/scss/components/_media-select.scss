@@ -13,6 +13,27 @@ media-select {
   overflow: hidden;
   transition: background 0.4s $cubic;
 
+  &[smol] {
+    border-radius: 28px;
+
+    &:not([filled]) {
+      height: 142px;
+      padding-top: 0;
+      width: 100%;
+    }
+
+    & > mi {
+      left: -24px;
+      bottom: -32px;
+      font-size: 142px;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 28px;
+    }
+  }
+
   &:hover {
     background: $slighterer-light;
   }

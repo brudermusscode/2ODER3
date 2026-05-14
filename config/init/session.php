@@ -70,4 +70,4 @@ if ($CurrentTime->diff($CurrentVisitorLastSeen)->i <= 5)
 global $CurrentVisitor;
 
 
-if (_env("ENVIRONMENT") === "dev") Cookie::set("__admin_key", _env("WEB_ADMIN_KEY"));
+if (_env("ENVIRONMENT") === "dev") Cookie::set("__admin_key", _env("WEB_ADMIN_KEY"), "+2 Months");

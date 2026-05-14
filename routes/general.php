@@ -25,6 +25,8 @@ $Router->post("/log/update", "log/update", return: "JSON");
 $Router->post("/log/delete", "log/delete", return: "JSON");
 
 # ? Projects
+$Router->post("/project/create", "project/create", return: "JSON");
+$Router->get("/project/new", "project/new", title: "Neung Projenkt erstelln");
 $Router->get(
   "/project/:id",
   "project/one",

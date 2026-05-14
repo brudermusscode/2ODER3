@@ -12,14 +12,14 @@ reactions {
   height: 48px;
   width: 48px;
   border-radius: 50%;
-  background: $slighterer-light;
+  background: $slighter-light;
 
   & > mi {
     font-size: 28px;
   }
 
   &:hover {
-    background: $slighter-light;
+    background: $slighterer-light;
   }
 
   &[active] {

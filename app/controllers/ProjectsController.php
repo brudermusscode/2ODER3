@@ -6,7 +6,7 @@ use Bruder\Controller\Controller;
 use Bruder\Model\Log;
 use Bruder\Model\Project;
 
-class LogsController extends Controller
+class ProjectsController extends Controller
 {
 
   /**
@@ -16,13 +16,13 @@ class LogsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["file"],
+      strict: ["name", "url", "file"],
       optional: [],
     );
 
     $this->authorize();
 
-    return (new Log)->new($this->params);
+    return (new Project)->new($this->params);
   }
 
   /**

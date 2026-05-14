@@ -15,7 +15,21 @@ $log_link = "/log/" . $id . "/edit/project";
 ?>
 
 <form data-action="log:finalize">
-  <content log-new>
+  <content log-new fl fldircol gap=smol+>
+    <p text bold smol slight ttup pinline24>Projekt nicht vergessen</p>
+
+
+    <add-new request-get="project:new">
+      <mi>deployed_code</mi>
+      <div fl alic jucsb flone pr18 pb12>
+        <p text midplus semibold>Neues erstellen</p>
+        <mi mid semibold>orders</mi>
+      </div>
+    </add-new>
+
+    <div fl alic jucc pblock12 w100>
+      <mi mid semibold slighter>expand_circle_down</mi>
+    </div>
 
     <choose-option fl fldircol gap=smol+>
       <?php foreach (Project::with("logs")->get() as $Project) :

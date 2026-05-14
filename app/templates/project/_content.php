@@ -55,43 +55,57 @@ $video_path = "/data/videos";
               <p text smol slight><?= $views ?> Aufruf<?= $views > 1 || $views < 1 ? "e" : "" ?></p>
             </div>
 
+            <div fl alic gap=smol+>
+              <reactions-container fl alic gap=smol>
+                <active-reactions fl alic gap=smoler>
+                  <get-content from="/get/log/reactions?log_id=<?= $SelectedLog->id ?>">
+                    <div fl alic gap=smoler>
+                      <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                      <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                      <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                      <div style="height:48px;width:66px;" rounded background=slighter-light></div>
+                    </div>
+                  </get-content>
+                </active-reactions>
 
-            <reactions-container fl alic gap=smol>
-              <active-reactions fl alic gap=smoler>
-                <get-content from="/get/log/reactions?log_id=<?= $SelectedLog->id ?>">
-                  <div fl alic gap=smoler>
-                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
-                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
-                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
-                    <div style="height:48px;width:66px;" rounded background=slighter-light></div>
-                  </div>
-                </get-content>
-              </active-reactions>
+                <reactions>
+                  <mi>add_reaction</mi>
+                  <reactions-choose
+                    data-action="reaction:create"
+                    data-log-id="<?= $SelectedLog->id ?>"
+                    data-type="emote">
+                    <reaction>😃</reaction>
+                    <reaction>🤣</reaction>
+                    <reaction>😍</reaction>
+                    <reaction>🤯</reaction>
+                    <reaction>😭</reaction>
+                    <reaction>🤡</reaction>
+                    <reaction>🤬</reaction>
+                  </reactions-choose>
+                </reactions>
+              </reactions-container>
 
-              <reactions>
-                <mi>add_reaction</mi>
-                <reactions-choose
-                  data-action="reaction:create"
-                  data-log-id="<?= $SelectedLog->id ?>"
-                  data-type="emote">
-                  <reaction>😃</reaction>
-                  <reaction>🤣</reaction>
-                  <reaction>😍</reaction>
-                  <reaction>🤯</reaction>
-                  <reaction>😭</reaction>
-                  <reaction>🤡</reaction>
-                  <reaction>🤬</reaction>
-                </reactions-choose>
-              </reactions>
+              <?php
 
-            </reactions-container>
+              /**
+               * + Editing tools.
+               */
+              if (authorized()) : ?>
+                <div background=slighter-light rounded pblock22 style=width:4px;></div>
+                <a href="/log/<?= $SelectedLog->id ?>/edit">
+                  <mbutton stdplus background=secondary color=secondary-text icon-only>
+                    <mi>edit</mi>
+                  </mbutton>
+                </a>
+              <?php endif ?>
+            </div>
           </div>
 
           <div fl fldircol gap p32 window>
-            <p text mid bold><?= $SelectedLog->name ?? "Ohne Nameee" ?></p>
+            <p text mid bold><?= $SelectedLog->name ?? "<span slight>Kein Name</span>" ?></p>
             <div fl fldircol gap=smol>
               <p text smoler ttup bold slight>Beschreibung</p>
-              <p text smolplus regular><?= $SelectedLog->description ?? "Nichts Beschreibung 😭" ?></p>
+              <p text smolplus regular><?= $SelectedLog->description ?? "<span slight>Nichts Beschreibung 😭</span>" ?></p>
             </div>
           </div>
         </div>

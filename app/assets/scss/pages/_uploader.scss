@@ -63,3 +63,24 @@ progress-bar {
     display: flex;
   }
 }
+
+add-new {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 24px;
+  background: $slighter-light;
+  overflow: hidden;
+  line-height: 1;
+
+  &:hover {
+    background: $slighterer-light;
+  }
+
+  & > mi {
+    font-size: 132px;
+    color: $tertiary;
+    margin-left: -24px;
+    margin-bottom: -32px;
+  }
+}

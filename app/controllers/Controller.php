@@ -42,10 +42,18 @@ class Controller
    */
   public function authorize()
   {
-    $valid =
-      !empty($this->params->__admin_key) && $this->params->__admin_key === _env("WEB_ADMIN_KEY")
-      || Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY");
-    return $valid ?: die(error("Nö Bruder. Einfach nö."));
+
+    # Do'nt forget to add a key to the .env file 😂
+    if (!_env("WEB_ADMIN_KEY")) die(error("Kein Key in der .env Brudi."));
+
+    # Either the transmitted params…
+    $params_have_valid_key = !empty($this->params->__admin_key) && $this->params->__admin_key === _env("WEB_ADMIN_KEY");
+
+    # …or a cookie has to have the matching key.
+    $cookies_have_valid_key = !empty(Cookie::get("__admin_key")) && Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY");
+
+    return $params_have_valid_key || $cookies_have_valid_key
+      ?: die(error("Nö Bruder. Einfach nö."));
   }
 
   /**
@@ -119,5 +127,42 @@ class Controller
     $final->Visitor = CURRENT_VISITOR;
 
     return $final;
+  }
+
+  /**
+   * Get the magic happening! Wizards from waverly Place have been
+   * working on this: This function calls a controller file from a
+   * given file inside a given path and determines the method to
+   * call based on the file name this function is being called in.
+   *
+   * WOW.
+   *
+   * @param $file __FILE__
+   * @param $from __DIR__
+   * @return string Basic JSON return string
+   */
+  public static function call(string $file, string $from)
+  {
+
+    $dir_split = explode("/", $from);
+
+    # Remove all directories before (and including) templates so we
+    # can determine, how deep the Controller file lays.
+    foreach ($dir_split as $key => $dir) {
+      unset($dir_split[$key]);
+      if ($dir === "templates") break;
+    }
+
+    # Build the controller name.
+    $ControllerName = "Bruder\\Controller\\";
+    foreach ($dir_split as $dir) {
+      $ControllerName .= ucfirst($dir);
+    }
+    $ControllerName .= "sController";
+
+    # Get the method name from file name.
+    $method = pathinfo($file, PATHINFO_FILENAME);
+
+    return (new $ControllerName($_POST, $_FILES))->$method();
   }
 }

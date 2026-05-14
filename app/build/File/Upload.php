@@ -28,4 +28,33 @@ class Upload
 
     return $error ? die(error($error, json_encoded: $json_encoded)) : false;
   }
+
+  /**
+   * @return string
+   */
+  public static function data_save_path(string $for = "videos")
+  {
+    $path = _root() . "/public/data" . match ($for) {
+      "identities",
+      "videos" => "/",
+      "thumbs" => "/videos/",
+      default => "",
+    }
+      . $for;
+
+    if (!is_dir($path))
+      mkdir($path, 0777);
+
+    return $path;
+  }
+
+  /**
+   * @param string $path
+   * @return void
+   */
+  public static function clean_up($path)
+  {
+    if (file_exists($path))
+      unlink($path);
+  }
 }

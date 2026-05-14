@@ -5,6 +5,7 @@ namespace Bruder\Model;
 use Bruder\Application\Exception;
 use Bruder\Application\Logger;
 use Bruder\Bruder;
+use Bruder\File\Upload;
 use Illuminate\Support\Collection;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
@@ -115,6 +116,11 @@ class Log extends Bruder
     return $this->hasMany(View::class);
   }
 
+  public function raw_file_path()
+  {
+    return Upload::data_save_path(for: "videos") . "/" . $this->file_name;
+  }
+
   /**
    * @return string
    */
@@ -146,19 +152,6 @@ class Log extends Bruder
   public function raw_file_name()
   {
     return explode(".", $this->file_name)[0];
-  }
-
-  /**
-   * @return string
-   */
-  public function save_path(string $of = "videos")
-  {
-    return _root() . "/public/data" . match ($of) {
-      "videos" => "/",
-      "thumbs" => "/videos/",
-      default => "",
-    }
-      . $of;
   }
 
   /**
@@ -209,8 +202,8 @@ class Log extends Bruder
         # The filename without the extension.
         $file_name_no_ext = explode(".", $this->file_name)[0];
 
-        $video_path = $this->save_path(of: "videos");
-        $thumb_path = $this->save_path(of: "thumbs");
+        $video_path = Upload::data_save_path(for: "videos");
+        $thumb_path = Upload::data_save_path(for: "thumbs");
         $video_file_path = "$video_path/" . $this->file_name;
         $pre_thumb_name = "{$file_name_no_ext}_" . ($i + 1);
 
@@ -266,6 +259,11 @@ class Log extends Bruder
     } catch (\Exception $e) {
       Logger::to_file($e);
 
+      # Clean up all uploaded thumbs.
+      if (isset($thumbs) && count($thumbs) > 0)
+        foreach ($thumbs as $thumb)
+          Upload::clean_up($thumb);
+
       return false;
     }
   }
@@ -278,7 +276,7 @@ class Log extends Bruder
   {
 
     # Die if any error is set.
-    \Bruder\File\Upload::error($file);
+    Upload::error($file);
 
     $microtime = self::format_microtime(microtime());
     $save_path = _root() . "/public/data/videos";
@@ -301,7 +299,7 @@ class Log extends Bruder
       # Might want to try recreating thumbs automatically or by
       # button press.
       if (!$this->save_thumbs(amount: 3)) {
-        $this->clean_up("$save_path/$file_name");
+        Upload::clean_up("$save_path/$file_name");
         return false;
       }
 
@@ -310,16 +308,10 @@ class Log extends Bruder
       Logger::to_file($e);
 
       if (isset($save_path, $file_name))
-        $this->clean_up("$save_path/$file_name");
+        Upload::clean_up("$save_path/$file_name");
 
       return false;
     }
-  }
-
-  public function clean_up($path)
-  {
-    if (file_exists($path))
-      unlink($path);
   }
 
   /**

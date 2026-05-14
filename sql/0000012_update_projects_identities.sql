@@ -1,0 +1,6 @@
+START TRANSACTION;
+
+ALTER TABLE `projects`
+  RENAME COLUMN `logo` TO `identity`;
+
+COMMIT;

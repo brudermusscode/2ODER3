@@ -6,13 +6,16 @@ use Bruder\Http\Request;
 /**
  * WEB_ADMIN_KEY has to match the __admin_key cookie to be able to
  * authorize for higher level actions like video uploading.
+ * Always utilizes exit().
  */
 function authorize(?int $exit_as = null)
 {
-  $env = _env("WEB_ADMIN_KEY");
-  $cookie = Cookie::get("__admin_key");
+  if (!_env("WEB_ADMIN_KEY")) die(error("Kein Key in der .env Brudi."));
+
+  $from_env = _env("WEB_ADMIN_KEY");
+  $from_cookie = Cookie::get("__admin_key");
   $exit_message = "Ne Bruder, keine Authorisierung.";
-  $valid = $env && $cookie && $env === $cookie;
+  $valid = $from_env && $from_cookie && $from_env === $from_cookie;
 
   if ($exit_as === JSON) {
     header(JSON_RESPONSE);
