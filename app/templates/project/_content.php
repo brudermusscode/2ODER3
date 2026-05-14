@@ -26,50 +26,19 @@ $video_path = "/data/videos";
   <?php else : ?>
 
     <current-log fl fldircol <?= DEV ? "flone" : "" ?>>
-      <video-wrapper>
-        <video poster="<?= "$video_path/thumbs/$SelectedLog->thumb_name" ?>">
-          <source src="<?= "$video_path/$SelectedLog->file_name" ?>" type="video/mp4" />
-        </video>
+      <?php
 
-        <video-top-toolbar>
-          <volume>
-            <mi></mi>
-            <contains>
-              <volume-track></volume-track>
-            </contains>
-          </volume>
+      /**
+       * @var Log
+       */
+      $Log = $SelectedLog;
 
-          <cinema-mode>
-            <mi>aspect_ratio</mi>
-          </cinema-mode>
-
-          <fullscreen>
-            <mi>open_in_full</mi>
-          </fullscreen>
-        </video-top-toolbar>
-
-        <video-toggle>
-          <mi></mi>
-        </video-toggle>
-
-        <video-toolbar>
-          <buffer>
-            <div smol primary class="spinner">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </buffer>
-          <duration-track-wrapper>
-            <contains>
-              <duration-track></duration-track>
-            </contains>
-          </duration-track-wrapper>
-        </video-toolbar>
-      </video-wrapper>
+      /**
+       * + Video wrapper
+       */
+      $video_src = $Log->video_src();
+      $video_thumb = $Log->current_thumb_src();
+      include TEMPLATE . "/global/_video-wrapper.php" ?>
 
       <div fl fldircol gap=mid>
         <div fl fldircol gap=smol+>
@@ -140,7 +109,7 @@ $video_path = "/data/videos";
               <a href="/project/<?= $Project->id ?>/log/<?= $Log->id ?>">
                 <log fl fldircol gap=smol flex-truncate>
                   <picture size=mid>
-                    <img src="/data/videos/thumbs/<?= $Log->thumb_name ?>" />
+                    <img src="<?= $Log->current_thumb_src(size: "small") ?>" />
                     <div count>#<?= $Log->id ?></div>
                   </picture>
                   <div fl fldircol lh1 pb8 pt2 pinline12 posrel flex-truncate>

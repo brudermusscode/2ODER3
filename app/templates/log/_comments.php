@@ -31,14 +31,14 @@ ob_start(); ?>
     </mbutton>
   </comments-top-bar>
 
-  <div none fl alic jucc window flone>
+  <div none background=slighter-dark rounded=wide fl alic jucc flone>
     <div>
       <div fl fldircol alic>
         <div fl alic style="margin-left:-24px;margin-bottom:-8px;">
           <div style="height:2.8em;width:2.8em;margin-right:-18px;" background=slighter-light circled></div>
           <div window pblock32 rounded style="max-width:182px;width:182px;"></div>
         </div>
-        <div fl alic style="margin-left:24px;">
+        <div fl alic style="margin-left:24px;z-index:2;">
           <div style="height:2.8em;width:2.8em;margin-right:-18px;" background=slighter-light circled></div>
           <div window pblock28 rounded style="max-width:182px;width:182px;"></div>
         </div>

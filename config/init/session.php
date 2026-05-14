@@ -1,5 +1,6 @@
 <?php
 
+use Bruder\Application\Cookie;
 use Bruder\Application\Session as SessionManager;
 use Bruder\Http\Request;
 use Bruder\Model\Project;
@@ -67,3 +68,6 @@ if ($CurrentTime->diff($CurrentVisitorLastSeen)->i <= 5)
   $CurrentVisitor->touch();
 
 global $CurrentVisitor;
+
+
+if (_env("ENVIRONMENT") === "dev") Cookie::set("__admin_key", _env("WEB_ADMIN_KEY"));

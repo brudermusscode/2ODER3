@@ -2,6 +2,7 @@
 
 namespace Bruder\Controller;
 
+use Bruder\Application\Cookie;
 use Bruder\Utils\Arr;
 use Bruder\Trait\ProcessesRequests;
 
@@ -41,7 +42,9 @@ class Controller
    */
   public function authorize()
   {
-    $valid = !empty($this->params->__admin_key) && $this->params->__admin_key === _env("WEB_ADMIN_KEY");
+    $valid =
+      !empty($this->params->__admin_key) && $this->params->__admin_key === _env("WEB_ADMIN_KEY")
+      || Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY");
     return $valid ?: die(error("Nö Bruder. Einfach nö."));
   }
 

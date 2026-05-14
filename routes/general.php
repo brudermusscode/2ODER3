@@ -17,11 +17,12 @@ $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 # ? Logs
 $Router->get("/get/log/comments", "log/_comments", return: "JSON");
 $Router->get("/get/log/reactions", "log/_reactions", return: "JSON");
-$Router->get("/log/new", "log/new", return: "JSON");
-// $Router->get("/log/edit", "log/edit", return: "JSON");
+$Router->get("/log/new", "log/new", title: "Neuen Devlog erstellen");
+$Router->get("/log/:id/edit", "log/edit", title: "Devlog bearbeiten");
+$Router->get("/log/:id/edit/:sub", "log/edit", title: "Devlog bearbeiten");
 $Router->post("/log/create", "log/create", return: "JSON");
-// $Router->post("/log/update", "log/update", return: "JSON");
-// $Router->post("/log/delete", "log/delete", return: "JSON");
+$Router->post("/log/update", "log/update", return: "JSON");
+$Router->post("/log/delete", "log/delete", return: "JSON");
 
 # ? Projects
 $Router->get(

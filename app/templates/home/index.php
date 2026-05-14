@@ -6,23 +6,28 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Format;
 
-/**
- * Encode all images as WebP and decrease quality for faster
- * loading times.
- */
-if (CURRENT_VISITOR->id === 1 && 1 === 2)
+
+if (CURRENT_VISITOR->id === 1) {
+  $dir = _root() . "/public/data/videos/thumbs";
+
   foreach (Log::all() as $L) {
-    $fpath = _root() . "/public/data/videos/thumbs/" . $L->thumb_name;
+    $fpath = "$dir/$L->thumb_name";
 
     if (!file_exists($fpath))
       continue;
 
+    $filename_no_ext = explode(".", $L->thumb_name)[0];
+
     $manager = ImageManager::usingDriver(GdDriver::class);
     $image = $manager->decodePath($fpath);
 
-    $encoded = $image->encodeUsingFormat(Format::WEBP, quality: 80);
-    $encoded->save(_root() . "/public/data/videos/thumbs/" . $L->thumb_name);
+    $image->scale(width: 350);
+
+    $encoded = $image->encodeUsingFormat(Format::JPEG, quality: 100);
+    $encoded->save("$dir/$filename_no_ext" . "-350.webp");
   }
+}
+
 
 /**
  * @var Project

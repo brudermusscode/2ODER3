@@ -2,6 +2,8 @@
 
 namespace Bruder\Model;
 
+use Bruder\Application\Exception;
+use Bruder\Application\Logger;
 use Bruder\Bruder;
 use Illuminate\Support\Collection;
 use FFMpeg\FFMpeg;
@@ -20,11 +22,13 @@ class Log extends Bruder
    * @var array
    */
   protected $fillable = [
+    "project_id",
     "src",
     "file_name",
     "name",
     "description",
     "views",
+    "published_at"
   ];
 
   /**
@@ -35,33 +39,13 @@ class Log extends Bruder
   {
 
     /**
-     * @var Project
-     */
-    $Project = $params->Project;
-
-    /**
      * @var self
      */
     $Log = self::make();
 
     # ? Video file
-    if (!empty($params->file["tmp_name"])) {
-      $upload = $Log->upload_video($params->file);
-      if (!$upload) return error("Upload failed");
-    }
-
-    # ? Name
-    if (!empty($params->name)) {
-      $Log->name = $params->name;
-    }
-
-    # ? Description
-    if (!empty($params->name)) {
-      $Log->description = $params->description;
-    }
-
-    # ? Project
-    $Log->project_id = $Project->id;
+    if (!$Log->upload_video($params->file))
+      return error("Upload failed");
 
     # * Save!
     $Log->save();
@@ -76,11 +60,9 @@ class Log extends Bruder
   public function edit(object $params)
   {
 
-    return success();
-
-    # ? Video file
-    if (!empty($params->file["tmp_name"]))
-      $this->upload_video($params->file);
+    # ? Project
+    if (!empty($params->project_id))
+      $this->project_id = Project::find($params->project_id)?->id;
 
     # ? Name
     if (!empty($params->name)) {
@@ -92,6 +74,9 @@ class Log extends Bruder
       $this->description = $params->description;
     }
 
+    # ? Selected Thumbnail
+    $this->thumb_selected = $params->thumb_selected ?? $this->thumb_selected;
+
     # * Save!
     $this->save();
 
@@ -99,11 +84,11 @@ class Log extends Bruder
   }
 
   /**
-   * @return Project
+   * @return ?Project
    */
   public function project()
   {
-    return $this->belongsTo(Project::class);
+    return $this->belongsTo(Project::class, "project_id");
   }
 
   /**
@@ -128,6 +113,52 @@ class Log extends Bruder
   public function views()
   {
     return $this->hasMany(View::class);
+  }
+
+  /**
+   * @return string
+   */
+  public function video_src()
+  {
+    return "/data/videos/{$this->file_name}";
+  }
+
+  /**
+   * On file upload, it generates more than one thumb, which I
+   * can choose one from to display throughout the page. This
+   * creates the public path to the currently selected thumb
+   * source file.
+   *
+   * @return string
+   */
+  public function current_thumb_src(string $size = "std")
+  {
+    $file_name = explode(".", $this->file_name)[0];
+
+    return "/data/videos/thumbs/{$file_name}_{$this->thumb_selected}"
+      . ($size === "small" ? "_350" : "")
+      . ".webp";
+  }
+
+  /**
+   * @return string
+   */
+  public function raw_file_name()
+  {
+    return explode(".", $this->file_name)[0];
+  }
+
+  /**
+   * @return string
+   */
+  public function save_path(string $of = "videos")
+  {
+    return _root() . "/public/data" . match ($of) {
+      "videos" => "/",
+      "thumbs" => "/videos/",
+      default => "",
+    }
+      . $of;
   }
 
   /**
@@ -164,6 +195,82 @@ class Log extends Bruder
   }
 
   /**
+   * @param int $amount
+   * @return array string
+   */
+  public function save_thumbs(int $amount = 1)
+  {
+
+    $thumbs = [];
+
+    try {
+      for ($i = 0; $i < $amount; $i++) {
+
+        # The filename without the extension.
+        $file_name_no_ext = explode(".", $this->file_name)[0];
+
+        $video_path = $this->save_path(of: "videos");
+        $thumb_path = $this->save_path(of: "thumbs");
+        $video_file_path = "$video_path/" . $this->file_name;
+        $pre_thumb_name = "{$file_name_no_ext}_" . ($i + 1);
+
+        /**
+         * @var FFMpeg
+         */
+        $ffmpeg = FFMpeg::create();
+
+        /**
+         * @var Video
+         */
+        $video = $ffmpeg->open($video_file_path);
+
+        /**
+         * @var Format
+         */
+        $Format = $video->getFormat();
+        $duration = $Format->get("duration"); # => 100%
+
+        # For every iteration of $amount, we divide the $duration by
+        # that $amount and multiply it by the current iteration $i.
+        # This will give us a number in seconds which is always in
+        # scope of the $duration and ever increasing with every
+        # iteration, ensuring a different thumb.
+        # (… - 0.1) because FFMpeg can't seem to get a thumb from the
+        # very last frame.
+        $progress = ($duration / $amount) * ($i + 1 - 0.1);
+
+        $final_thumb_path = "$thumb_path/$pre_thumb_name.webp";
+
+        # Generate a thumb and save it based on the length of the video.
+        $video->frame(TimeCode::fromSeconds($progress))
+          ->save($final_thumb_path);
+
+        $thumbs[] = $final_thumb_path;
+
+        # Create a 350px version of thumb.
+        $ImageManager = ImageManager::usingDriver(GdDriver::class);
+        $Image = $ImageManager->decodePath($final_thumb_path);
+        $Image->scale(width: 350);
+        $EncodedImage = $Image->encodeUsingFormat(InterventionImageFormat::WEBP, quality: 100);
+        $EncodedImage->save("$thumb_path/{$pre_thumb_name}_350.webp");
+      }
+
+      # ? Thumb count
+      $this->thumb_count = $amount;
+
+      # ? Selected thumb
+      $this->thumb_selected = 1;
+
+      # # Yessss!
+      return $thumbs;
+    } catch (\Exception $e) {
+      Logger::to_file($e);
+
+      return false;
+    }
+  }
+
+  /**
    * @param array $file
    * @return bool
    */
@@ -175,59 +282,44 @@ class Log extends Bruder
 
     $microtime = self::format_microtime(microtime());
     $save_path = _root() . "/public/data/videos";
-    $thumb_path = "$save_path/thumbs";
-    $thumb_name = $microtime . ".webp";
     $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
     $file_name = $microtime . "." . $extension;
     $final_path = $save_path . "/" . $file_name;
-    $final_thumb_path = "$thumb_path/$thumb_name";
 
     try {
 
       # Move the temporary file to permanent.
       $moved = move_uploaded_file($file["tmp_name"], $final_path);
-
-      // ! Moving failed
-      if (!$moved) return error("Could not move file");
+      if (!$moved)
+        return error("Could not move file");
 
       # ? File name
       $this->file_name = $file_name;
 
-      # Create thumbnail.
-      $ffmpeg = FFMpeg::create();
-
-      /**
-       * @var Video
-       */
-      $video = $ffmpeg->open($final_path);
-
-      /**
-       * @var Format
-       */
-      $Format = $video->getFormat();
-      $duration = $Format->get("duration");
-      $video->frame(TimeCode::fromSeconds(match (true) {
-        $duration < 20 => 6,
-        default => 20,
-      }))
-        ->save($final_thumb_path);
-
-      # Decrease quality of image.
-      $ImageManager = ImageManager::usingDriver(GdDriver::class);
-      $Image = $ImageManager->decodePath($final_thumb_path);
-      $EncodedImage = $Image->encodeUsingFormat(InterventionImageFormat::WEBP, quality: 80);
-      $EncodedImage->save($final_thumb_path);
-
-      # ? thumb_name
-      $this->thumb_name = $thumb_name;
+      # ? Thumbs
+      # If thumb upload fails, I can delete the whole video again.
+      # Might want to try recreating thumbs automatically or by
+      # button press.
+      if (!$this->save_thumbs(amount: 3)) {
+        $this->clean_up("$save_path/$file_name");
+        return false;
+      }
 
       return true;
     } catch (\Exception $e) {
-      if (isset($save_path, $filename) && file_exists("$save_path/$filename"))
-        unlink("$save_path/$filename");
+      Logger::to_file($e);
 
-      return error($e->getMessage());
+      if (isset($save_path, $file_name))
+        $this->clean_up("$save_path/$file_name");
+
+      return false;
     }
+  }
+
+  public function clean_up($path)
+  {
+    if (file_exists($path))
+      unlink($path);
   }
 
   /**

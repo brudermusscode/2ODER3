@@ -6,7 +6,7 @@ body {
   transition: none;
 
   &[cinema-mode] {
-    video-wrapper {
+    video-wrapper:not([prevent-cinema-mode]) {
       background: rgba(0, 0, 0, 0.98);
       position: absolute;
       top: -$header-height;
@@ -70,6 +70,7 @@ video-wrapper {
   video {
     display: block;
     border-radius: 25px;
+    max-width: 100%;
   }
 
   video-toggle mi::before {

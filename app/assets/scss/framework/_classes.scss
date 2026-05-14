@@ -288,6 +288,10 @@ $hw-percentage-list: 0 2 4 6 8 10 12 14 16 18 23 24 28 30 32 34 36 38 40 42 44
 }
 
 // * margins, paddings, gaps
+[miauto] {
+  margin-inline: auto;
+}
+
 $margin-size-classes: 0;
 @while $margin-size-classes <= 200 {
   [m#{$margin-size-classes}] {

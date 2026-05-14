@@ -16,17 +16,11 @@ class LogsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["project_id"],
-      optional: ["file", "name", "description",],
+      strict: ["file"],
+      optional: [],
     );
 
     $this->authorize();
-
-    /**
-     * @var ?Project
-     */
-    $this->params->Project =
-      Project::findOrReturn($this->params->project_id, "No project");
 
     return (new Log)->new($this->params);
   }
@@ -37,11 +31,9 @@ class LogsController extends Controller
   public function update()
   {
 
-    return error();
-
     $this->validate_params(
       strict: ["id"],
-      optional: ["name", "description", "file"],
+      optional: ["project_id", "name", "description", "file", "thumb_selected"],
     );
 
     $this->authorize();
@@ -59,8 +51,6 @@ class LogsController extends Controller
    */
   public function delete()
   {
-
-    return error();
 
     $this->validate_params(
       strict: ["id"],

@@ -1,0 +1,65 @@
+@use "../abstract" as *;
+@use "../framework/classes" as *;
+@use "../framework/var.sizes" as *;
+@use "../framework/var.utils" as *;
+
+content[log-new] {
+  // height: calc(100vh - $header-height);
+  width: $content-mid-size;
+  margin-inline: auto;
+  padding-block: 4.2em;
+
+  [thumbnails] {
+    picture {
+      &[active] {
+        outline: 2px solid $green;
+      }
+    }
+  }
+}
+
+choose-option {
+  display: block;
+  position: relative;
+
+  coption {
+    cursor: pointer;
+
+    &[active] {
+      outline: 4px solid $green;
+    }
+  }
+}
+
+progress-bar {
+  position: relative;
+  display: none;
+  width: 100%;
+  height: 12px;
+  background: $slighter-light;
+  border-radius: 24px;
+  overflow: hidden;
+  border: none;
+  outline: none;
+
+  &[active] {
+    display: block;
+  }
+
+  progress-track {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: 24px;
+    position: absolute;
+    background: $green;
+  }
+}
+
+[processing-message] {
+  display: none;
+
+  &[active] {
+    display: flex;
+  }
+}

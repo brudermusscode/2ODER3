@@ -32,6 +32,10 @@ body {
   }
 }
 
+img {
+  vertical-align: middle;
+}
+
 background-blur {
   z-index: -1;
   position: fixed;
@@ -48,7 +52,8 @@ main {
   padding-inline: $main-distance;
   padding-top: $header-height;
   max-width: $content-width;
-  margin: 0 auto;
+  min-height: calc(100vh);
+  margin-inline: auto;
   transition: none;
 }
 

@@ -3,7 +3,7 @@
 
     <div posrel background=tertiary rounded=smolplus>
       <a href="/" disbl posabs style="top:50%;left:-32px;translate: 0 -50%;">
-        <mbutton size=mid background=primary color=primary-text icon-only>
+        <mbutton mid background=primary color=primary-text icon-only>
           <mi>arrow_back</mi>
         </mbutton>
       </a>

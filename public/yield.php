@@ -113,9 +113,11 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
       <?php if (authorized()) : ?>
         <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
 
-        <mbutton request-get="log:new" background=green color=dark size=std icon-only>
-          <mi>arrow_upload_ready</mi>
-        </mbutton>
+        <a href="/log/new">
+          <mbutton background=green color=dark size=std icon-only>
+            <mi>arrow_upload_ready</mi>
+          </mbutton>
+        </a>
       <?php endif; ?>
     </div>
   </header>
@@ -139,12 +141,13 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
     </main>
   HTML; ?>
 
-
-  <div window rounded fl alic gap=smol color=primary
-    style="position:fixed;bottom:24px;left:24px;height:56px;padding-inline:18px 24px;z-index:110;">
-    <mi midler>deployed_code</mi>
-    <p text smolplus>Webseite befindet sich noch im Aufbau</p>
-  </div>
+  <?php if (!DEV) : ?>
+    <div window rounded fl alic gap=smol color=primary
+      style="position:fixed;bottom:24px;left:24px;height:56px;padding-inline:18px 24px;z-index:110;">
+      <mi midler>deployed_code</mi>
+      <p text smolplus>Webseite befindet sich noch im Aufbau</p>
+    </div>
+  <?php endif ?>
 
 </body>
 

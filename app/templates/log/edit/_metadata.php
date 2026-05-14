@@ -1,0 +1,74 @@
+<?php
+
+use Bruder\Model\Log;
+
+/**
+ * @var int $id
+ * @var string $sub
+ * @var Log $Log
+ */
+
+$log_link = "/log/" . $id . "/edit/project";
+
+?>
+
+<form request="log:update" redirect="<?= $log_link ?>" responder=simple>
+  <content log-new fl fldircol gap=mid>
+
+    <?php
+
+    $video_src = $Log->video_src();
+    $video_thumb = $Log->current_thumb_src();
+    $show_cinema_mode = false;
+    include TEMPLATE . "/global/_video-wrapper.php";
+
+    ?>
+
+    <choose-option thumbnails fl fldircol gap=smol+>
+      <p text smol bold ttup>Thumbnail</p>
+      <div fl alic gap=smol+>
+        <?php for ($i = 1; $i <= $Log->thumb_count; $i++) : ?>
+          <coption rounded ovhid
+            data-value="<?= $i ?>"
+            <?= $i === $Log->thumb_selected ? "active" : "" ?>>
+            <picture>
+              <img
+                src="/data/videos/thumbs/<?= $Log->raw_file_name() . "_" . ($i) . ".webp" ?>" />
+            </picture>
+          </coption>
+        <?php endfor ?>
+      </div>
+
+      <input type=hidden name=thumb_selected value=<?= $Log->thumb_selected ?> />
+    </choose-option>
+
+    <div fl fldircol gap=mid>
+      <div fl fldircol gap=smol>
+        <p text smol ttup bold>Metadaten</p>
+        <div fl fldircol gap>
+          <input tabindex="1" autocomplete="off" crazy autofocus type=text name=name placeholder="Name" value="<?= $Log->name ?? "" ?>" />
+          <textarea tabindex="2" crazy placeholder="Beschreibuuuung" name=description><?= $Log->description ?? "" ?></textarea>
+        </div>
+      </div>
+    </div>
+
+    <input type=hidden name=id value=<?= $Log->id ?> />
+    <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />
+
+    <div z style="position:fixed;left:2.4em;top:50%;translate:0 -50%;">
+      <mbutton mid tabindex="3" icon-only background=red color=dark has-tooltip=right
+        data-action="log:delete"
+        data-id="<?= $id ?>">
+        <mi>eraser_size_2</mi>
+        <div ttooltip text semibold>Ne man, lass mal</div>
+      </mbutton>
+    </div>
+
+    <div z style="position:fixed;right:2.4em;top:50%;translate:0 -50%;">
+      <mbutton has-tooltip=left wide tabindex="3" icon-only background=tertiary color=tertiary-text submit-closest>
+        <mi>deployed_code</mi>
+        <div ttooltip text semibold>Projekt zuordnen</div>
+      </mbutton>
+    </div>
+  </content>
+</form>

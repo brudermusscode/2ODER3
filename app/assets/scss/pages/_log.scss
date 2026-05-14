@@ -97,10 +97,6 @@ current-log {
   width: calc(100% - $comments-width - $main-distance);
   padding-bottom: $main-distance * 5;
   transition: width 0.6s $cubic;
-
-  video {
-    max-width: 100%;
-  }
 }
 
 comments {
@@ -170,7 +166,6 @@ comments {
 
   [none] {
     display: none;
-    // margin-bottom: $composer-height;
   }
 
   comments-top-bar {
