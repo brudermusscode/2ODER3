@@ -3,6 +3,7 @@
 namespace Bruder\Controller;
 
 use Bruder\Controller\Controller;
+use Bruder\File\Upload;
 use Bruder\Model\Log;
 use Bruder\Model\Project;
 
@@ -69,7 +70,7 @@ class LogsController extends Controller
       unlink($Log->raw_file_path());
 
       for ($i = 1; $i <= $Log->thumb_count; $i++) {
-        $file_path = $Log->save_path("thumbs") . "/" . $Log->raw_file_name() . "_$i";
+        $file_path = Upload::data_save_path("thumbs") . "/" . $Log->raw_file_name() . "_$i";
         file_exists($file_path . ".webp") ? unlink($file_path . ".webp") : null;
         file_exists($file_path . "_350.webp") ? unlink($file_path . "_350.webp") : null;
       }
