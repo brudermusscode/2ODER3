@@ -65,16 +65,16 @@ class LogsController extends Controller
      */
     $Log = Log::findOrReturn($this->params->id, "No log");
 
-    # Find video file and delete it.
-    if (file_exists($Log->raw_file_path())) {
-      unlink($Log->raw_file_path());
+    # Array up all relative media files and clean them up.
+    $files = [$Log->raw_file_path(),];
 
-      for ($i = 1; $i <= $Log->thumb_count; $i++) {
-        $file_path = Upload::data_save_path("thumbs") . "/" . $Log->raw_file_name() . "_$i";
-        file_exists($file_path . ".webp") ? unlink($file_path . ".webp") : null;
-        file_exists($file_path . "_350.webp") ? unlink($file_path . "_350.webp") : null;
-      }
+    for ($i = 1; $i <= $Log->thumb_count; $i++) {
+      $file_path = Upload::data_save_path("thumbs") . "/" . $Log->raw_file_name() . "_$i";
+      $files[] = $file_path . ".webp";
+      $files[] = $file_path . "_350.webp";
     }
+
+    Upload::clean_up($files);
 
     $Log->delete();
 

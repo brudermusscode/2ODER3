@@ -49,12 +49,18 @@ class Upload
   }
 
   /**
-   * @param string $path
+   * Checks if a given file exists and deletes it.
+   *
+   * @param array|string $paths
    * @return void
    */
-  public static function clean_up($path)
+  public static function clean_up(array|string $paths)
   {
-    if (file_exists($path))
-      unlink($path);
+    if (is_string($paths))
+      $paths = [$paths];
+
+    foreach ($paths as $path)
+      if (file_exists($path))
+        unlink($path);
   }
 }

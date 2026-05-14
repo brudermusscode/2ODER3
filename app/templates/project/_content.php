@@ -119,12 +119,12 @@ $video_path = "/data/videos";
         <div fl fldircol gap=smol+>
           <p text smoler ttup bold pinline12 mb8 slight>Möööhr Devlogs zu ⌞<?= $Project->name ?>⌝</p>
           <more-logs fl gap=smol flex-wrap>
-            <?php foreach ($Logs as $Log) : ?>
+            <?php foreach ($Logs as $key => $Log) : ?>
               <a href="/project/<?= $Project->id ?>/log/<?= $Log->id ?>">
                 <log fl fldircol gap=smol flex-truncate>
                   <picture size=mid>
                     <img src="<?= $Log->current_thumb_src(size: "small") ?>" />
-                    <div count>#<?= $Log->id ?></div>
+                    <div count>#<?= count($Logs) - $key ?></div>
                   </picture>
                   <div fl fldircol lh1 pb8 pt2 pinline12 posrel flex-truncate>
                     <p text smolplus semibold trimt style=margin-bottom:-2px;><?= $Log->name ?? "Kein Titel" ?></p>
