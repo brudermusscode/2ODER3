@@ -44,9 +44,12 @@ class Session
    * @param string $name
    * @return ?mixed
    */
-  public static function get(string|int $name)
+  public static function get(string|int $name, bool $allow_empty = true)
   {
-    return isset($_SESSION[$name]) ? $_SESSION[$name] : null;
+    $validate_w_empty = isset($_SESSION[$name]) ? $_SESSION[$name] : null;
+    $validate_non_empty = !empty($_SESSION[$name]) ? $_SESSION[$name] : null;
+
+    return $allow_empty ? $validate_w_empty : $validate_non_empty;
   }
 
   /**

@@ -2,6 +2,7 @@
 
 use Bruder\Application\Application;
 use Bruder\Application\Session as SessionManager;
+use Bruder\Model\Session;
 
 /**
  * Environmental.
@@ -61,5 +62,8 @@ define("FONT", HOME_URL . "/assets/fonts");
  */
 define("ASSET", ROOT . "/public/assets");
 
-
+/**
+ * Variable.
+ */
 define("CURRENT_VISITOR", SessionManager::get("Visitor"));
+define("LOGGED", Session::valid());

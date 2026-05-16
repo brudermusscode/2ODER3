@@ -47,7 +47,7 @@ use Bruder\Model\Project;
         $Logs = $Project->logs;
 
         foreach ($Logs as $key => $Log) : ?>
-          <div style="flex-basis: 25%">
+          <div style="flex-basis:25%;min-width:25%;">
             <?php include TEMPLATE . "/log/_log.php" ?>
           </div>
         <?php endforeach;

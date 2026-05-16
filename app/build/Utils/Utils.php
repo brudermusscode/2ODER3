@@ -9,6 +9,22 @@ class Utils
 {
 
   /**
+   * Generates a (hopefully) universally unique identifier in
+   * format xxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxxxxxx.
+   *
+   * @return string
+   */
+  public static function create_uuid()
+  {
+    $str = self::random_alpha_token(12) . "-";
+    $str .= self::random_alpha_token(12) . "-";
+    $str .= self::random_alpha_token(12) . "-";
+    $str .= self::random_alpha_token(12);
+
+    return $str;
+  }
+
+  /**
    * Converts upper thousands with proper ending.
    *
    * @param int $num

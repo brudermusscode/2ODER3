@@ -20,6 +20,8 @@ class CommentsController extends Controller
       optional: [],
     );
 
+    $this->visitor_authorized();
+
     /**
      * @var ?Log
      */
@@ -42,6 +44,8 @@ class CommentsController extends Controller
       optional: [],
     );
 
+    $this->visitor_authorized();
+
     return $Reaction->edit($this->params);
   }
 
@@ -55,6 +59,8 @@ class CommentsController extends Controller
       strict: ["id"],
       optional: [],
     );
+
+    $this->visitor_authorized();
 
     /**
      * @var ?Comment

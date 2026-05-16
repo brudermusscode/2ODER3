@@ -15,6 +15,9 @@ $Router->get("/not-found", "error/404", title: "Bruder, was geht jetzt?");
 $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 $Router->get("/fire/job", "job", return: "JSON");
 
+# Just for intitializing the current visitor.
+$Router->post("/visitor/create", "visitor/create", return: "JSON");
+
 # ? Logs
 $Router->get("/get/log/comments", "log/_comments", return: "JSON");
 $Router->get("/get/log/reactions", "log/_reactions", return: "JSON");
@@ -63,6 +66,17 @@ $Router->post("/reaction/delete", "reaction/delete", return: "JSON");
 $Router->post("/comment/create", "comment/create", return: "JSON");
 $Router->post("/comment/delete", "comment/delete", return: "JSON");
 
-# ? Report
+# ? Reports
 $Router->get("/report/new", "report/new", return: "JSON");
 $Router->post("/report/create", "report/create", return: "JSON");
+
+# ? Users
+$Router->get("/user/new", "user/new", return: "JSON");
+$Router->get("/user/email", "user/email", return: "JSON");
+$Router->get("/user/code", "user/code", return: "JSON");
+$Router->post("/user/create", "user/create", return: "JSON");
+$Router->post("/user/update", "user/update", return: "JSON");
+
+# ? UserVerifications
+$Router->post("/user/verification/create", "user/verification/create", return: "JSON");
+$Router->post("/user/verification/update", "user/verification/update", return: "JSON");

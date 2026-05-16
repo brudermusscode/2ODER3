@@ -130,8 +130,7 @@ export const close_overlays = () => {
     }, 400);
   });
 
-  __current_overlay = null;
-  __current_second_overlay = null;
+  __page.overlay = null;
 };
 
 export const close_exception_overlay = () => {

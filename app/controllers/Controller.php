@@ -3,6 +3,10 @@
 namespace Bruder\Controller;
 
 use Bruder\Application\Cookie;
+use Bruder\Application\Session;
+use Bruder\Model\Session as ModelSession;
+use Bruder\Model\User;
+use Bruder\Model\Visitor;
 use Bruder\Utils\Arr;
 use Bruder\Trait\ProcessesRequests;
 
@@ -54,6 +58,32 @@ class Controller
 
     return $params_have_valid_key || $cookies_have_valid_key
       ?: die(error("Nö Bruder. Einfach nö."));
+  }
+
+  /**
+   * Authorizes a visitor to take action.
+   *
+   * @return true|die
+   */
+  public function visitor_authorized()
+  {
+
+    if (!Visitor::authorized())
+      return die(error("Nicht aUtHoRiSiErT Brudi. 🤡"));
+
+    return true;
+  }
+
+  /**
+   * Validates if the current Visitor is digitated into a User
+   * already.
+   *
+   * @return true|die
+   */
+  public function user_authorized(bool $exit = true)
+  {
+    return ModelSession::valid()
+      ?: ($exit ? exit(error("D1 User ist nicht authorisiert 🤡")) : false);
   }
 
   /**

@@ -27,7 +27,113 @@ const SUBMIT_FORM_ATTRIBUTES = [
   "interchange-action",
 ];
 
+/**
+ * Creates a GET request. Creates a new Overlay to put the
+ * returned content into.
+ *
+ * @param {string} url
+ * @param {string} query
+ */
+export const get = (url, query) => {
+  let timeout = 0;
+
+  // Remove a current overlay.
+  if (__page.overlay) {
+    __page.overlay.delete();
+    timeout = 100;
+  }
+
+  Frontend.load();
+
+  setTimeout(() => {
+    $.ajax({
+      url: url + query,
+      method: "GET",
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        Frontend.unload();
+
+        if (data.status) new Overlay(data.data);
+        else Frontend.ajax_response("error");
+      },
+      error: function (error) {
+        Frontend.unload();
+        Frontend.ajax_error(error);
+      },
+    });
+  }, timeout);
+};
+
+/**
+ * Builds a complete query string with a leading ? for get
+ * requests from a given dataset.
+ */
+export const dataset_build_query_string = (dataset) => {
+  let dataset_count = Object.keys(dataset).length;
+  let query = "?";
+
+  /**
+   * Construct the url query by iterating through all data
+   * elements on the clicked element.
+   */
+  if (dataset_count > 0) {
+    for (const key in dataset) {
+      query +=
+        key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) +
+        "=" +
+        dataset[key] +
+        "&";
+    }
+  }
+
+  return query;
+};
+
+/**
+ * Builds up a FormData object from a given dataset and returns it.
+ */
+export const dataset_build_formdata = (dataset) => {
+  let formdata = new FormData();
+  let dataset_count = Object.keys(dataset).length;
+
+  /**
+   * Construct the url query by iterating through all data
+   * elements on the clicked element.
+   */
+  if (dataset_count > 0) {
+    for (const key in dataset) {
+      let transformed_key = key.replace(
+        /[A-Z]/g,
+        (letter) => "_" + letter.toLowerCase(),
+      );
+
+      if (transformed_key !== "action")
+        formdata.append(transformed_key, dataset[key]);
+    }
+  }
+
+  return formdata;
+};
+
+/**
+ * Either pass an element that has a data-action attribute or a
+ * string which both will be transformed to a valid request url.
+ */
+export const url = (string) => {
+  let action = string.dataset.action;
+  let url = action ? action : string;
+
+  return "/" + url.replaceAll(":", "/");
+};
+
+/**
+ * @event DOMContentLoaded
+ */
 $(function () {
+  //
+  //
+
   /**
    * Shadow submitting a form. It basically mimics the
    * functionality of form[request="…"] when submitted, but as a
@@ -248,95 +354,10 @@ $(function () {
           this.dataset[key] +
           "&";
       }
+    }
 
-      query += "is_popup=kurwa";
-    } else query += "is_popup=kurwa";
+    query += "is_popup=kurwa";
 
-    Frontend.load();
-
-    $.ajax({
-      url: url + query,
-      method: "GET",
-      contentType: false,
-      processData: false,
-      success: function (data) {
-        Frontend.unload();
-
-        if (data.status) {
-          let overlay = new Overlay();
-          overlay.append(data.data);
-
-          setTimeout(() => {
-            overlay.overlay.find("[autofocus]")?.focus();
-          }, 400);
-        } else new Frontend.create_responder(data.message, "error");
-      },
-      error: function (error) {
-        Frontend.unload();
-        Frontend.ajax_error(error);
-      },
-    });
+    get(url, query);
   });
 });
-
-/**
- * Builds a complete query string with a leading ? for get
- * requests from a given dataset.
- */
-export const dataset_build_query_string = (dataset) => {
-  let dataset_count = Object.keys(dataset).length;
-  let query = "?";
-
-  /**
-   * Construct the url query by iterating through all data
-   * elements on the clicked element.
-   */
-  if (dataset_count > 0) {
-    for (const key in dataset) {
-      query +=
-        key.replace(/[A-Z]/g, (letter) => "_" + letter.toLowerCase()) +
-        "=" +
-        dataset[key] +
-        "&";
-    }
-  }
-
-  return query;
-};
-
-/**
- * Builds up a FormData object from a given dataset and returns it.
- */
-export const dataset_build_formdata = (dataset) => {
-  let formdata = new FormData();
-  let dataset_count = Object.keys(dataset).length;
-
-  /**
-   * Construct the url query by iterating through all data
-   * elements on the clicked element.
-   */
-  if (dataset_count > 0) {
-    for (const key in dataset) {
-      let transformed_key = key.replace(
-        /[A-Z]/g,
-        (letter) => "_" + letter.toLowerCase(),
-      );
-
-      if (transformed_key !== "action")
-        formdata.append(transformed_key, dataset[key]);
-    }
-  }
-
-  return formdata;
-};
-
-/**
- * Either pass an element that has a data-action attribute or a
- * string which both will be transformed to a valid request url.
- */
-export const url = (string) => {
-  let action = string.dataset.action;
-  let url = action ? action : string;
-
-  return "/" + url.replaceAll(":", "/");
-};

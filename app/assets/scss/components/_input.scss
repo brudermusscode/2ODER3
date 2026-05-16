@@ -2,11 +2,39 @@
 @use "../framework/var.sizes" as *;
 @use "../abstract" as *;
 
+[input] {
+  display: flex;
+  align-items: center;
+
+  &[has-icon="left"] {
+    & > mi {
+      font-size: 32px;
+      margin-right: -28px;
+    }
+
+    input {
+      padding-left: 42px;
+    }
+  }
+
+  &[has-icon="right"] {
+    & > mi {
+      font-size: 32px;
+      margin-left: -28px;
+    }
+
+    input {
+      padding-right: 42px;
+    }
+  }
+}
+
 input {
   outline: none;
   border: none;
   background: white;
   font-size: 18px;
+  max-width: 100%;
 
   &[floating] {
     position: sticky;

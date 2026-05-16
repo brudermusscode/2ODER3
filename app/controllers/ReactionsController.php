@@ -20,6 +20,8 @@ class ReactionsController extends Controller
       optional: [],
     );
 
+    $this->visitor_authorized();
+
     /**
      * @var ?Reaction
      */
@@ -61,6 +63,8 @@ class ReactionsController extends Controller
       optional: [],
     );
 
+    $this->visitor_authorized();
+
     /**
      * @var ?Log
      */
@@ -79,6 +83,8 @@ class ReactionsController extends Controller
       strict: ["log_id", "emote"],
       optional: [],
     );
+
+    $this->visitor_authorized();
 
     /**
      * Delete the reaction in one run or return an error, if no

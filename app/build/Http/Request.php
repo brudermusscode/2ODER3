@@ -121,6 +121,24 @@ class Request
   }
 
   /**
+   * Vaguely determines, if a user-agent might be related to a
+   * real human. Returns the agent, if it might be human or null,
+   * if not.
+   *
+   * @return ?string
+   */
+  public static function maybe_human(?string $agent = null)
+  {
+    $agent = $agent ?? $_SERVER['HTTP_USER_AGENT'] ?? "";
+    $is_bot = preg_match(
+      '/bot|crawl|spider|slurp|bing|google|preview|facebook|discord/i',
+      $agent,
+    );
+
+    return $is_bot || !$agent ? null : $agent;
+  }
+
+  /**
    * Retrieves and escapes a query parameter from the URL.
    *
    * This function checks if the specified query parameter exists

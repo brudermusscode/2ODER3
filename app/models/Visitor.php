@@ -2,8 +2,13 @@
 
 namespace Bruder\Model;
 
+use Bruder\Application\Cookie;
 use Bruder\Application\Exception as ApplicationException;
+use Bruder\Application\Session;
 use Bruder\Bruder;
+use Bruder\Http\Request;
+use Bruder\Utils\Utils;
+use DateTime;
 use Illuminate\Support\Collection;
 use Exception;
 
@@ -14,10 +19,16 @@ class Visitor extends Bruder
    * @var array
    */
   protected $fillable = [
+    "uuid",
+    "agent",
     "nickname",
     "color",
     "ip",
   ];
+
+  public static string $uuid_cookie = "visitor-uuid";
+
+  public static string $identifier_cookie = "visitor-identifier";
 
   public static array $colors = [
     "#fff158",
@@ -94,6 +105,46 @@ class Visitor extends Bruder
   ];
 
   /**
+   * @return string
+   */
+  public function new()
+  {
+
+    $Visitor = self::make();
+
+    # ? Agent
+    $Visitor->agent = Request::maybe_human();
+
+    # Check, if the visitor might be a real human or, if it is a
+    # bot. In case of bots, we do not want to create a new
+    # Visitor but return the bare instance.
+    if (!$Visitor->agent) {
+      self::clean_up();
+
+      return error("Possibly 1 Bot lol.");
+    }
+
+    # ? Universally unique identifier
+    $Visitor->uuid = Utils::create_uuid();
+    while (Visitor::where("uuid", $Visitor->uuid)->exists())
+      $Visitor->uuid = Utils::create_uuid();
+
+    # ? Nickname
+    $Visitor?->set_unique_name();
+
+    # ? Remote address
+    $Visitor->ip = Request::get_remote_address();
+
+    # ? Color
+    $Visitor->color = self::$colors[array_rand(self::$colors)];
+
+    # # Save it!
+    $Visitor->save();
+
+    return $Visitor;
+  }
+
+  /**
    * @return Collection<Reaction>
    */
   public function reactions()
@@ -123,6 +174,87 @@ class Visitor extends Bruder
   public function reports()
   {
     return $this->hasMany(Report::class);
+  }
+
+  /**
+   * Checks for a Visitor being set through a UUID saved in a
+   * cookie. It will instantly return null if no UUID cookie is
+   * set. Some prevention for database spamming.
+   *
+   * @return ?Visitor
+   */
+  public static function revisiting()
+  {
+
+    $cookie_uuid = Cookie::get("visitor-uuid");
+
+    if (!$cookie_uuid) return null;
+
+    /**
+     * @var ?Visitor
+     */
+    $Visitor = Visitor::where("uuid", $cookie_uuid)
+      ->first();
+
+    # Set any missing values for a possible instance.
+    $Visitor?->set_unique_name();
+    $Visitor?->set_color();
+
+    # In case there is a uuid saved as a cookie, but no Visitor
+    # relating to it, we can delete relations.
+    if (!$Visitor) {
+      self::clean_up();
+    }
+
+    return $Visitor;
+  }
+
+  /**
+   * Cleans up all relations to a Visitor, including a possible
+   * database entry.
+   *
+   * @return void
+   */
+  public static function clean_up()
+  {
+    $uuid_cookie = Cookie::get(self::$uuid_cookie);
+
+    # Delete a possible Visitor database entry.
+    if ($uuid_cookie)
+      Visitor::where("uuid", $uuid_cookie)
+        ->delete();
+
+    # Remove cookies and session data.
+    Cookie::delete(self::$uuid_cookie);
+    Cookie::delete(self::$identifier_cookie);
+    Session::remove("Visitor");
+  }
+
+  /**
+   * @return void
+   */
+  public function update_last_seen()
+  {
+    if (!$this->exists) return;
+
+    $CurrentVisitorLastSeen = $this->updated_at->getTimestamp();
+    $CurrentTime = new DateTime("now")->getTimestamp();
+
+    if ($CurrentTime - $CurrentVisitorLastSeen <= 5)
+      $this->touch();
+  }
+
+  /**
+   * Checks for a real visitor and all it's relations to be present.
+   */
+  public static function authorized()
+  {
+    $uuid_cookie = Cookie::get(self::$uuid_cookie);
+
+    return $uuid_cookie
+      && Cookie::get(self::$identifier_cookie)
+      && Session::get("Visitor", allow_empty: false)
+      && Visitor::where("uuid", $uuid_cookie)->first();
   }
 
   /**

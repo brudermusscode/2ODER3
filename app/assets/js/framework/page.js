@@ -8,8 +8,8 @@ import * as Global from "../pages/global";
  * Reloads the page by calling the get function and setting the
  * reload parameter to true.
  */
-export const reload = (keep_overlays = false) => {
-  get(
+export const reload = async (keep_overlays = false) => {
+  await get(
     window.location.pathname + window.location.search,
     false,
     null,

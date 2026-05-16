@@ -4,12 +4,6 @@ use Bruder\Application\Logger;
 use Bruder\Application\Router;
 
 /**
- * Maintenance mode.
- */
-// if (IS_MAINTENANCE)
-//   header("location: /maintenance");
-
-/**
  * @var Router
  */
 $Router = new Router;

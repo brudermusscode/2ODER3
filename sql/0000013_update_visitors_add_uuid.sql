@@ -1,0 +1,9 @@
+START TRANSACTION;
+
+TRUNCATE `visitors`;
+
+ALTER TABLE `visitors`
+  ADD `uuid` VARCHAR(255) NOT NULL AFTER `id`,
+  ADD `agent` VARCHAR(255) NULL AFTER `uuid`;
+
+COMMIT;

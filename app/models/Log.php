@@ -157,8 +157,10 @@ class Log extends Bruder
   /**
    * @return ?string
    */
-  public function increase_views(Visitor $Visitor)
+  public function increase_views(?Visitor $Visitor)
   {
+
+    if (!$Visitor?->exists) return ERROR;
 
     /**
      * @var ?View

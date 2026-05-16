@@ -1,5 +1,6 @@
 import * as Frontend from "../framework/frontend";
 import * as Cookie from "../framework/cookie";
+import * as Page from "../framework/page";
 import * as Prototype from "../abstract/prototypes";
 
 /**
@@ -19,6 +20,19 @@ $.ajaxSetup({
 $(function () {
   //
   //
+
+  $.ajax({
+    url: "/visitor/create",
+    method: "POST",
+    beforeSend: function () {
+      Cookie.set("visitor-identifier", true, 365);
+    },
+    success: function (data) {
+      console.log(data);
+
+      // if (!data.status) window.location.replace("/possibly-bot.php");
+    },
+  });
 
   /**
    * General click event handler.
@@ -123,10 +137,12 @@ $(function () {
     },
   );
 
+  /**
+   * @event click
+   * @this HTMLElement <popup-close></popup-close>
+   */
   $(document).on("click", "popup-close", function (e) {
-    if (__current_overlay.overlay) {
-      __current_overlay.delete();
-    }
+    __page.overlay?.delete();
   });
 
   /**

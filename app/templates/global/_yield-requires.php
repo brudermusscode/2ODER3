@@ -15,6 +15,7 @@
     marked: "home",
     is_loading: false,
     file_dialog_open: false,
+    overlay: null,
   };
 
   let __player = {
@@ -22,11 +23,6 @@
     object: null,
     volume: 0.5,
   };
-
-  let __current_overlay = null;
-  let __current_second_overlay;
-  let __current_audio_element;
-  let __current_hover_card;
 
   let __material_button_ripple_effect_remove_interval = 100;
   let __material_button_ripple_effect_done = false;

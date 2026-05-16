@@ -1,16 +1,16 @@
+@use "../abstract" as *;
 @use "var.utils" as *;
 @use "var.colors" as *;
 
 responder {
   display: block;
   bottom: -48px;
-  left: 50%;
-  translate: -50% 0;
+  left: $main-distance;
   position: fixed;
   z-index: $endless-z-index + 2001;
   transition: $trans-cubic;
   max-width: 48em;
-  padding-inline: 24px 36px;
+  padding-inline: 24px;
   padding-block: 20px;
   scale: 0.88;
   opacity: 0;
@@ -20,6 +20,19 @@ responder {
   // * You can add styling for &[error] … &[success] as those
   // * attributes will be set depending on the request status that
   // * the responder is repsonding to!
+
+  &[success] {
+    @extend .window;
+    color: $tertiary;
+    border-radius: 18px;
+  }
+
+  &[error] {
+    border-top: 1px solid rgba(255, 255, 255, 0.24);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+    background: $primary;
+    color: $primary-text;
+  }
 
   [close-responder] {
     cursor: pointer;

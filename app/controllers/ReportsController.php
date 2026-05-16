@@ -19,6 +19,8 @@ class ReportsController extends Controller
       optional: [],
     );
 
+    $this->visitor_authorized();
+
     /**
      * @var ?Comment
      */
