@@ -62,7 +62,7 @@ ob_start(); ?>
       <div fl fldircol gap=smol+>
         <div input has-icon=left>
           <mi color=secondary>password_2</mi>
-          <input crazy type=text placeholder="Code" name=code <?= DEV ? "value=" . $UserVerification->code : "" ?> />
+          <input crazy autofocus type=text placeholder="Code" name=code <?= DEV ? "value=" . $UserVerification->code : "" ?> />
         </div>
       </div>
 

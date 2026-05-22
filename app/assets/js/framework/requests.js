@@ -55,8 +55,9 @@ export const get = (url, query) => {
       success: function (data) {
         Frontend.unload();
 
-        if (data.status) new Overlay(data.data);
-        else Frontend.ajax_response("error");
+        if (data.status) {
+          new Overlay(data.data);
+        } else Frontend.ajax_response("error");
       },
       error: function (error) {
         Frontend.unload();

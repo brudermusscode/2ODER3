@@ -40,7 +40,7 @@ ob_start(); ?>
       <div fl fldircol gap=smol+>
         <div input has-icon=left>
           <mi color=secondary>alternate_email</mi>
-          <input autofocus crazy type=text placeholder="E-Mail Adresse" name=email />
+          <input tabindex=1 autofocus crazy type=text placeholder="E-Mail Adresse" name=email />
         </div>
       </div>
 
@@ -50,7 +50,7 @@ ob_start(); ?>
       <input type=hidden name=uuid value="<?= $tolkien ?>" />
 
       <div fl alic jucend gap=smol+ mt12>
-        <mbutton submit-closest mid background=tertiary color=tertiary-text icon-only>
+        <mbutton tabindex=2 submit-closest mid background=tertiary color=tertiary-text icon-only>
           <mi>arrow_forward</mi>
         </mbutton>
       </div>

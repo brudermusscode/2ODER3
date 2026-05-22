@@ -42,6 +42,7 @@ export default class Overlay {
     setTimeout(() => {
       this.loader.setAttribute("visible", "false");
       this.overlay.insertAdjacentHTML("afterbegin", data);
+      this.overlay.find("[autofocus]")?.focus();
       Frontend.reload_images();
     }, 200);
   }

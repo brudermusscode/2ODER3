@@ -33,8 +33,10 @@ $(function () {
       code === "enter" &&
       e.target.closest("input") &&
       e.target.closest("form")
-    )
+    ) {
+      e.preventDefault();
       e.target.closest("form").find("[submit-closest]").click();
+    }
   });
 
   /**
