@@ -93,7 +93,7 @@ class Mail
         /**
          * Encoding
          */
-        $mail->AddCustomHeader("X-MSMail-Priority: High");
+        // $mail->AddCustomHeader("X-MSMail-Priority: High");
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
         /**
@@ -102,7 +102,7 @@ class Mail
         $mail->DKIM_domain = $config->DOMAIN;
         $mail->DKIM_selector = $config->MAIL_DKIM_SELECTOR;
         $mail->DKIM_private = $private_key;
-        // $mail->DKIM_passphrase = $config->MAIL_DKIM_PASSPHRASE;
+        $mail->DKIM_passphrase = $config->MAIL_DKIM_PASSPHRASE;
         $mail->DKIM_identity = $mail->From;
       }
 
