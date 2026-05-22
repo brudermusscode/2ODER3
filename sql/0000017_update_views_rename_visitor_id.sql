@@ -14,9 +14,9 @@ ALTER TABLE `reactions`
 
 ALTER TABLE `reports`
   RENAME COLUMN `visitor_id` TO `user_id`,
-  MODIFY COLUMN `reference_type` VARCHAR(32) NOT NULL;
+  MODIFY COLUMN `type` VARCHAR(32) NOT NULL;
 
 ALTER TABLE `reports`
-  RENAME COLUMN `reference_type` TO `type`;
+  RENAME COLUMN `type` TO `reference_type`;
 
 COMMIT;

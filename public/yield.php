@@ -91,7 +91,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
     </main>
   HTML; ?>
 
-  <?php if (!DEV) : ?>
+  <?php if (!DEV && 1 === 2) : ?>
     <div window rounded fl alic gap=smol color=primary
       style="position:fixed;bottom:24px;left:24px;height:56px;padding-inline:18px 24px;z-index:110;">
       <mi midler>deployed_code</mi>

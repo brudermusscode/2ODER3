@@ -30,8 +30,8 @@ else : ?>
           </div>
 
           <div fl jucsb alic mt24>
-            <a tabindex=4 onclick="history.go(-1)" normal>
-              <mbutton tabindex=3 stdplus no-hover-shadow>
+            <a onclick="history.go(-1)" normal>
+              <mbutton tabindex=4 stdplus no-hover-shadow>
                 <span color=tertiary>züröck</span>
               </mbutton>
             </a>

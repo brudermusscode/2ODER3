@@ -21,6 +21,29 @@ $(function () {
   //
   //
 
+  /**
+   * @event keypress
+   */
+  $(document).on("keypress", function (e) {
+    let code = e.originalEvent.code.toLowerCase();
+
+    // Click submit a form if focused on an input inside a form and
+    // pressing enter.
+    if (
+      code === "enter" &&
+      e.target.closest("input") &&
+      e.target.closest("form")
+    )
+      e.target.closest("form").find("[submit-closest]").click();
+  });
+
+  /**
+   * Creates a Visitor on page startup. JS calling on startup will
+   * prevent bots from creating mass of Visitor instances.
+   *
+   * @action create
+   * @controller VisitorsController
+   */
   $.ajax({
     url: "/visitor/create",
     method: "POST",
@@ -35,7 +58,7 @@ $(function () {
   });
 
   /**
-   * General click event handler.
+   * @event click
    */
   $(document).on("click", function (e) {});
 
@@ -55,7 +78,7 @@ $(function () {
   });
 
   /**
-   * Release keypress events.
+   * @event keyup
    */
   $(document).on("keyup", function (e) {
     let key = e.key.toLowerCase();
@@ -73,7 +96,7 @@ $(function () {
   });
 
   /**
-   * Scroll events.
+   * @event scroll
    */
   $(document).on("scroll", function (e) {
     let $scroll_container = document.body.querySelectorAll(
@@ -106,7 +129,11 @@ $(function () {
   });
 
   /**
-   * Change event for file inputs.
+   * Triggers media selector changes when the corresponding input
+   * has received changes.
+   *
+   * @event change
+   * @this HTMLElement [trigger-file-input] input[type='file']
    */
   $(document).on(
     "change",

@@ -24,7 +24,7 @@ export const routes = {
     mark: "login",
     hide_sidebar: true,
     background: {
-      image: "/assets/images/tent.svg",
+      image: "/assets/images/66727.jpg",
       blur: 0,
       color: "rgba(0,0,0,.24)",
     },
