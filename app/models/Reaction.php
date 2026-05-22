@@ -3,6 +3,8 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Reaction extends Bruder
 {
@@ -15,7 +17,15 @@ class Reaction extends Bruder
     "emote",
   ];
 
+  /**
+   * Emojis that can be used as reactions.
+   */
   public static array $valid_reaction_emotes = ["😃", "🤣", "😍", "🤯", "😭", "🤡", "🤬",];
+
+  /**
+   * Not yet in use really, but might come in handy later. Will
+   * include types of reactions like emotes or stickers.
+   */
   public static array $valid_reaction_types = [
     "emote",
   ];
@@ -30,7 +40,7 @@ class Reaction extends Bruder
     /**
      * @var Visitor
      */
-    $Visitor = $params->Visitor;
+    $Client = $params->Client;
 
     /**
      * @var Log
@@ -53,8 +63,8 @@ class Reaction extends Bruder
       return error("Invalid Reaction type");
 
     $Reaction->type = $params->type;
-    $Reaction->log_id = $Log->id;
-    $Reaction->visitor_id = $Visitor->id;
+    $Reaction->log()->associate($Log);
+    $Reaction->client()->associate($Client);
     $Reaction->save();
 
     # For the frontend manipulation, I include the reaction
@@ -77,15 +87,15 @@ class Reaction extends Bruder
   }
 
   /**
-   * @return Visitor
+   * @return MorphTo<User|Visitor>
    */
-  public function visitor()
+  public function client()
   {
-    return $this->belongsTo(Visitor::class);
+    return $this->morphTo();
   }
 
   /**
-   * @return Log
+   * @return BelongsTo<Log>
    */
   public function log()
   {

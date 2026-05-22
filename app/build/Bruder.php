@@ -4,6 +4,7 @@ namespace Bruder;
 
 use Bruder\Trait\ProcessesRequests;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Bruder extends Model
 {

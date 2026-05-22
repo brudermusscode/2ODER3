@@ -103,6 +103,11 @@ mbutton {
      * ,,,,,,,,,,,,,,,,,,,,,,, SIZING ,,,,,,,,,,,,,,,,,,,,,,,,,
      * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
      */
+
+  &[has-icon] {
+    justify-content: flex-start;
+  }
+
   &[size="std"],
   &[std],
   &:not([smol], [std], [stdplus], [midler], [mid], [wide]) {
@@ -128,6 +133,8 @@ mbutton {
       gap: 8px;
 
       &[has-icon="left"] {
+        padding-inline: 8px 12px;
+
         &[show-text-active] {
           &:not([active]) {
             padding-inline: 0;
@@ -135,11 +142,11 @@ mbutton {
             min-width: $mbutton-std-size;
           }
         }
-
-        padding-inline: 12px 24px;
       }
 
       &[has-icon="right"] {
+        padding-inline: 12px 8px;
+
         &[show-text-active] {
           &:not([active]) {
             padding-inline: 0;
@@ -147,8 +154,6 @@ mbutton {
             min-width: $mbutton-std-size;
           }
         }
-
-        padding-inline: 24px 12px;
       }
     }
 
@@ -233,6 +238,8 @@ mbutton {
       gap: 8px;
 
       &[has-icon="left"] {
+        padding-inline: 10px 24px;
+
         &[show-text-active] {
           &:not([active]) {
             padding-inline: 0;
@@ -240,11 +247,11 @@ mbutton {
             min-width: $mbutton-std-plus-size;
           }
         }
-
-        padding-inline: 12px 24px;
       }
 
       &[has-icon="right"] {
+        padding-inline: 24px 10px;
+
         &[show-text-active] {
           &:not([active]) {
             padding-inline: 0;
@@ -252,8 +259,6 @@ mbutton {
             min-width: $mbutton-std-plus-size;
           }
         }
-
-        padding-inline: 24px 12px;
       }
     }
 
@@ -387,7 +392,7 @@ mbutton {
   &:hover {
     outline: none;
     box-shadow: var(--mio-theme-elevation-3);
-    scale: 1.03;
+    scale: 1.02;
 
     &[elevated] {
       box-shadow: var(--mio-theme-elevation-3);

@@ -4,13 +4,13 @@
 
 popup-close {
   position: fixed;
-  height: $header-height - 2px;
-  width: $header-height - 2px;
+  height: 82px;
+  width: 82px;
   top: 0;
   right: 0;
   border-radius: 0 0 0 64px;
   transition: $trans-cubic;
-  padding: 18px 18px 24px 24px;
+  padding: 18px 18px 32px 32px;
   display: flex;
   align-items: center;
   justify-content: center;

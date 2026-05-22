@@ -20,12 +20,12 @@ class UsersController extends Controller
       optional: [],
     );
 
-    $cookie_uuid = Cookie::get("user-uuid");
+    $cookie_uuid = Cookie::get(User::$pre_uuid_cookie);
 
     /**
      * @var ?User
      */
-    $User = User::where("uuid", $cookie_uuid ?? "")
+    $User = User::where("uuid", $cookie_uuid)
       ->first();
 
     return $User

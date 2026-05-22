@@ -8,12 +8,12 @@ require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php"
 /**
  * @var int
  */
-$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+$id = filter_input(INPUT_GET, "reference_id", FILTER_VALIDATE_INT);
 
 /**
  * @var ?string
  */
-$type = filter_input(INPUT_GET, "type", FILTER_SANITIZE_SPECIAL_CHARS);
+$type = filter_input(INPUT_GET, "reference_type", FILTER_SANITIZE_SPECIAL_CHARS);
 
 /**
  * @var ?Comment
@@ -32,8 +32,8 @@ ob_start(); ?>
     <form request="report:create" reload responder=simple
       fl fldircol gap>
 
-      <input type=hidden name=type value=<?= $type ?> />
-      <input type=hidden name=id value=<?= $id ?> />
+      <input type=hidden name=reference_id value=<?= $id ?> />
+      <input type=hidden name=reference_type value=<?= $type ?> />
 
       <div>
         <p text smol ttup slight>Gar kein Bock auf diese</p>

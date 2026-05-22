@@ -10,7 +10,7 @@ $log_id = filter_input(INPUT_GET, "log_id", FILTER_VALIDATE_INT);
 /**
  * @var ?Log
  */
-$SelectedLog = Log::with("comments.visitor")
+$SelectedLog = Log::with("comments.client")
   ->where("id", $log_id)
   ->first();
 

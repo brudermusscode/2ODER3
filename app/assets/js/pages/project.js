@@ -52,7 +52,7 @@ $(function () {
   //
 
   /**
-   * Click events.
+   * @event click
    */
   $(document).on("click", function (e) {
     // Close reactions popup.

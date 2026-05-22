@@ -10,11 +10,19 @@ class Arr
    * @param array $array
    * @return array
    */
-  public static function sanitize_special_chars(array $array)
+  public static function sanitize_special_chars(array $array, array $skip_keys = [])
   {
     $filtered = [];
 
-    foreach ($array as $key => $value)
+    foreach ($array as $key => $value) {
+
+      # Skip any given keys by directly appending it to the
+      # filtered array and continuing.
+      if (in_array($key, $skip_keys)) {
+        $filtered[$key] = $value;
+        continue;
+      }
+
       if (is_array($value))
         $filtered[$key] = self::sanitize_special_chars($value);
       else {
@@ -26,6 +34,7 @@ class Arr
           ? (int) $value
           : filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);;
       }
+    }
 
     return $filtered;
   }

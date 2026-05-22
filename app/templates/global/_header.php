@@ -5,73 +5,100 @@ use Bruder\Model\Project;
 
 ?>
 
-<header fl alic jucsb scroll-manipulated>
-  <div fl alic gap z>
-    <a fl alic gap=smol href="/">
-      <logo>
-        <picture>
-          <img src="/logo.svg" />
-        </picture>
-      </logo>
-      <p text smol ttup><strong>DEV</strong>Log</p>
-    </a>
+<sidebar fl fldircol jucsb gap>
+  <div fl fldircol gap ovauto pb100>
+    <div fl alic gap z pinline20>
+      <a fl alic gap=smol href="/">
+        <logo>
+          <picture>
+            <img src="/logo.svg" />
+          </picture>
+        </logo>
+        <p text smol ttup><strong>DEV</strong>Log</p>
+      </a>
+    </div>
 
-    <div style="height:24px;width:3px;" rounded background=slight-light></div>
+    <?php if (!LOGGED) : ?>
+      <div pinline12>
+        <mbutton request-get="user:new" stdplus background=secondary color=secondary-text has-icon=left>
+          <mi>crowdsource</mi>
+          Hierbleiben
+        </mbutton>
+      </div>
+    <?php else : ?>
+      <div pinline12>
+        <mbutton tag stdplus style="background:<?= CURRENT_BRUDER->color ?>;">
+          <p text smolplus semibold><?= CURRENT_BRUDER->nickname; ?></p>
+        </mbutton>
+      </div>
+    <?php endif ?>
 
     <?php
 
     /**
      * @var Collection<Project>
      */
-    $Projects = Project::orderBy("created_at", "DESC")->get();
+    $Projects = Project::withCount("logs")
+      ->orderBy("created_at", "DESC")
+      ->get();
 
     ?>
 
-    <option-select>
-      <mi stdplus color=tertiary>deployed_code</mi>
-      <current-option>
-        <?php if (isset($Project)) : ?>
-          <?= $Project->name ?>
-        <?php else : ?>
-          Projekt wählen
-        <?php endif ?>
-      </current-option>
-      <mi midler>arrow_drop_down</mi>
-      <options data-action="project:get">
-        <p pinline20 pt8 pb6 text smoler ttup semibold color=tertiary>Meine Projekte</p>
-        <?php foreach ($Projects as $Project) : ?>
-          <option data-id=<?= $Project->id ?>
-            <?= CURRENT_PAGE === "project" && isset($_GET["id"]) && $_GET["id"] === $Project->id
-              ? "active"
-              : "" ?>>
-            <p text><?= $Project->name ?></p>
-            <mi></mi>
-          </option>
-        <?php endforeach ?>
-      </options>
-    </option-select>
+    <div pinline12 fl fldircol gap=smoler>
+      <div fl alic gap=smol pinline10 posrel mb12>
+        <p text smoler ttup semibold color=tertiary>Projekte</p>
+        <div style="min-height:3px;" flone rounded background=slight-light
+          minline6></div>
+      </div>
+      <?php foreach ($Projects as $Project) : ?>
+        <a hoverable pl10 pr6 pblock12 rounded=mid fl alic gap=smol
+          page=project href="/project/<?= $Project->id ?>">
+          <mi stdplus color=tertiary>deployed_code</mi>
+          <p><?= $Project->name; ?></p>
+        </a>
+      <?php endforeach; ?>
+    </div>
+
+
+    <div style="min-height:3px;" flone rounded background=slight-light
+      minline24></div>
+
+    <div pinline12>
+      <a href="https://github.com/brudermusscode" extern target="_blank">
+        <mbutton stdplus has-icon=left background=slight-light>
+          <img style="height:24px;" src="/assets/images/github-white.svg" />
+          <p text style="font-size:14px;">@brudermusscode</p>
+        </mbutton>
+      </a>
+    </div>
   </div>
 
-  <div fl alic gap=smol+ z>
-    <a href="https://github.com/brudermusscode" extern target="_blank">
-      <mbutton std icon-only background=slighter-light>
-        <img src="/assets/images/github-white.svg" />
-      </mbutton>
-    </a>
-
-    <div style="height:24px;width:3px;" rounded background=slight-light minline12></div>
-
-    <mbutton request-get="user:new" stdplus background=secondary color=secondary-text has-icon=left>
-      <mi>crowdsource</mi>
-      Beitreten
-    </mbutton>
-
+  <!--- Bottom --->
+  <div style="bottom:0;" posabs pb24 pinline12 fl alic gap=smoler>
     <?php if (authorized()) : ?>
       <a href="/log/new">
-        <mbutton std background=green color=dark icon-only>
+        <mbutton stdplus background=green color=dark icon-only>
           <mi>arrow_upload_ready</mi>
         </mbutton>
       </a>
+
+
+      <div style="min-width:3px;height:38px;" minline6 rounded background=slight-light></div>
+    <?php endif; ?>
+
+    <?php if (!LOGGED) : ?>
+      <a href="/get-back">
+        <mbutton stdplus z background=primary color=primary-text icon-only has-tooltip=right>
+          <mi>key_vertical</mi>
+          <div ttooltip text semibold>Einloggen</div>
+        </mbutton>
+      </a>
+    <?php else : ?>
+      <mbutton stdplus request="session:delete" shadow-submit full-reload responder=simple
+        background=red icon-only has-tooltip="right">
+        <mi>folded_hands</mi>
+        <div ttooltip>Ausloggääähn</div>
+      </mbutton>
     <?php endif; ?>
   </div>
-</header>
+</sidebar>

@@ -10,27 +10,24 @@ export const routes = {
   "not-found": {},
 
   home: {
-    // * Which [page] attribute in a possible main menu should be
-    // * marked with [active] attribute.
     mark: "home",
-
-    // * Should match the exact params in your router for this route.
     params: "/:id/:sub",
-
-    // * Some functions should just be executed once when loading a
-    // * page and not again, when entering a sub page of this route.
-    // * For example, you click to /user/1 and it should load all
-    // * scores of the user with the id 1. Then you click on
-    // * /user/1/friends and it should not execute the function
-    // * loading all scores again.
     execute_once: () => {},
-
-    // TODO: implement execute_always.
   },
 
   project: {
-    mark: "projects",
+    mark: "project",
     params: ":id",
+  },
+
+  "get-back": {
+    mark: "login",
+    hide_sidebar: true,
+    background: {
+      image: "/assets/images/tent.svg",
+      blur: 0,
+      color: "rgba(0,0,0,.24)",
+    },
   },
 };
 

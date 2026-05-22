@@ -1,8 +1,15 @@
 <?php
 
 use Bruder\Application\Application;
+use Bruder\Application\Cookie;
 use Bruder\Application\Session as SessionManager;
 use Bruder\Model\Session;
+use Bruder\Model\User;
+use Bruder\Model\Visitor;
+
+/**
+ * @var ?Session $Session
+ */
 
 /**
  * Environmental.
@@ -63,7 +70,11 @@ define("FONT", HOME_URL . "/assets/fonts");
 define("ASSET", ROOT . "/public/assets");
 
 /**
- * Variable.
+ * Determines the currennt Bruder, or better Client by checking for a
+ * valid Session to be existing or falls back to the Visitor in the
+ * session object of PHP, which could also be null.
+ *
+ * @var User|Visitor|null
  */
-define("CURRENT_VISITOR", SessionManager::get("Visitor"));
-define("LOGGED", Session::valid());
+define("CURRENT_BRUDER", $Session->valid ? $Session->user : SessionManager::get("Visitor"));
+define("LOGGED", CURRENT_BRUDER instanceof User);

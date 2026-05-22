@@ -25,6 +25,10 @@ choose-option {
   coption {
     cursor: pointer;
 
+    &:focus {
+      outline: 4px solid $light;
+    }
+
     &[active] {
       outline: 4px solid $green;
     }

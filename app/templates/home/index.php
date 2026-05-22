@@ -18,7 +18,7 @@ use Bruder\Model\Project;
   ) : ?>
 
     <div>
-      <div pt12 pb12 fl alic jucsb>
+      <div pb12 fl alic jucsb>
         <div fl alic gap=smol>
           <div circled window style="height:38px;width:38px;" fl alic jucc>
             <mi color=tertiary midler>deployed_code</mi>
@@ -47,7 +47,7 @@ use Bruder\Model\Project;
         $Logs = $Project->logs;
 
         foreach ($Logs as $key => $Log) : ?>
-          <div style="flex-basis:25%;min-width:25%;">
+          <div style="flex-basis:25%;max-width:25%;">
             <?php include TEMPLATE . "/log/_log.php" ?>
           </div>
         <?php endforeach;

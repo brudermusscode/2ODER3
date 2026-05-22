@@ -3,26 +3,26 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class View extends Bruder
 {
-
   /**
    * @var array
    */
   protected $fillable = [];
 
   /**
-   * @return Visitor
+   * @return MorphTo<User|Visitor>
    */
-  public function visitor()
+  public function client()
   {
-    return $this->belongsTo(Visitor::class);
+    return $this->morphTo();
   }
 
   /**
-   * @return Log
+   * @return BelongsTo<Log>
    */
   public function log()
   {

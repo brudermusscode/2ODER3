@@ -26,7 +26,7 @@ ob_start(); ?>
       <div fl fldircol gap=smol+>
         <div input has-icon=left>
           <mi color=secondary>sticker</mi>
-          <input tabindex=1 autofocus crazy type=text placeholder="Spitzname" name=nickname value="<?= CURRENT_VISITOR->nickname ?? "" ?>" />
+          <input tabindex=1 autofocus crazy type=text placeholder="Spitzname" name=nickname value="<?= CURRENT_BRUDER->nickname ?? "" ?>" />
         </div>
         <div input has-icon=left>
           <mi color=secondary>lock</mi>
@@ -49,11 +49,11 @@ ob_start(); ?>
               tabindex="<?php echo $tabindex;
                         $tabindex++; ?>"
               data-value="<?= $color ?>"
-              <?= CURRENT_VISITOR?->color === $color ? "active" : "" ?>
+              <?= CURRENT_BRUDER?->color === $color ? "active" : "" ?>
               pinline18 pblock18 circled style="max-width:48px;background:<?= $color ?>;">
             </coption>
           <?php endforeach ?>
-          <input type=hidden name=color value="<?= CURRENT_VISITOR?->color ?? "" ?>" />
+          <input type=hidden name=color value="<?= CURRENT_BRUDER?->color ?? "" ?>" />
         </choose-option>
       </div>
 

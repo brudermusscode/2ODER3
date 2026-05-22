@@ -1,47 +1,40 @@
 @use "../abstract" as *;
 @use "../framework/var.utils" as *;
 
-header {
+sidebar {
   position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 50%;
-  translate: -50% 0;
-  width: 100%;
-  height: $header-height;
-  max-width: $content-width;
-  padding-inline: $main-distance;
+  z-index: 99;
+  left: 0;
+  padding-top: $main-distance;
+  width: $sidebar-width;
+  height: 100%;
+  background: $slighter-dark;
 
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80%;
-    transition: opacity 0.1s linear;
-    background: #101012;
-    background: linear-gradient(
-      180deg,
-      rgba(16, 16, 18, 1) 32%,
-      rgba(16, 16, 18, 0) 100%
-    );
+  &[active] {
+    left: -$sidebar-width;
   }
+}
 
-  logo {
-    $logo-size: 38px;
+logo {
+  $logo-size: 38px;
 
-    @extend .window;
+  @extend .window;
 
-    display: block;
-    height: $logo-size;
-    width: $logo-size;
+  display: block;
+  height: $logo-size;
+  width: $logo-size;
+
+  &[mid] {
+    height: $mbutton-mid-size;
+    width: $mbutton-mid-size;
 
     picture {
-      height: $logo-size;
-      margin-top: -1px;
+      height: $mbutton-mid-size;
     }
+  }
+
+  picture {
+    height: $logo-size;
+    margin-top: -1px;
   }
 }

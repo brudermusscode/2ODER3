@@ -3,7 +3,6 @@
 namespace Bruder\Controller;
 
 use Bruder\Application\Cookie;
-use Bruder\Application\Session;
 use Bruder\Model\Session as ModelSession;
 use Bruder\Model\User;
 use Bruder\Model\Visitor;
@@ -16,18 +15,35 @@ class Controller
 
   # Keys that are valid for prequests even tho not explicitly
   # noted down in the controller.
-  protected static array $valid_passthrough_keys = ["habibi", "csrf_token", "__admin_key"];
+  protected static array $valid_passthrough_keys = [
+    "__admin_key",
+    "Client",
+  ];
 
+  /**
+   * Sent parameter from $_GET or $_POST.
+   */
   protected array|object|null $params = [];
 
+  /**
+   * Sent files from $_FILES.
+   */
   protected array $files = [];
 
   /**
-   * @param array $request - GET/POST/REQUEST
+   * The current client, which can either be a non authenticated
+   * Visitor or a fully signed up User. Or null, of course 🐣
+   * * Not being used by now, as I often pass the Client as a
+   * * param to model methods.
+   */
+  protected User|Visitor|null $Client = null;
+
+  /**
+   * @param array $params
+   * @param array $files
    */
   public function __construct(array $params = [], array $files = [])
   {
-
     # Set input params.
     $this->params = $params;
 
@@ -35,55 +51,64 @@ class Controller
     foreach ($files as $key => $file) {
       $this->params[$key] = $file;
     }
+
+    # Set the current Bruder as the Client, so we can interact with
+    # it either in Controller files itself or any Model as we pass
+    # the params. This is save, as params are set above and if the
+    # User would set a custom Client, this below will overwrite it
+    # again. Sanitization for key Client will be skipped.
+    # * It feels wrong passing the User or Visitor as a param to any
+    # * model and work with it inside the model. Shouldn't this be
+    # * happening in the controller? Using $this->Client and limiting
+    # * access to any controller only would be cleaner.
+    $this->params["Client"] = CURRENT_BRUDER;
   }
 
   /**
    * Authorizes the client which has to send a secret key that
-   * needs to match the one in the .env file. Otherwise it
-   * instantly dies the php processing.
+   * needs to match the one in the .env file. Only for author-
+   * izing admina actions.
    *
-   * @return true|die
+   * ? May terminate the execution using die().
+   *
+   * @return true
    */
   public function authorize()
   {
-
     # Do'nt forget to add a key to the .env file 😂
-    if (!_env("WEB_ADMIN_KEY")) die(error("Kein Key in der .env Brudi."));
+    if (!_env("WEB_ADMIN_KEY")) {
+      die(error("Kein Key in der .env Brudi."));
+    }
 
     # Either the transmitted params…
-    $params_have_valid_key = !empty($this->params->__admin_key) && $this->params->__admin_key === _env("WEB_ADMIN_KEY");
+    $params_have_valid_key =
+      !empty($this->params->__admin_key) &&
+      $this->params->__admin_key === _env("WEB_ADMIN_KEY");
 
     # …or a cookie has to have the matching key.
-    $cookies_have_valid_key = !empty(Cookie::get("__admin_key")) && Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY");
+    $cookies_have_valid_key =
+      !empty(Cookie::get("__admin_key")) &&
+      Cookie::get("__admin_key") === _env("WEB_ADMIN_KEY");
 
-    return $params_have_valid_key || $cookies_have_valid_key
-      ?: die(error("Nö Bruder. Einfach nö."));
+    return $params_have_valid_key || $cookies_have_valid_key ?:
+      die(error("Nö Bruder. Einfach nö."));
   }
 
   /**
-   * Authorizes a visitor to take action.
+   * Authorizes a client to take action. Respects exceptional
+   * nullability of $Client. If null, it checks for the
+   * CURRENT_BRUDER to be popuplated.
    *
-   * @return true|die
-   */
-  public function visitor_authorized()
-  {
-
-    if (!Visitor::authorized())
-      return die(error("Nicht aUtHoRiSiErT Brudi. 🤡"));
-
-    return true;
-  }
-
-  /**
-   * Validates if the current Visitor is digitated into a User
-   * already.
+   * ? May terminate the execution using die().
    *
-   * @return true|die
+   * @param User|Visitor|null $Client
+   * @param bool $die
+   * @return true
    */
-  public function user_authorized(bool $exit = true)
+  public function can_interact(User|Visitor|null $Client = null, bool $die = true)
   {
-    return ModelSession::valid()
-      ?: ($exit ? exit(error("D1 User ist nicht authorisiert 🤡")) : false);
+    return $this->params->Client?->exists
+      ?: ($die ? die(error("Nicht aUtHoRiSiErT Brudi. 🤡")) : false);
   }
 
   /**
@@ -99,16 +124,15 @@ class Controller
   public function validate_params(
     array $strict,
     array $optional,
-    ?array $input_params = null
+    ?array $input_params = null,
   ) {
-
     /**
      * @var ?object
      */
     $this->params = $this->serialize_request_params(
       $strict,
       $input_params ?? $this->params,
-      $optional
+      $optional,
     );
 
     /**
@@ -116,8 +140,9 @@ class Controller
      * execution of any further code, since this will (hopefully)
      * always be the end.
      */
-    if (!$this->params)
+    if (!$this->params) {
       die($this->error());
+    }
   }
 
   /**
@@ -132,7 +157,7 @@ class Controller
   protected function serialize_request_params(
     array $necessary,
     array $post_params,
-    array $optional = []
+    array $optional = [],
   ) {
     /**
      * @var array
@@ -140,27 +165,29 @@ class Controller
     $always_pass = self::$valid_passthrough_keys;
 
     // Check if all required parameters are set in the post request
-    foreach ($necessary as $param)
+    foreach ($necessary as $param) {
       if (!isset($post_params[$param]))
         return null;
+    }
 
     // Check if any parameter in the post request is not in the required or optional arrays
-    foreach ($post_params as $key => $value)
+    foreach ($post_params as $key => $value) {
       if (
         !in_array($key, $necessary) &&
         !in_array($key, $optional) &&
         !in_array($key, $always_pass)
-      )
+      ) {
         return null;
+      }
+    }
 
-    $final = (object) Arr::sanitize_special_chars($post_params);
-    $final->Visitor = CURRENT_VISITOR;
+    $final = (object) Arr::sanitize_special_chars($post_params, skip_keys: ["Client"]);
 
     return $final;
   }
 
   /**
-   * Get the magic happening! Wizards from waverly Place have been
+   * Get the magic happening! Wizards from Waverly Place have been
    * working on this: This function calls a controller file from a
    * given file inside a given path and determines the method to
    * call based on the file name this function is being called in.
@@ -173,14 +200,15 @@ class Controller
    */
   public static function call(string $file, string $from)
   {
-
     $dir_split = explode("/", $from);
 
     # Remove all directories before (and including) templates so we
     # can determine, how deep the Controller file lays.
     foreach ($dir_split as $key => $dir) {
       unset($dir_split[$key]);
-      if ($dir === "templates") break;
+      if ($dir === "templates") {
+        break;
+      }
     }
 
     # Build the controller name.
@@ -190,17 +218,19 @@ class Controller
     }
     $ControllerName .= "sController";
 
-    // ! Controller class is non-existent.
-    if (!class_exists($ControllerName))
+    // Controller class is non-existent?
+    if (!class_exists($ControllerName)) {
       return error("Klasse gibts nicht Bruder.");
+    }
 
     # Get the method name from file name.
     $method = pathinfo($file, PATHINFO_FILENAME);
 
-    // ! Method is non-existent inside controller class.
-    if (!method_exists($ControllerName, $method))
+    // Method is non-existent inside controller class?
+    if (!method_exists($ControllerName, $method)) {
       return error("Methode gibts nicht Bruder.");
+    }
 
-    return (new $ControllerName($_POST, $_FILES))->$method();
+    return new $ControllerName($_POST, $_FILES)->$method();
   }
 }

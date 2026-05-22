@@ -157,15 +157,15 @@ class Log extends Bruder
   /**
    * @return ?string
    */
-  public function increase_views(?Visitor $Visitor)
+  public function increase_views(Visitor|User|null $Client)
   {
 
-    if (!$Visitor?->exists) return ERROR;
+    if (!$Client?->exists) return ERROR;
 
     /**
      * @var ?View
      */
-    $LastView = $Visitor->views()
+    $LastView = $Client->views()
       ->where([
         "log_id" => $this->id,
       ])
@@ -177,9 +177,9 @@ class Log extends Bruder
     if ($LastView && time() - $LastView->created_at->getTimestamp() < 300)
       return null;
 
-    # # Create it!
+    # Create it!
     $View = new View;
-    $View->visitor()->associate($Visitor);
+    $View->client()->associate($Client);
     $View->log()->associate($this);
     $View->save();
 

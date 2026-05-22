@@ -48,6 +48,20 @@ input {
     padding-block: 18px;
   }
 
+  &[login] {
+    background: $slight-light;
+    border-radius: 28px;
+    height: $mbutton-std-plus-size;
+    padding-inline: 18px;
+    max-width: 100%;
+    width: 100%;
+    color: $light;
+
+    &:focus {
+      outline: 4px solid white;
+    }
+  }
+
   &[crazy] {
     background: transparent;
     border-bottom: 2px solid rgba(255, 255, 255, 0.24);

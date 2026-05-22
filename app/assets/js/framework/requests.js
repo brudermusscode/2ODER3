@@ -18,6 +18,7 @@ const SUBMIT_FORM_ATTRIBUTES = [
   "no-scroll-top",
   "toggle-button-active",
   "redirect",
+  "full-redirect",
   "reload",
   "full-reload",
   "close-overlays",
@@ -220,8 +221,11 @@ $(function () {
        */
       let full_reload = this.getAttribute("full-reload");
 
+      // * [full-reload] combined with [redirect] will redirect to the
+      // * desired URI in non-SPA manner.
+
       /**
-       * [close-overlays] will close all opened overlays.
+       * [close-overlays] will close all open overlays.
        */
       let close_overlays = this.hasAttribute("close-overlays");
 
@@ -284,21 +288,20 @@ $(function () {
             }
             if (close_overlays !== null) Frontend.close_overlays();
             if (reload !== null) Page.reload();
-            if (redirect !== null) {
-              if (full_reload === null) {
-                Page.get(
-                  data.data?.redirect_uri ?? redirect,
-                  false,
-                  null,
-                  scroll_top,
-                );
-              } else
-                window.location.replace(
-                  data.data?.redirect_uri ??
-                    redirect ??
-                    window.location.pathname + window.location.search,
-                );
-            }
+            if (redirect !== null && full_reload === null)
+              Page.get(
+                data.data?.redirect_uri ?? redirect,
+                false,
+                null,
+                scroll_top,
+              );
+
+            if (full_reload !== null)
+              window.location.replace(
+                data.data?.redirect_uri ??
+                  redirect ??
+                  window.location.pathname + window.location.search,
+              );
 
             if (!redirect && !reload && !full_reload) button.enable();
 

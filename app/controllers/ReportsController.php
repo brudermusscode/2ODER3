@@ -3,6 +3,7 @@
 namespace Bruder\Controller;
 
 use Bruder\Controller\Controller;
+use Bruder\Model\Comment;
 use Bruder\Model\Report;
 
 class ReportsController extends Controller
@@ -15,35 +16,35 @@ class ReportsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["type", "id"],
+      strict: ["reference_id", "reference_type",],
       optional: [],
     );
 
-    $this->visitor_authorized();
+    $this->can_interact(die: true);
 
     /**
      * @var ?Comment
      */
     $Reference =
-      Report::valid($this->params->type, $this->params->id)
+      Report::valid($this->params->reference_type, $this->params->reference_id)
       ?? ERROR;
 
-    # ! User has reported this already.
+    # User has reported this already?
     if (
-      CURRENT_VISITOR->reports()
+      CURRENT_BRUDER->reports()
       ->where([
         "reference_id" => $Reference->id,
-        "type" => $this->params->type
+        "reference_type" => $this->params->reference_type
       ])
       ->first()
     )
       return ERROR;
 
     # Create a new report!
-    CURRENT_VISITOR->reports()
+    CURRENT_BRUDER->reports()
       ->create([
         "reference_id" => $Reference->id,
-        "type" => $this->params->type,
+        "reference_type" => $this->params->reference_type,
       ]);
 
     return OK;

@@ -1,5 +1,7 @@
 <?php
 
+use Bruder\Application\Cookie;
+use Bruder\Model\User;
 use Bruder\Model\UserVerification;
 
 require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php";
@@ -20,11 +22,27 @@ $UserVerification = UserVerification::where([
 ])
   ->first();
 
-# ! No User with this UUID exists.
+# No UserVerification exists?
 if (!$UserVerification)
   exit(error("Nein."));
 
-# Begin output.
+# The pre uuid cookie for the User.
+$uuid = Cookie::get(User::$pre_uuid_cookie);
+
+/**
+ * Find a User with the set user pre uuid and the user_id of
+ * the UserVerification.
+ * @var ?User
+ */
+$User = User::where([
+  "uuid" => $uuid,
+  "id" => $UserVerification->user_id
+])->first();
+
+# No User with this UUID exists?
+if (!$User)
+  exit(error("Nein. Was ist das für eine UUID? 🙂‍↔️"));
+
 ob_start(); ?>
 
 <popup-close>
@@ -52,6 +70,7 @@ ob_start(); ?>
 
       <input type=hidden name=email value="<?= $email ?>" />
       <input type=hidden name=token value="<?= $tolkien ?>" />
+      <input type=hidden name=uuid value="<?= $uuid ?>" />
 
       <div fl alic jucsb gap=smol+ mt12 pl12>
         <div smol class=spinner>

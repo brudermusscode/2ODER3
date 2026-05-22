@@ -20,12 +20,12 @@ class ReactionsController extends Controller
       optional: [],
     );
 
-    $this->visitor_authorized();
+    $this->can_interact(die: true);
 
     /**
      * @var ?Reaction
      */
-    $Reaction = CURRENT_VISITOR->reactions()
+    $Reaction = CURRENT_BRUDER->reactions()
       ->where([
         "log_id" => $this->params->log_id,
         "emote" => $this->params->emote,
@@ -84,13 +84,13 @@ class ReactionsController extends Controller
       optional: [],
     );
 
-    $this->visitor_authorized();
+    $this->can_interact(die: true);
 
     /**
      * Delete the reaction in one run or return an error, if no
      * reaction exists here with the given id.
      */
-    $Reaction = CURRENT_VISITOR->reactions()
+    $Reaction = CURRENT_BRUDER->reactions()
       ->where([
         "log_id" => $this->params->log_id,
         "emote" => $this->params->emote,

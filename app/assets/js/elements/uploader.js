@@ -26,6 +26,17 @@ $(function () {
   });
 
   /**
+   * @event keypress
+   */
+  $(document).on("keypress", function (e) {
+    let code = e.originalEvent.code.toLowerCase();
+
+    // Click a choose option element if it is targeted.
+    if (code === "enter" && e.target.closest("coption"))
+      e.target.closest("coption").click();
+  });
+
+  /**
    * Delete a Log.
    *
    * @action DELETE

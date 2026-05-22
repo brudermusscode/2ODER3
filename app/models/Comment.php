@@ -3,6 +3,9 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Comment extends Bruder
 {
@@ -24,7 +27,7 @@ class Comment extends Bruder
     /**
      * @var Visitor
      */
-    $Visitor = $params->Visitor;
+    $Client = $params->Client;
 
     /**
      * @var Log
@@ -37,10 +40,10 @@ class Comment extends Bruder
     $Comment = self::make();
 
     # ? Log
-    $Comment->log_id = $Log->id;
+    $Comment->log()->associate($Log);
 
     # ? Visitor
-    $Comment->visitor_id = $Visitor->id;
+    $Comment->client()->associate($Client);
 
     # ? Comment
     $Comment->comment = $params->comment ?: die(error("Comment is empty"));
@@ -67,26 +70,18 @@ class Comment extends Bruder
   }
 
   /**
-   * @return Visitor
+   * @return MorphTo<User|Visitor>
    */
-  public function visitor()
+  public function client()
   {
-    return $this->belongsTo(Visitor::class);
+    return $this->morphTo("client");
   }
 
   /**
-   * @return Log
+   * @return BelongsTo<Log>
    */
   public function log()
   {
     return $this->belongsTo(Log::class);
-  }
-
-  /**
-   * @return Collection<Report>
-   */
-  public function reports()
-  {
-    return $this->hasMany(Report::class, "reference_id", "id");
   }
 }

@@ -17,6 +17,8 @@
 /Dockerfile.dev
 /docker/dev
 
+/.prettierignore
+/.prettierrc
 /.VSCodeCounter
 /.setup
 /deploy.sh

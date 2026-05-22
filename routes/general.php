@@ -14,9 +14,14 @@ use Bruder\Model\Project;
 $Router->get("/not-found", "error/404", title: "Bruder, was geht jetzt?");
 $Router->get("/", "home/index", title: APP_NAME . " - Bruder! Geil!");
 $Router->get("/fire/job", "job", return: "JSON");
+$Router->get("/get-back", "login", title: "Wieder da? \\ " . APP_NAME);
 
 # Just for intitializing the current visitor.
 $Router->post("/visitor/create", "visitor/create", return: "JSON");
+
+# ? Sessions
+$Router->post("/session/create", "session/create", return: "JSON");
+$Router->post("/session/delete", "session/delete", return: "JSON");
 
 # ? Logs
 $Router->get("/get/log/comments", "log/_comments", return: "JSON");

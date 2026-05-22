@@ -6,6 +6,7 @@ use Bruder\Application\Cookie;
 use Bruder\Controller\Controller;
 use Bruder\Model\User;
 use Bruder\Model\UserVerification;
+use Bruder\Model\Visitor;
 
 class UserVerificationsController extends Controller
 {
@@ -21,7 +22,7 @@ class UserVerificationsController extends Controller
       optional: [],
     );
 
-    $cookie_uuid = Cookie::get("user-uuid");
+    $cookie_uuid = Cookie::get(User::$pre_uuid_cookie);
 
     # ! UUIDs not matching.
     if ($cookie_uuid !== $this->params->uuid)
@@ -51,14 +52,27 @@ class UserVerificationsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["code", "email", "token"],
+      strict: ["code", "email", "token", "uuid"],
       optional: [],
     );
 
+    # A Visitor has to be set till here. The edit() method will
+    # call a method that transformes the currently set Visitor
+    # into a User, which will fail otherwise.
+    if (!($this->params->Client instanceof Visitor))
+      return error("Brudi, du bist k1 Besucher… Wie ist das möglich? 🫨");
+
+    $uuid = $this->params->uuid;
+
     /**
+     * Get a UserVerification with a corresponding User that shares
+     * the same UUID as given from params.
      * @var UserVerification
      */
-    $UserVerification = UserVerification::with("user.sessions")
+    $UserVerification = UserVerification::whereHas("user", function ($q) use ($uuid) {
+      $q->where("uuid", $uuid);
+    })
+      ->with("user.sessions")
       ->where([
         "code" => $this->params->code,
         "email" => $this->params->email,
@@ -67,7 +81,7 @@ class UserVerificationsController extends Controller
       ->first();
 
     if (!$UserVerification)
-      return error("Ne man, da stimmt was nicht.");
+      return error("Ne man, da stimmt was nicht. Entweder gibts keinen User mit dieser UUID oder keine UserVerification. 🙂‍↔️");
 
     return $UserVerification->edit($this->params);
   }

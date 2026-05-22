@@ -20,7 +20,7 @@ class CommentsController extends Controller
       optional: [],
     );
 
-    $this->visitor_authorized();
+    $this->can_interact(die: true);
 
     /**
      * @var ?Log
@@ -37,16 +37,14 @@ class CommentsController extends Controller
   public function update()
   {
 
-    return NEIN;
-
     $this->validate_params(
       strict: ["id", "type", "emote"],
       optional: [],
     );
 
-    $this->visitor_authorized();
+    $this->can_interact(die: true);
 
-    return $Reaction->edit($this->params);
+    return success();
   }
 
   /**
@@ -60,12 +58,12 @@ class CommentsController extends Controller
       optional: [],
     );
 
-    $this->visitor_authorized();
+    $this->can_interact(die: true);
 
     /**
      * @var ?Comment
      */
-    $Comment = CURRENT_VISITOR->comments()
+    $Comment = CURRENT_BRUDER->comments()
       ->where("id", $this->params->id)
       ->first();
 

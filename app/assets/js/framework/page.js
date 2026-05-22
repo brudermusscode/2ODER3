@@ -166,21 +166,36 @@ export const get = async (
         await wait();
       }
 
-      /**
-       * Update the page global.
-       */
+      // Update page global.
       __page.current = Route.key;
       __page.marked = Route.mark ? Route.mark : Route.key;
 
-      /**
-       * Update main content.
-       */
+      // Append data to main container.
       main_container.innerHTML = data;
 
-      /**
-       * Extract the title.
-       * @var string
-       */
+      let background_blur = document.find("background-blur");
+
+      // Update background image.
+      document.body.style.backgroundImage = `url(${Route.background?.image ?? "/colors.svg"})`;
+
+      background_blur.style.display =
+        Route.background?.blur < 1 ? "none" : "block";
+
+      background_blur.style.backdropFilter =
+        Route.background?.blur > 0
+          ? `blur(${Route.background.blur}px)`
+          : "blur(42px)";
+
+      background_blur.style.background =
+        Route.background?.color !== undefined
+          ? Route.background.color
+          : "rgba(0, 0, 0, 0.82)";
+
+      // Hide sidebar
+      if (Route.hide_sidebar) document.find("sidebar")?.activate();
+      else document.find("sidebar")?.deactivate();
+
+      // Set the title extracted from the <title> inside the main.
       title = main_container.find("title")?.innerHTML;
 
       /**

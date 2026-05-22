@@ -57,10 +57,33 @@ $(function () {
  * of this application.
  */
 const init_application = async () => {
-  // let Route = await Page.get_route(window.location.pathname);
+  let Route = await Page.get_route(window.location.pathname);
 
   Frontend.extract_exception(document.body);
   Frontend.reload_images();
+
+  // ! Make better
+  let background_blur = document.find("background-blur");
+
+  // Update background image.
+  document.body.style.backgroundImage = `url(${Route.background?.image ?? "/colors.svg"})`;
+
+  background_blur.style.display = Route.background?.blur < 1 ? "none" : "block";
+
+  background_blur.style.backdropFilter =
+    Route.background?.blur > 0
+      ? `blur(${Route.background.blur}px)`
+      : "blur(42px)";
+
+  background_blur.style.background =
+    Route.background?.color !== undefined
+      ? Route.background.color
+      : "rgba(0, 0, 0, 0.82)";
+
+  // Hide sidebar
+  if (Route.hide_sidebar) document.find("sidebar")?.activate();
+  else document.find("sidebar")?.deactivate();
+  // !
 
   document.body.setAttribute("toggled", false);
 

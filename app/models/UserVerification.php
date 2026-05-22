@@ -9,7 +9,6 @@ use Bruder\Utils\Utils;
 
 class UserVerification extends Bruder
 {
-
   /**
    * @var array
    */
@@ -17,7 +16,7 @@ class UserVerification extends Bruder
     "email",
     "token",
     "code",
-    "ip",
+    "ip"
   ];
 
   /**
@@ -36,8 +35,14 @@ class UserVerification extends Bruder
      * ? E-Mail
      */
     $email = trim($params->email);
+
+    # E-Mail of invalid format?
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
       return error("Bruder, E-Mail ist falsch 😆");
+
+    # E-Mail already associated with another User?
+    if (User::where("email", $email)->first())
+      return error("Bruder, E-Mail ist schon in-use 😆");
 
     $code = Utils::random_numeric_token(4);
     $token = Utils::random_alpha_token(32);
@@ -50,32 +55,41 @@ class UserVerification extends Bruder
     ];
 
     # # Update or create it!
-    $User->verification?->update($update_to)
-      ?? $User->verification()->create($update_to);
+    $User->verification?->update($update_to) ??
+      $User->verification()->create($update_to);
 
     # Prepare mail body.
-    $mail_body = file_get_contents(TEMPLATE . "/mail/user-verification.html");
+    $mail_body = file_get_contents(
+      TEMPLATE . "/mail/user-verification.html",
+    );
     $mail_body = str_replace("%code%", $code, $mail_body);
 
     # Send a mail with a verification code.
-    (new Mail)->create(
+    new Mail()->create(
       address: $email,
       subject: "🫱 Bruder, d1 code ist: $code",
       body: $mail_body,
     );
 
-    return success(data: [
-      "token" => $token,
-      "email" => $email,
-    ]);
+    return success(
+      data: [
+        "token" => $token,
+        "email" => $email,
+      ],
+    );
   }
 
   /**
    * @param object $params
    * @return string
    */
-  public function edit()
+  public function edit(object $params)
   {
+
+    /**
+     * @var Visitor
+     */
+    $Visitor = $params->Client;
 
     $this->user->update([
       "email" => $this->email,
@@ -84,12 +98,13 @@ class UserVerification extends Bruder
 
     $this->delete();
 
-    # We can use the User for authorization now, so clean up all
-    # Visitor relatives.
-    Visitor::clean_up();
+    # Boooom, all done. Now we can transform the Visitor
+    # into a User and clean up all Visitor relations!
+    # Sooooo gooooooooooooooooooooooooooooooooooooooood.
+    $Visitor->transform_into($this->user);
 
     # Create a new User session. All is done!
-    $Session = (new Session)->new($this->user);
+    (new Session())->new($this->user);
 
     return success();
   }

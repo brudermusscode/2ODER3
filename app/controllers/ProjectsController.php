@@ -27,7 +27,6 @@ class ProjectsController extends Controller
   /**
    * @return string
    */
-  // TODO: update()
   public function update()
   {
 
@@ -39,14 +38,11 @@ class ProjectsController extends Controller
     $this->authorize();
 
     return success();
-
-    // return $Project->edit($this->params);
   }
 
   /**
    * @return string
    */
-  // TODO: delete()
   public function delete()
   {
 

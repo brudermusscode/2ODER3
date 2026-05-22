@@ -6,7 +6,7 @@
 body {
   &[cinema-mode] {
     content[log] {
-      padding-top: calc(100vh - $header-height);
+      padding-top: 100vh;
     }
   }
 }
@@ -110,8 +110,8 @@ comments {
   overflow: auto;
   scrollbar-width: 0px;
   margin-top: 0;
+  padding-top: $main-distance;
   padding-bottom: $main-distance;
-  padding-top: $header-height;
   transition:
     translate 0.6s $cubic,
     margin 0.6s $cubic;
@@ -127,10 +127,6 @@ comments {
     comments-contain {
       display: none;
     }
-  }
-
-  loading {
-    margin-top: $header-height;
   }
 
   [panel-open] {

@@ -3,7 +3,8 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Report extends Bruder
 {
@@ -13,7 +14,7 @@ class Report extends Bruder
    */
   protected $fillable = [
     "reference_id",
-    "type",
+    "reference_type",
   ];
 
   protected static array $types = [
@@ -27,19 +28,19 @@ class Report extends Bruder
   public function new(object $params) {}
 
   /**
-   * @return Visitor
+   * @return MorphTo<Comment>
    */
-  public function visitor()
+  public function reference()
   {
-    return $this->belongsTo(Visitor::class);
+    return $this->morphTo();
   }
 
   /**
-   * @return ?Comment
+   * @return HasOne<User>
    */
-  public function comment()
+  public function user()
   {
-    return $this->belongsTo(Comment::class, "reference_id", "id");
+    return $this->belongsTo(User::class);
   }
 
   /**

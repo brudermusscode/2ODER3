@@ -1,15 +1,27 @@
 <?php
 
+/**
+ * A returned Request usually is a JSON encoded string and has the
+ * following pattern:
+ * {
+ *    status: true|false,
+ *    message: "…",
+ *    error: "…",
+ *    data: { … },
+ * }
+ * This allows the frontend to work effectively when a request has
+ * un/successfully executed and show a well considered and designed
+ * response. Data should in most cases contain a Model relation in-
+ * stance or HTML to append to the DOM. Who needs React, let's be
+ * honest :D
+ */
+
 namespace Bruder\Trait;
 
 use Bruder\Http\Request;
 
 trait ProcessesRequests
 {
-
-  /** ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
-  /** ,,,,,,,,,,,,,,,,,,,,,, REQUEST & RETURN ,,,,,,,,,,,,,,,,,,,,,, */
-  /** ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */
 
   /**
    * @param string $message

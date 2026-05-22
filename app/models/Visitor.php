@@ -4,16 +4,19 @@ namespace Bruder\Model;
 
 use Bruder\Application\Cookie;
 use Bruder\Application\Exception as ApplicationException;
+use Bruder\Application\Logger;
 use Bruder\Application\Session;
 use Bruder\Bruder;
 use Bruder\Http\Request;
+use Bruder\Trait\IsClient;
 use Bruder\Utils\Utils;
 use DateTime;
-use Illuminate\Support\Collection;
 use Exception;
 
 class Visitor extends Bruder
 {
+  # Includes Relations for Comments, Views, …
+  use IsClient;
 
   /**
    * @var array
@@ -26,10 +29,22 @@ class Visitor extends Bruder
     "ip",
   ];
 
+  /**
+   * The unique identifier for any Viisitor to determine a
+   * revisit.
+   */
   public static string $uuid_cookie = "visitor-uuid";
 
+  /**
+   * Name of the Identifier cookie, which has to be set before
+   * a new Visitor will be created.
+   */
   public static string $identifier_cookie = "visitor-identifier";
 
+  /**
+   * Various predefined color HEX codes, which Nicknames and
+   * User Identities will be shown in.
+   */
   public static array $colors = [
     "#fff158",
     "#9c3fff",
@@ -145,38 +160,6 @@ class Visitor extends Bruder
   }
 
   /**
-   * @return Collection<Reaction>
-   */
-  public function reactions()
-  {
-    return $this->hasMany(Reaction::class);
-  }
-
-  /**
-   * @return Collection<View>
-   */
-  public function views()
-  {
-    return $this->hasMany(View::class);
-  }
-
-  /**
-   * @return Collection<Comment>
-   */
-  public function comments()
-  {
-    return $this->hasMany(Comment::class);
-  }
-
-  /**
-   * @return Collection<Report>
-   */
-  public function reports()
-  {
-    return $this->hasMany(Report::class);
-  }
-
-  /**
    * Checks for a Visitor being set through a UUID saved in a
    * cookie. It will instantly return null if no UUID cookie is
    * set. Some prevention for database spamming.
@@ -231,6 +214,42 @@ class Visitor extends Bruder
   }
 
   /**
+   * @param User $User
+   * @return bool
+   */
+  public function transform_into(User $User)
+  {
+    try {
+      $this->db_transaction();
+
+      # Update all relations.
+      foreach ($this->model_relations as $r) {
+        $this->$r()->update([
+          "client_id" => $User->id,
+          "client_type" => $User::class,
+        ]);
+      }
+
+      $this->db_commit();
+
+      # Everything transformed? Wonderful! Time to clean
+      # up all Visitor relations.
+      self::clean_up();
+
+      # Remove user pre uuid cookie. The actual uuid cookie
+      # will be set through Sessino creation.
+      Cookie::delete(User::$pre_uuid_cookie);
+
+      return true;
+    } catch (\Throwable $e) {
+      Logger::to_file($e);
+
+      $this->db_rollback();
+      return false;
+    }
+  }
+
+  /**
    * @return void
    */
   public function update_last_seen()
@@ -245,7 +264,9 @@ class Visitor extends Bruder
   }
 
   /**
-   * Checks for a real visitor and all it's relations to be present.
+   * Checks for a Visitor and all it's relations to be set.
+   *
+   * @return bool
    */
   public static function authorized()
   {

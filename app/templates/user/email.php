@@ -14,7 +14,7 @@ $tolkien = filter_input(INPUT_GET, "tolkien", FILTER_SANITIZE_SPECIAL_CHARS);
 if (!User::where("uuid", $tolkien)->first())
   exit(error("Nein."));
 
-$cookie_uuid = Cookie::get("user-uuid");
+$cookie_uuid = Cookie::get(User::$pre_uuid_cookie);
 
 # ! UUIDs not matching.
 if ($cookie_uuid !== $tolkien)
@@ -40,7 +40,7 @@ ob_start(); ?>
       <div fl fldircol gap=smol+>
         <div input has-icon=left>
           <mi color=secondary>alternate_email</mi>
-          <input crazy type=text placeholder="E-Mail Adresse" name=email />
+          <input autofocus crazy type=text placeholder="E-Mail Adresse" name=email />
         </div>
       </div>
 

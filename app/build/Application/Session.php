@@ -33,15 +33,17 @@ class Session
   }
 
   /**
+   * @param mixed $name
    * @return boolean
    */
-  public static function key_exists($name)
+  public static function key_exists(mixed $name)
   {
     return isset($_SESSION[$name]);
   }
 
   /**
    * @param string $name
+   * @param bool $allow_empty
    * @return ?mixed
    */
   public static function get(string|int $name, bool $allow_empty = true)
