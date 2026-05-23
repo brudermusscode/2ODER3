@@ -67,7 +67,7 @@ class UserVerification extends Bruder
     # Send a mail with a verification code.
     (new Mail())->create(
       address: $email,
-      subject: "🫱 Bruder, d1 code ist: $code",
+      subject: "d1 code ist: 🫱 $code",
       body: $mail_body,
     );
 

@@ -32,23 +32,16 @@ class Mail
     $mail = new PHPMailer(true);
     $config = _env();
 
-    /**
-     * We need the DKIM key to send mails to Google & Co., or
-     * otherwise they will bounce back and be declined by their servers.
-     */
+    # DKIM key missing in production?
     if (!file_exists($private_key) && current_env() !== "dev")
       return false;
 
-    /**
-     * Important to set for PHPMailer.
-     */
+    # Important.
     date_default_timezone_set('Europe/Berlin');
 
     try {
 
-      /**
-       * Mail-Server configuration
-       */
+      # ? Basic configuration
       $mail->isSMTP();
       $mail->Host = $config->MAIL_HOST;
       $mail->Port = $config->MAIL_PORT;
@@ -57,9 +50,7 @@ class Mail
       $mail->Username = $config->MAIL_USERNAME;
       $mail->Password = $config->MAIL_PASSWORD;
 
-      /**
-       * Content & receipient
-       */
+      # ? Receipient & Content
       $mail->setFrom(
         $from_mail ?? $config->MAIL_FROM_MAIL,
         $from_name ?? $config->MAIL_FROM_NAME
@@ -71,34 +62,21 @@ class Mail
 
       $mail->addAddress($address);
 
-      /**
-       * Set encoding & charset for proper displaying.
-       */
+      # ? Encoding
       $mail->CharSet = "UTF-8";
       $mail->Encoding = "base64";
 
-
-      /**
-       * Debug settings.
-       */
+      # ? Debugging
       if ($debug) {
         $mail->Debugoutput = "echo";
         $mail->SMTPDebug = 4; // Enable full debug output
       }
 
-      /**
-       * Production|Staging settings.
-       */
+      # * In Production
       if (current_env() !== "dev") {
-        /**
-         * Encoding
-         */
-        // $mail->AddCustomHeader("X-MSMail-Priority: High");
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
-        /**
-         * DKIM
-         */
+        # ? DKIM setup
         $mail->DKIM_domain = $config->DOMAIN;
         $mail->DKIM_selector = $config->MAIL_DKIM_SELECTOR;
         $mail->DKIM_private = $private_key;
