@@ -106,17 +106,11 @@ class Mail
         $mail->DKIM_identity = $mail->From;
       }
 
-      /**
-       * Send it!
-       */
+      # # Send!
       $mail->send();
 
       return true;
     } catch (\Exception $e) {
-
-      /**
-       * Log error.
-       */
       Logger::to_file($e, "mail_errors.log");
 
       return false;

@@ -65,7 +65,7 @@ class UserVerification extends Bruder
     $mail_body = str_replace("%code%", $code, $mail_body);
 
     # Send a mail with a verification code.
-    new Mail()->create(
+    (new Mail())->create(
       address: $email,
       subject: "🫱 Bruder, d1 code ist: $code",
       body: $mail_body,
