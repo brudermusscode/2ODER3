@@ -27,7 +27,7 @@ $show_larger ??= false;
 /**
  * @var Visitor|User
  */
-$Client = $Comment->client;
+$Client = $Comment->client ?? (new Visitor);
 
 ?>
 

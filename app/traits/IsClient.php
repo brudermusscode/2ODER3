@@ -21,6 +21,14 @@ trait IsClient
   ];
 
   /**
+   * @var array
+   */
+  protected $attributes = [
+    "nickname" => "$: &niemand",
+    "color" => "#fc2a90",
+  ];
+
+  /**
    * Intelephense doesn't understand that this trait belongs to
    * Eloquent Model's so it shows hasMany() etc. with suqiggles.
    * We need to add this so it can resolve the relations.

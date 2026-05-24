@@ -47,7 +47,7 @@ $Router->get(
 );
 $Router->get(
   "/project/:id/log/:log_id",
-  "project/one",
+  "log/one",
   constraints: [
     "id" => "\d+",
     "log_id" => "\d+"
