@@ -7,15 +7,15 @@ use Bruder\Model\Project;
 
 <sidebar fl fldircol jucsb gap>
   <div fl fldircol gap ovauto pb100>
-    <div fl alic gap z pinline20>
-      <a fl alic gap=smol href="/">
+    <div fl fldircol alic>
+      <a fl fldircol alic jucc pinline20 href="/">
         <logo>
-          <picture>
-            <img src="/logo.svg" />
+          <picture circled>
+            <img src="/jesus.webp" />
           </picture>
         </logo>
-        <p text smol ttup><strong>DEV</strong>Log</p>
       </a>
+      <p smol ttup z style="text-shadow:0 -1px 3px black;"><span text bold>DEV</span><span text semi-bold>Log</span></p>
     </div>
 
     <?php if (!LOGGED) : ?>
@@ -59,7 +59,7 @@ use Bruder\Model\Project;
       <?php endforeach; ?>
 
       <?php if (authorized()) : ?>
-        <mbutton request-get="project:new" stdplus mt12 has-icon=left background=primary color=primary-text rounded=mid fl alic gap=smol>
+        <mbutton request-get="project:new" stdplus mt12 has-icon=left background=tertiary color=tertiary-text rounded=mid fl alic gap=smol>
           <mi>add</mi>
           <p style="font-size:16px;"><semi-strong>Neue Projenkt</semi-strong></p>
           </a>

@@ -95,8 +95,8 @@ else :
             <img style="height:30.7px;" src="/assets/images/github.svg" loaded="true">
             <div fl fldircol>
               <p text style="font-size:16px;" semibold><?= $Project->name ?></p>
-              <p style="font-size:12px;"><span color=primary>
-                  <?= $date ? "Letzter Commit &middot; " . Time::ago($date) : "Kein Commit" ?></span></p>
+              <p style="font-size:12px;">
+                <?= $date ? "Letzter Commit &middot; <span color=primary>" . Time::ago($date) . "</span>" : "Kein Commit" ?></p>
             </div>
           </mbutton>
         </a>

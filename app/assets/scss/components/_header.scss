@@ -16,13 +16,12 @@ sidebar {
 }
 
 logo {
-  $logo-size: 38px;
-
-  @extend .window;
+  $logo-size: 62px;
 
   display: block;
   height: $logo-size;
   width: $logo-size;
+  margin-bottom: -12px;
 
   &[mid] {
     height: $mbutton-mid-size;
@@ -34,7 +33,17 @@ logo {
   }
 
   picture {
+    $logo-inlay-size: 8px;
+
     height: $logo-size;
-    margin-top: -1px;
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      top: -$logo-inlay-size;
+      left: -$logo-inlay-size;
+      height: calc(100% + 2 * $logo-inlay-size);
+      width: calc(100% + 2 * $logo-inlay-size);
+    }
   }
 }
