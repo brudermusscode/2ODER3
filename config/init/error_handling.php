@@ -134,6 +134,13 @@ set_error_handler(function (
   ?int $errline = null,
   ?array $errcontext = null
 ) {
+
+  // Wurde mit @ suppressed?
+  if (!(error_reporting() & $errno)) {
+    return true;
+  }
+
+
   /**
    * @var string
    */

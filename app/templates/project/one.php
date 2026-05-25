@@ -1,7 +1,10 @@
 <?php
 
+
+
 use Bruder\Model\Project;
 use Bruder\Model\Log;
+use Bruder\Time\Time;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -32,6 +35,26 @@ else :
    * @var Collection<Log>
    */
   $Logs = $Project->logs;
+
+  $owner = 'brudermusscode';
+  $repo  = $Project->name;
+  $branch = 'deploy';
+
+  $url = "https://api.github.com/repos/$owner/$repo/commits";
+
+  $options = [
+    "http" => [
+      "method" => "GET",
+      "header" => [
+        "User-Agent: MyWebsite",
+        "Accept: application/vnd.github+json"
+      ]
+    ]
+  ];
+
+  $context = stream_context_create($options);
+  $response = @file_get_contents($url, false, $context);
+  $date = $response ? json_decode($response)[0]?->commit->author->date : null;
 
 ?>
 
@@ -70,7 +93,11 @@ else :
         <a href="<?= $Project->url ?>" extern target="_blank">
           <mbutton stdplus has-icon="left" background=light color=dark>
             <img style="height:30.7px;" src="/assets/images/github.svg" loaded="true">
-            <p text style="font-size:14px;">GitHub</p>
+            <div fl fldircol>
+              <p text style="font-size:16px;" semibold><?= $Project->name ?></p>
+              <p style="font-size:12px;"><span color=primary>
+                  <?= $date ? "Letzter Commit &middot; " . Time::ago($date) : "Kein Commit" ?></span></p>
+            </div>
           </mbutton>
         </a>
       </div>
