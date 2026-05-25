@@ -41,19 +41,28 @@ use Bruder\Model\Project;
       <div fl alic gap=smol>
         <?php
 
-        /**
-         * @var Collection<Log>
-         */
-        $Logs = $Project->logs;
+        if (!$Project->logs_count) : ?>
 
-        foreach ($Logs as $key => $Log) : ?>
-          <div style="flex-basis:25%;max-width:25%;">
-            <?php include TEMPLATE . "/log/_log.php" ?>
+          <div w100 rounded background=hover-dark pblock62 tac>
+            <p text bold smol ttup>Noch Keine Logs &nbsp; 🦕</p>
           </div>
+
+          <?php else :
+
+          /**
+           * @var Collection<Log>
+           */
+          $Logs = $Project->logs;
+
+          foreach ($Logs as $key => $Log) : ?>
+            <div style="flex-basis:25%;max-width:25%;">
+              <?php include TEMPLATE . "/log/_log.php" ?>
+            </div>
         <?php endforeach;
 
-        unset($Logs);
+          unset($Logs);
 
+        endif;
         ?>
       </div>
     </div>

@@ -51,13 +51,21 @@ else :
       <p text widester bold tac><?= $Project->name ?></p>
 
       <div fl alic gap=smol>
-        <a href="<?= $Project->logs->first()->link() ?>">
-          <mbutton stdplus background=primary has-icon="left">
+
+        <?php if ($Project->logs_count) : ?>
+          <a href="<?= $Project->logs->first()->link() ?>">
+            <mbutton stdplus background=primary has-icon="left">
+              <mi>books_movies_and_music</mi>
+              <span color=tertiary><strong><?= $Project->logs_count; ?></strong></span>
+              Logs ansehen
+            </mbutton>
+          </a>
+        <?php else : ?>
+          <mbutton stdplus disabled background=primary has-icon="left">
             <mi>books_movies_and_music</mi>
-            <span color=tertiary><strong><?= $Project->logs_count; ?></strong></span>
-            Logs ansehen
+            Keinö Logs
           </mbutton>
-        </a>
+        <?php endif; ?>
 
         <a href="<?= $Project->url ?>" extern target="_blank">
           <mbutton stdplus has-icon="left" background=light color=dark>

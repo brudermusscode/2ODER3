@@ -57,6 +57,13 @@ use Bruder\Model\Project;
           <p><?= $Project->name; ?></p>
         </a>
       <?php endforeach; ?>
+
+      <?php if (authorized()) : ?>
+        <mbutton request-get="project:new" stdplus mt12 has-icon=left background=primary color=primary-text rounded=mid fl alic gap=smol>
+          <mi>add</mi>
+          <p style="font-size:16px;"><semi-strong>Neue Projenkt</semi-strong></p>
+          </a>
+        <?php endif; ?>
     </div>
 
 
