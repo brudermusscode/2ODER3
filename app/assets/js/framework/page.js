@@ -173,19 +173,18 @@ export const get = async (
       // Append data to main container.
       main_container.innerHTML = data;
 
-      let background_blur = document.find("background-blur");
+      let background = document.find("background");
+      let background_blur = background.find("blur");
+      let background_img = background.find("img");
 
       // Update background image.
-      document.body.style.backgroundImage = `url(${Route.background?.image ?? "/bg-colors.png"})`;
-
+      background_img.src = `${Route.background?.image ?? "/bg-colors.png"}`;
       background_blur.style.display =
         Route.background?.blur < 1 ? "none" : "block";
-
       background_blur.style.backdropFilter =
         Route.background?.blur > 0
           ? `blur(${Route.background.blur}px)`
           : "blur(12px)";
-
       background_blur.style.background =
         Route.background?.color !== undefined
           ? Route.background.color

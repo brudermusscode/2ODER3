@@ -5,10 +5,9 @@ sidebar {
   position: fixed;
   z-index: 99;
   left: 0;
-  padding-top: $main-distance;
+  padding-top: $main-distance + 12px;
   width: $sidebar-width;
   height: 100%;
-  background: $slighter-dark;
 
   &[active] {
     left: -$sidebar-width;

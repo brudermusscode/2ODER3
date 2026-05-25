@@ -23,7 +23,7 @@ body {
     left: 0;
     width: 100%;
     height: 18px;
-    background: #101012;
+    background: #000000;
     background: linear-gradient(
       0deg,
       rgba(0, 0, 0, 1) 6%,
@@ -41,11 +41,11 @@ body {
     width: 100%;
     height: 18px;
     transition: opacity 0.1s linear;
-    background: #101012;
+    background: #000000;
     background: linear-gradient(
       180deg,
-      rgba(16, 16, 18, 1) 6%,
-      rgba(16, 16, 18, 0) 100%
+      rgba(0, 0, 0, 1) 6%,
+      rgba(0, 0, 0, 0) 100%
     );
   }
 
@@ -60,21 +60,39 @@ img {
   vertical-align: middle;
 }
 
-background-blur {
-  z-index: -1;
+background {
   position: fixed;
+  z-index: -1;
   top: 0;
   left: 0;
+  width: 100vw;
   height: 100%;
-  width: 100%;
-  backdrop-filter: blur(12px);
-  background: rgba(0, 0, 0, 0.86);
-  transition: none;
+
+  picture {
+    position: absolute;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  blur {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(24px);
+    background: rgba(0, 0, 0, 0.88);
+    transition: none;
+  }
 }
 
 main {
-  padding-inline: calc($sidebar-width + $main-distance / 2) $main-distance;
-  padding-top: $main-distance;
+  padding-inline: calc($sidebar-width + $main-distance) $main-distance;
+  padding-top: $main-distance + 12px;
   max-width: $content-width;
   min-height: calc(100vh);
   margin-inline: auto;

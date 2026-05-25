@@ -12,7 +12,7 @@ else : ?>
 
         <form request="session:create" full-reload redirect="/" responder=simple
           fl fldircol gap>
-          <div fl fldircol alic>
+          <div logo fl fldircol alic>
             <a href="/">
               <logo mid>
                 <picture circled>
@@ -24,6 +24,8 @@ else : ?>
               <strong>DEV</strong>Log
             </p>
           </div>
+
+          <p login-sub text midler semibold tac mb12>Einloggen</p>
 
           <div fl fldircol gap=smol>
             <input login autofocus tabindex=1 type=text name="nickname" placeholder="Nickname" />
