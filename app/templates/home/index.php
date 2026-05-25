@@ -27,7 +27,7 @@ use Bruder\Model\Project;
           <p text mid bold><?= $Project->name ?></p>
         </div>
 
-        <a fl alic gap=smol href="/project/<?= $Project->id ?>">
+        <a fl alic gap=smol href="<?= $Project->logs->first()?->link() ?? $Project->link() ?>">
           <div background=quadro color=quadro-text rounded=smolplus pinline10 pblock6>
             <p text smol semibold ttup>
               <strong><?= $Project->logs_count ?></strong> logs
