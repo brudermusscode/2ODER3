@@ -24,11 +24,23 @@ logo {
   margin-bottom: -12px;
 
   &[mid] {
-    height: $mbutton-mid-size;
-    width: $mbutton-mid-size;
+    $logo-inlay-size: 14px;
+    $logo-wide-size: 84px;
+
+    width: $logo-wide-size;
+    height: $logo-wide-size;
+    margin-bottom: -14px;
 
     picture {
-      height: $mbutton-mid-size;
+      height: $logo-wide-size;
+      width: $logo-wide-size;
+
+      img {
+        top: -$logo-inlay-size;
+        left: -$logo-inlay-size;
+        height: calc(100% + 2 * $logo-inlay-size);
+        width: calc(100% + 2 * $logo-inlay-size);
+      }
     }
   }
 

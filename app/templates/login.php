@@ -9,19 +9,20 @@ else : ?>
     <div style="top:50%;left:50%;translate:-50% -50%;" posabs>
       <div window pinline32 pblock42
         style="max-height:calc(100vh - 24px);max-width:400px;width:100%;" ovauto">
+
         <form request="session:create" full-reload redirect="/" responder=simple
           fl fldircol gap>
-
-          <div fl fldircol alic gap=smol+ mb8>
+          <div fl fldircol alic>
             <a href="/">
               <logo mid>
-                <picture>
-                  <img src="/logo.svg" />
+                <picture circled>
+                  <img src="/jesus.webp" />
                 </picture>
               </logo>
             </a>
-
-            <p text stdplus>Moin, <strong>Bruder!</strong></p>
+            <p text midler ttup z style="text-shadow:0 -1px 4px rgba(0,0,0,.62);">
+              <strong>DEV</strong>Log
+            </p>
           </div>
 
           <div fl fldircol gap=smol>

@@ -176,7 +176,7 @@ export const get = async (
       let background_blur = document.find("background-blur");
 
       // Update background image.
-      document.body.style.backgroundImage = `url(${Route.background?.image ?? "/colors.svg"})`;
+      document.body.style.backgroundImage = `url(${Route.background?.image ?? "/bg-colors.png"})`;
 
       background_blur.style.display =
         Route.background?.blur < 1 ? "none" : "block";
@@ -184,12 +184,12 @@ export const get = async (
       background_blur.style.backdropFilter =
         Route.background?.blur > 0
           ? `blur(${Route.background.blur}px)`
-          : "blur(42px)";
+          : "blur(12px)";
 
       background_blur.style.background =
         Route.background?.color !== undefined
           ? Route.background.color
-          : "rgba(0, 0, 0, 0.82)";
+          : "rgba(0, 0, 0, 0.86)";
 
       // Hide sidebar
       if (Route.hide_sidebar) document.find("sidebar")?.activate();
