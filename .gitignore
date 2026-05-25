@@ -11,6 +11,7 @@
 /public/data/videos/*.mkv
 /public/data/videos/*.ogg
 /public/data/videos/thumbs/*.webp
+/public/data/identities/*.webp
 /config/keys/*
 /.vscode
 /public/MusikBruder
