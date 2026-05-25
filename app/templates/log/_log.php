@@ -12,7 +12,7 @@ use Bruder\Model\Log;
 
 ?>
 
-<a href="/project/<?= $Project->id ?>/log/<?= $Log->id ?>">
+<a href="<?= $Log->link() ?>">
   <log fl fldircol gap=smol flex-truncate>
     <picture size=mid>
       <img src="<?= $Log->current_thumb_src(size: "small") ?>" />

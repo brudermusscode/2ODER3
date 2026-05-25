@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Authorize the client to view this page.
- */
 # TODO: Authorization should be in the router as a seperate layer.
-if (!authorize(exit_as: BOOLER)) :
+if (!authorized()) :
   include UNAVAILABLE;
-else :
-
-?>
+else : ?>
 
   <form data-action="log:create" enctype="multipart/form-data">
     <content log-new fl fldircol gap=mid>

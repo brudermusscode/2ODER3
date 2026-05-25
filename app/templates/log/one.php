@@ -9,7 +9,7 @@ use Bruder\Time\Time;
 /**
  * @var int
  */
-$id = filter_var($GLOBALS["route_param_id"] ?? 0, FILTER_VALIDATE_INT);
+$name = filter_var($GLOBALS["route_param_name"] ?? "", FILTER_SANITIZE_SPECIAL_CHARS);
 
 /**
  * @var int
@@ -23,12 +23,13 @@ $Project = Project::with(["logs" => function ($q) {
   $q->orderBy("created_at", "DESC");
 }])
   ->withCount("logs")
-  ->find($id);
+  ->where("name", $name)
+  ->first();
 
 /**
  * @var ?Log
  */
-$SelectedLog = $Project->logs->where("id", $log_id)->first();
+$SelectedLog = $Project?->logs->where("id", $log_id)->first();
 
 if (!$Project || !$SelectedLog) :
   include UNAVAILABLE;

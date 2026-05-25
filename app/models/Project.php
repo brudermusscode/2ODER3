@@ -50,11 +50,52 @@ class Project extends Bruder
     /**
      * ? Identity
      */
-    $Project->upload_identity($params->file, Upload::data_save_path(for: "identities"));
+    if (!empty($params->file["tmp_name"]))
+      $Project->upload_identity($params->file, Upload::data_save_path(for: "identities"));
 
     $Project->save();
 
     return success("Alles gut m8");
+  }
+
+  /**
+   * @param object $params
+   * @return string
+   */
+  public function edit(object $params)
+  {
+
+    # ? Name
+    $serialized_name = trim($params->name);
+    if (!$serialized_name) return error("Falscher Name");
+
+    $this->name = $params->name;
+
+    # ? URL
+    if (!filter_var($params->url, FILTER_VALIDATE_URL))
+      return error("Falsche URL");
+
+    $this->url = $params->url;
+
+    # ? Identitiy
+    if (!empty($params->file["tmp_name"]))
+      $this->upload_identity($params->file, Upload::data_save_path(for: "identities"));
+
+    $this->save();
+
+    return success("Alles gut m8");
+  }
+
+  /**
+   * @param ?string $action
+   * @return string
+   */
+  public function link(?string $action = null)
+  {
+    return match ($action) {
+      "edit" => "/project/{$this->name}/edit",
+      default => "/project/{$this->name}",
+    };
   }
 
   /**
@@ -84,7 +125,7 @@ class Project extends Bruder
 
       $ImageManager = ImageManager::usingDriver(GdDriver::class);
       $Image = $ImageManager->decodePath($file["tmp_name"]);
-      $Image->scale(width: 600);
+      // $Image->scale(width: 600);
       $EncodedImage = $Image->encodeUsingFormat(Format::WEBP, quality: 100);
       $EncodedImage->save($final_path);
 
@@ -99,5 +140,13 @@ class Project extends Bruder
 
       die(error($e->getMessage()));
     }
+  }
+
+  /**
+   * @return string
+   */
+  public function identity()
+  {
+    return "/data/identities/" . $this->identity;
   }
 }

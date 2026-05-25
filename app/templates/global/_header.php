@@ -52,7 +52,7 @@ use Bruder\Model\Project;
       </div>
       <?php foreach ($Projects as $Project) : ?>
         <a hoverable pl10 pr6 pblock12 rounded=mid fl alic gap=smol
-          page=project href="/project/<?= $Project->id ?>">
+          page=project href="/project/<?= $Project->name ?>">
           <mi stdplus color=tertiary>deployed_code</mi>
           <p><?= $Project->name; ?></p>
         </a>

@@ -31,13 +31,18 @@ class ProjectsController extends Controller
   {
 
     $this->validate_params(
-      strict: ["id"],
-      optional: ["name", "url", "file"],
+      strict: ["id", "name", "url"],
+      optional: ["file"],
     );
 
     $this->authorize();
 
-    return success();
+    /**
+     * @var ?Project
+     */
+    $Project = Project::findOrReturn($this->params->id);
+
+    return $Project->edit($this->params);
   }
 
   /**

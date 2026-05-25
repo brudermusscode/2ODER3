@@ -35,26 +35,26 @@ $Router->post("/log/delete", "log/delete", return: "JSON");
 
 # ? Projects
 $Router->post("/project/create", "project/create", return: "JSON");
+$Router->post("/project/update", "project/update", return: "JSON");
 $Router->get("/project/new", "project/new", title: "Neung Projenkt erstelln");
+$Router->get("/project/:name/edit", "project/edit", title: "Projenkt bearbeitem");
 $Router->get(
-  "/project/:id",
+  "/project/:name",
   "project/one",
-  constraints: ["id" => "\d+",],
   title: function ($params) {
-    $Project = Project::find($params["id"]);
+    $Project = Project::where("name", $params["name"])->first();
     return $Project ? "⌞Projekt\\{$Project->name}⌝" : "Keine Ahnung, Bruder.";
   }
 );
 $Router->get(
-  "/project/:id/log/:log_id",
+  "/project/:name/log/:log_id",
   "log/one",
   constraints: [
-    "id" => "\d+",
     "log_id" => "\d+"
   ],
   title: function ($params) {
-    $Project = Project::find($params["id"]);
-    $Log = $Project->logs()->where("id", $params["log_id"])->first();
+    $Project = Project::where("name", $params["name"])->first();
+    $Log = $Project?->logs()->where("id", $params["log_id"])->first();
     return $Project && $Log?->name
       ? "{$Log->name} · ⌞Projekt\\{$Project->name}⌝"
       : (

@@ -1,13 +1,5 @@
 <?php
 
-use Bruder\Controller\LogsController;
-
 require _root() . "/config/get_requirements.php";
 
-/**
- * @var Request $Request
- */
-
-$Controller = (new LogsController($_POST))->update();
-
-exit($Controller);
+exit(\Bruder\Controller\Controller::call(__FILE__, __DIR__));

@@ -3,6 +3,6 @@
 use Bruder\Model\Project;
 
 if (CURRENT_PAGE === "project") {
-  $id = filter_var($GLOBALS["route_param_id"], FILTER_VALIDATE_INT) ?? 0;
-  $Project = Project::find($id);
+  $name = filter_var($GLOBALS["route_param_name"], FILTER_VALIDATE_INT) ?? 0;
+  $Project = Project::where("name", $name)->first();
 }

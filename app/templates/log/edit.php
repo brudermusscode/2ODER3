@@ -2,7 +2,7 @@
 
 use Bruder\Model\Log;
 
-if (!authorize(exit_as: BOOLER)) :
+if (!authorized()) :
   include UNAVAILABLE;
 else :
 

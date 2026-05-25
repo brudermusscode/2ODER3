@@ -124,6 +124,14 @@ class Log extends Bruder
   /**
    * @return string
    */
+  public function link()
+  {
+    return "/project/{$this->project->name}/log/$this->id";
+  }
+
+  /**
+   * @return string
+   */
   public function video_src()
   {
     return "/data/videos/{$this->file_name}";
