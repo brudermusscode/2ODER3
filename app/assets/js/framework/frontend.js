@@ -47,7 +47,6 @@ export const adjust_background = async (settings) => {
     // Create a new Image object to check for loaded
     // state so we can fade it in when it's fully loaded.
     let img = new Image();
-    img.src = set.image;
 
     img.addEventListener("load", () => {
       setTimeout(() => {
@@ -55,6 +54,10 @@ export const adjust_background = async (settings) => {
         background_img.activate();
       }, 20);
     });
+
+    img.src = set.image;
+
+    clog(img);
 
     // Set the settings to the global __page object.
     __page.background = set;
