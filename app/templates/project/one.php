@@ -32,45 +32,58 @@ if (!$Project) :
 else :
 
   /**
+   * @param string $owner
+   * @param string $repository
+   * @return ?object
+   */
+  function get_commits(string $owner, string $repository)
+  {
+    $url = "https://api.github.com/repos/$owner/$repository/commits";
+
+    $options = [
+      "http" => [
+        "method" => "GET",
+        "header" => [
+          "User-Agent: mitjesus.dev",
+          "Accept: application/vnd.github+json"
+        ]
+      ]
+    ];
+
+    $context = stream_context_create($options);
+    $response = @file_get_contents($url, false, $context);
+
+    return $response ? json_decode($response) : null;
+  }
+
+  $commits = get_commits(owner: "brudermusscode", repository: $Project->name,);
+
+  /**
    * @var Collection<Log>
    */
   $Logs = $Project->logs;
 
-  $owner = 'brudermusscode';
-  $repo  = $Project->name;
-  $branch = 'deploy';
-
-  $url = "https://api.github.com/repos/$owner/$repo/commits";
-
-  $options = [
-    "http" => [
-      "method" => "GET",
-      "header" => [
-        "User-Agent: MyWebsite",
-        "Accept: application/vnd.github+json"
-      ]
-    ]
-  ];
-
-  $context = stream_context_create($options);
-  $response = @file_get_contents($url, false, $context);
-  $date = $response ? json_decode($response)[0]?->commit->author->date : null;
-
 ?>
 
   <div landing fl fldircol alic>
-    <?php if (authorized()) : ?>
-      <div fl jucend alic w100 style="margin-bottom:-56px;">
+    <div fl jucsb alic w100 style="margin-bottom:-56px;">
+      <a href="/">
+        <mbutton mid icon-only background=light color=dark>
+          <mi>arrow_back</mi>
+        </mbutton>
+      </a>
+
+      <?php if (authorized()) : ?>
         <a href="<?= $Project->link("edit"); ?>">
           <mbutton mid icon-only background=green>
             <mi>edit</mi>
           </mbutton>
         </a>
-      </div>
-    <?php endif; ?>
+      <?php endif; ?>
+    </div>
 
     <div title fl fldircol alic jucc gap=smol+ posrel>
-      <mi slighter posabs color=tertiary>deployed_code</mi>
+      <mi posabs color=tertiary>deployed_code</mi>
       <p text widester bold tac><?= $Project->name ?></p>
 
       <div fl alic gap=smol>
@@ -96,7 +109,13 @@ else :
             <div fl fldircol>
               <p text style="font-size:16px;" semibold><?= $Project->name ?></p>
               <p style="font-size:12px;">
-                <?= $date ? "Letzter Commit &middot; <span color=primary>" . Time::ago($date) . "</span>" : "Kein Commit" ?></p>
+                <?php
+                $last_commit_date = $commits[0]->commit->author->date ?? null;
+                echo $last_commit_date
+                  ? "Letzter Commit &middot; <span color=primary>" . Time::ago($last_commit_date) . "</span>"
+                  : "Nichts commited"
+                ?>
+              </p>
             </div>
           </mbutton>
         </a>

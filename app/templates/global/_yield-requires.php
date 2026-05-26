@@ -16,6 +16,7 @@
     is_loading: false,
     file_dialog_open: false,
     overlay: null,
+    background: null,
   };
 
   let __player = {

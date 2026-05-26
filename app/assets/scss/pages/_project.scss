@@ -4,19 +4,22 @@
 @use "../framework/var.utils" as *;
 
 [landing] {
-  max-height: calc(100vh - $main-distance);
+  position: absolute;
+  width: calc(100% - 2 * $main-distance);
+  max-height: calc(100vh - $main-distance * 2);
 
   $landing-title-height: 300px;
 
   [title] {
     height: $landing-title-height;
     line-height: 1;
+    padding-top: 32px;
 
     > mi {
       font-size: 420px;
-      top: 50%;
+      top: -332px;
       left: 50%;
-      translate: -50% -50%;
+      translate: -50% 0;
       z-index: -1;
 
       &::before {
@@ -28,14 +31,14 @@
         left: 0;
         height: 100%;
         width: 100%;
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(0px);
       }
     }
   }
 
   [identity] {
     height: calc(100vh - $landing-title-height);
-    width: calc(100vw - 400px);
+    width: 70%;
     border: 12px solid $slight-light;
     border-bottom: 0;
     border-radius: 42px 42px 0 0;

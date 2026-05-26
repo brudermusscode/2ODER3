@@ -1,5 +1,62 @@
 import * as Responder from "./responder";
-import * as Comment from "../elements/comment";
+
+/**
+ * Hides the sidebar to the left if param is given.
+ *
+ * @param {bool} hide
+ */
+export const toggle_sidebar = (hide = false) => {
+  if (typeof hide === "function") hide = hide();
+
+  if (hide === true) {
+    document.find("sidebar")?.activate();
+    document.body.setAttribute("sidebar-hidden", "");
+  } else {
+    document.find("sidebar")?.deactivate();
+    document.body.removeAttribute("sidebar-hidden");
+  }
+};
+
+/**
+ * Takes in an object of background which can contain various
+ * settings for image, blur etc. The background of the page
+ * will be changed accordingly.
+ *
+ * @param {object} settings
+ * @return {Promise}
+ */
+export const adjust_background = async (settings) => {
+  return new Promise((resolve) => {
+    let background = document.find("background");
+    let background_blur = background.find("blur");
+    let background_img = background.find("actual");
+    let set = {
+      image: settings?.image ?? "/bg-colors.png",
+      blur: settings?.blur ?? 12,
+      color: settings?.color ?? "rgba(0,0,0,.78)",
+    };
+
+    if (set.image !== __page.background?.image) background_img.deactivate();
+
+    console.log(background_img);
+
+    background_blur.style.display = set.blur < 1 ? "none" : "block";
+    background_blur.style.backdropFilter = `blur(${set.blur}px)`;
+    background_blur.style.background = set.color;
+    background_img.style.backgroundImage = `url(${set.image})`;
+
+    // Set the settings to the global __page object.
+    __page.background = set;
+
+    setTimeout(() => {
+      background_img.activate();
+    }, 20);
+
+    console.log(background_img);
+
+    resolve(1);
+  });
+};
 
 /**
  * Sets the frontend to be loading.
@@ -41,6 +98,18 @@ export const scroll_to = async (number) => {
 };
 
 /**
+ * This boy checks for any images already being loaded on the page
+ * startup andd shows them.
+ *
+ * @param {HTMLImageElement} img
+ */
+const any_loaded_images = (img) => {
+  if (img.complete && img.naturalHeight !== 0) {
+    img.setAttribute("loaded", true);
+  }
+};
+
+/**
  * Preloads a list of <img> elements by creating new Image
  * instances and marks them with a [loaded] tag so they will fade in.
  *
@@ -49,28 +118,13 @@ export const scroll_to = async (number) => {
  */
 export const load_images = (arr) => {
   arr.forEach((img) => {
-    if (img.hasAttribute("loaded")) return;
-
-    let new_img = new Image();
-    new_img.src = img.src;
-
-    if (new_img.complete) {
-      img.setAttribute("loaded", true);
-
-      return;
+    function load(e) {
+      this.setAttribute("loaded", true);
     }
 
-    img.onerror = () => {
-      img.onerror = "";
+    any_loaded_images(img);
 
-      return;
-    };
-
-    img.onload = () => {
-      img.setAttribute("loaded", true);
-
-      return;
-    };
+    img.addEventListener("load", load);
   });
 };
 
@@ -225,7 +279,7 @@ export const get_content = () => {
           c.insertAdjacentHTML("afterend", data?.data ?? data);
           c.remove();
 
-          reload_images();
+          // reload_images();
 
           let elem = document.createElement("div");
           elem.insertAdjacentHTML("afterbegin", data?.data ?? data);

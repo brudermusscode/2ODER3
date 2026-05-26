@@ -36,6 +36,7 @@ $Router->post("/log/delete", "log/delete", return: "JSON");
 # ? Projects
 $Router->post("/project/create", "project/create", return: "JSON");
 $Router->post("/project/update", "project/update", return: "JSON");
+$Router->post("/project/delete", "project/delete", return: "JSON");
 $Router->get("/project/new", "project/new", title: "Neung Projenkt erstelln");
 $Router->get("/project/:name/edit", "project/edit", title: "Projenkt bearbeitem");
 $Router->get(

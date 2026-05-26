@@ -4,10 +4,9 @@
 @use "../framework/var.utils" as *;
 
 content[log-new] {
-  // height: calc(100vh - $header-height);
-  width: $content-mid-size;
+  min-height: calc(100vh - (2 * $main-distance + 2 * 12px));
   margin-inline: auto;
-  padding-block: 0 4.2em;
+  padding-block: $main-distance + 12px;
 
   [thumbnails] {
     picture {

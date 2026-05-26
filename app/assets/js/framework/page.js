@@ -153,7 +153,6 @@ export const get = async (
     processData: false,
     success: async function (data) {
       //
-      //
       if (!keep_overlays) Frontend.close_overlays();
 
       /**
@@ -173,29 +172,27 @@ export const get = async (
       // Append data to main container.
       main_container.innerHTML = data;
 
-      let background = document.find("background");
-      let background_blur = background.find("blur");
-      let background_img = background.find("img");
-
-      // Update background image.
-      background_img.src = `${Route.background?.image ?? "/bg-colors.png"}`;
-      background_blur.style.display =
-        Route.background?.blur < 1 ? "none" : "block";
-      background_blur.style.backdropFilter =
-        Route.background?.blur > 0
-          ? `blur(${Route.background.blur}px)`
-          : "blur(12px)";
-      background_blur.style.background =
-        Route.background?.color !== undefined
-          ? Route.background.color
-          : "rgba(0, 0, 0, 0.86)";
-
-      // Hide sidebar
-      if (Route.hide_sidebar) document.find("sidebar")?.activate();
-      else document.find("sidebar")?.deactivate();
-
       // Set the title extracted from the <title> inside the main.
       title = main_container.find("title")?.innerHTML;
+
+      /**
+       * Check for an exception and move it to a direct child of
+       * the body to be present in the very foreground.
+       */
+      Frontend.extract_exception(main_container);
+
+      // Toggle sidebar visibility.
+      Frontend.toggle_sidebar(
+        typeof Route.hide_sidebar === "function"
+          ? Route.hide_sidebar(url)
+          : Route.hide_sidebar,
+      );
+
+      // Adjust background image & blur, ….
+      await Frontend.adjust_background(Route.background);
+
+      // Load in all images with a nice effect.
+      Frontend.reload_images();
 
       /**
        * Pushes the coming state to the browser history and sets a proper
@@ -216,12 +213,6 @@ export const get = async (
         document.find_all("[scroll-manipulated]")?.forEach((elem) => {
           elem.setAttribute("scrolled", true);
         });
-
-      /**
-       * Check for an exception and move it to a direct child of
-       * the body to be present in the very foreground.
-       */
-      Frontend.extract_exception(main_container);
 
       /**
        * If a redirect exists, redirect to the page inside the to attribute.
@@ -261,9 +252,7 @@ export const get = async (
         document.body.removeAttribute(index);
       });
 
-      /**
-       * Set route attributes.
-       */
+      // Sets a route attribute to the body. Can be styled if wanted.
       document.body.setAttribute(
         Route.key == ""
           ? "home"
@@ -273,26 +262,18 @@ export const get = async (
         "",
       );
 
-      /**
-       * Free the clicking on other links by disabling page loading.
-       */
+      // Free up scrolling and clicking by unloading the page.
       Frontend.unload();
 
-      /**
-       * Load dynamic content.
-       */
+      // Load all dynamic <get-content from=…> elements.
       Frontend.get_content();
 
-      /**
-       * Eval all script tags inside the newly fetched content.
-       */
+      // Find any script tag and load it's js.
       main_container.find_all("script").forEach((script) => {
         eval(script.innerHTML);
       });
 
-      /**
-       * Deactivate all main navigation buttons.
-       */
+      // Deactivate all main navigation buttons.
       document.find_all("[page]").forEach((button) => {
         button.deactivate();
       });
@@ -331,11 +312,6 @@ export const get = async (
           ?.scrollIntoView({ behavior: "smooth" });
 
       /**
-       * Load in all images with a nice effect.
-       */
-      Frontend.reload_images();
-
-      /**
        * Now at the end of execution, we give the router the
        * option to execute something.
        */
@@ -357,47 +333,6 @@ export const get = async (
     },
     error: function (error) {
       Frontend.ajax_error(error);
-    },
-  });
-};
-
-export const get_component = async (
-  react,
-  url,
-  data = null,
-  empty_container = false,
-  where = "top",
-) => {
-  $.ajax({
-    url: url,
-    data: data,
-    method: "GET",
-    processData: false,
-    contentType: "JSON",
-    success: function (data) {
-      if (!data.status)
-        return new Responder.Responder().add(
-          document.body,
-          data.message,
-          "error",
-        );
-
-      if (empty_container) {
-        react.innerHTML = data;
-      } else {
-        if (where === "top") react.insertAdjacentHTML("afterbegin", data);
-        else react.insertAdjacentHTML("beforeend", data);
-      }
-
-      Frontend.reload_images();
-    },
-    error: function (data) {
-      new Responder.Responder().add(
-        document.body,
-        data.message,
-        "error",
-        "user",
-      );
     },
   });
 };

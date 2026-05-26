@@ -20,8 +20,8 @@ else : ?>
     <form request="project:update" redirect="<?= $Project->link() ?>" responder=simple
       fl fldircol gap=mid>
 
-      <div fl fldircol gap=smol+>
-        <p text smol ttup bold color=tertiary>Identität</p>
+      <div>
+        <input-title color=tertiary>Identität</input-title>
         <media-select trigger-file-input <?= $Project->identity ? "filled" : ""; ?>>
           <?php if ($Project->identity) : ?>
             <img src="<?= $Project->identity() ?>" />
@@ -32,20 +32,24 @@ else : ?>
       </div>
 
       <div>
-        <p text smol bold ttup color=tertiary>Heißung</p>
+        <input-title color=tertiary>Heißung</input-title>
         <input crazy w100 name=name placeholder="Name" value="<?= $Project->name ?>" />
       </div>
 
       <div>
-        <p text smol bold ttup color=tertiary>Open Source URL</p>
+        <input-title color=tertiary>Open Source URL</input-title>
         <input crazy w100 name=url placeholder="GitHub/…" value="<?= $Project->url ?>" />
       </div>
 
       <input type=hidden name=id value=<?= $Project->id ?> />
 
-      <div fl jucsb>
-        <div></div>
-        <mbutton submit-closest mid icon-only background=green color=dark>
+      <div fl jucend alic gap=smol>
+        <mbutton request="project:delete" shadow-submit data-id="<?= $Project->id ?>"
+          mid icon-only background=slight-light color=light>
+          <mi>delete_forever</mi>
+        </mbutton>
+        <div divide-horiz w100 minline24></div>
+        <mbutton submit-closest wide icon-only background=green color=dark>
           <mi>publish</mi>
         </mbutton>
       </div>

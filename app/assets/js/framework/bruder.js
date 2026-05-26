@@ -59,30 +59,16 @@ $(function () {
 const init_application = async () => {
   let Route = await Page.get_route(window.location.pathname);
 
+  // ! Should be passed in one function.
   Frontend.extract_exception(document.body);
+  Frontend.adjust_background(Route.background);
   Frontend.reload_images();
-
-  // ! Make better
-  let background = document.find("background");
-  let background_blur = background.find("blur");
-  let background_img = background.find("img");
-
-  // Update background image.
-  background_img.src = `${Route.background?.image ?? "/bg-colors.png"}`;
-  background_blur.style.display = Route.background?.blur < 1 ? "none" : "block";
-  background_blur.style.backdropFilter =
-    Route.background?.blur > 0
-      ? `blur(${Route.background.blur}px)`
-      : "blur(12px)";
-  background_blur.style.background =
-    Route.background?.color !== undefined
-      ? Route.background.color
-      : "rgba(0, 0, 0, 0.86)";
-
-  // Hide sidebar
-  if (Route.hide_sidebar) document.find("sidebar")?.activate();
-  else document.find("sidebar")?.deactivate();
-  // !
+  Frontend.toggle_sidebar(
+    typeof Route.hide_sidebar === "function"
+      ? Route.hide_sidebar(window.location.pathname)
+      : Route.hide_sidebar,
+  );
+  // ! please.
 
   document.body.setAttribute("toggled", false);
 

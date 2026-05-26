@@ -14,10 +14,9 @@ $log_link = "/log/" . $id . "/edit/project";
 
 ?>
 
-<form data-action="log:finalize">
-  <content log-new fl fldircol gap=smol+>
+<content log-new mid>
+  <form data-action="log:finalize" fl fldircol gap=smol+>
     <p text bold smol slight ttup pinline24>Projekt nicht vergessen</p>
-
 
     <add-new request-get="project:new">
       <mi>deployed_code</mi>
@@ -62,19 +61,19 @@ $log_link = "/log/" . $id . "/edit/project";
     <input type=hidden name=id value=<?= $Log->id ?> />
     <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />
 
-    <div z style="position:fixed;left:2.4em;top:50%;translate:0 -50%;">
+    <div fl alic>
       <a href="/log/<?= $id ?>/edit/metadata">
         <mbutton has-tooltip=right wide tabindex="3" icon-only background=tertiary color=tertiary-text>
           <mi>art_track</mi>
           <div ttooltip text semibold>Metadaten bearbeiten</div>
         </mbutton>
       </a>
-    </div>
 
-    <div z style="position:fixed;right:2.4em;top:50%;translate:0 -50%;">
+      <div minline24 divide-horiz w100></div>
+
       <mbutton wide tabindex="3" icon-only background=green color=dark submit-closest>
         <mi>done_all</mi>
       </mbutton>
     </div>
-  </content>
-</form>
+  </form>
+</content>

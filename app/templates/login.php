@@ -5,46 +5,30 @@ if (LOGGED) :
   include UNAVAILABLE;
 else : ?>
 
-  <div fl alic jucstart>
-    <div style="top:50%;left:50%;translate:-50% -50%;" posabs>
-      <div window pinline32 pblock42
-        style="max-height:calc(100vh - 24px);max-width:400px;width:100%;" ovauto">
+  <div style="height:calc(100vh - 80px);width:100%;max-width:1100px;" fl jucend alic>
+    <div window pinline32 pblock42
+      style="max-height:calc(100vh - 24px);max-width:400px;width:100%;" ovauto">
 
-        <form request="session:create" full-reload redirect="/" responder=simple
-          fl fldircol gap>
-          <div logo fl fldircol alic>
-            <a href="/">
-              <logo mid>
-                <picture circled>
-                  <img src="/jesus.webp" />
-                </picture>
-              </logo>
-            </a>
-            <p text midler ttup z style="text-shadow:0 -1px 4px rgba(0,0,0,.62);">
-              <strong>DEV</strong>Log
-            </p>
-          </div>
+      <form request="session:create" full-reload redirect="/" responder=simple
+        fl fldircol gap>
+        <p login-sub text midplus bold tac mb24 mt24>Einloggen</p>
 
-          <p login-sub text midler semibold tac mb12>Einloggen</p>
+        <div fl fldircol gap=smol>
+          <input login autofocus tabindex=1 type=text name="nickname" placeholder="Nickname" />
+          <input login tabindex=2 type=password name="password" placeholder="Passwort" />
+        </div>
 
-          <div fl fldircol gap=smol>
-            <input login autofocus tabindex=1 type=text name="nickname" placeholder="Nickname" />
-            <input login tabindex=2 type=password name="password" placeholder="Passwort" />
-          </div>
-
-          <div fl jucsb alic mt24>
-            <a onclick="history.go(-1)" normal>
-              <mbutton tabindex=4 stdplus no-hover-shadow>
-                <span color=tertiary>züröck</span>
-              </mbutton>
-            </a>
-            <mbutton tabindex=3 submit-closest stdplus background=primary
-              color=primary-text icon-only>
-              <mi>arrow_forward</mi>
+        <div fl jucsb alic mt24>
+          <a onclick="history.go(-1)" normal>
+            <mbutton tabindex=4 mid no-hover-shadow>
+              <span color=tertiary>zurück</span>
             </mbutton>
-          </div>
-        </form>
-      </div>
+          </a>
+          <mbutton tabindex=3 submit-closest wide background=green icon-only>
+            <mi>arrow_forward</mi>
+          </mbutton>
+        </div>
+      </form>
     </div>
   </div>
 

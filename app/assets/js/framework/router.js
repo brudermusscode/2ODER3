@@ -18,6 +18,11 @@ export const routes = {
   project: {
     mark: "project",
     params: ":id",
+    hide_sidebar: (uri) => {
+      let uri_split = uri.split("/");
+
+      return uri_split.length > 3 ? false : true;
+    },
   },
 
   "get-back": {

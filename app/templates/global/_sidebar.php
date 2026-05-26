@@ -5,7 +5,7 @@ use Bruder\Model\Project;
 
 ?>
 
-<sidebar fl fldircol jucsb gap>
+<sidebar fl fldircol jucsb gap pl12>
   <div fl fldircol gap ovauto pb100>
     <div fl fldircol alic>
       <a fl fldircol alic jucc pinline20 href="/">
@@ -81,14 +81,13 @@ use Bruder\Model\Project;
   </div>
 
   <!--- Bottom --->
-  <div style="bottom:0;" posabs pb24 pinline12 fl alic gap=smoler>
+  <div style="bottom:12px;" posabs pb24 pinline12 fl alic gap=smoler>
     <?php if (authorized()) : ?>
       <a href="/log/new">
         <mbutton stdplus background=green color=dark icon-only>
           <mi>arrow_upload_ready</mi>
         </mbutton>
       </a>
-
 
       <div style="min-width:3px;height:38px;" minline6 rounded background=slight-light></div>
     <?php endif; ?>

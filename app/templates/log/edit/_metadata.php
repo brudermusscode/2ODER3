@@ -12,8 +12,9 @@ $log_link = "/log/" . $id . "/edit/project";
 
 ?>
 
-<form request="log:update" redirect="<?= $log_link ?>" responder=simple>
-  <content log-new fl fldircol gap=mid>
+<content log-new midplus>
+  <form request="log:update" redirect="<?= $log_link ?>" responder=simple
+    fl fldircol gap=mid>
 
     <?php
 
@@ -25,7 +26,7 @@ $log_link = "/log/" . $id . "/edit/project";
     ?>
 
     <choose-option thumbnails fl fldircol gap=smol+>
-      <p text smol bold ttup>Thumbnail</p>
+      <input-title color=tertiary>Thumbnail</input-title>
       <div fl alic gap=smol+>
         <?php for ($i = 1; $i <= $Log->thumb_count; $i++) : ?>
           <coption rounded ovhid
@@ -42,33 +43,33 @@ $log_link = "/log/" . $id . "/edit/project";
       <input type=hidden name=thumb_selected value=<?= $Log->thumb_selected ?> />
     </choose-option>
 
-    <div fl fldircol gap=mid>
-      <div fl fldircol gap=smol>
-        <p text smol ttup bold>Metadaten</p>
-        <div fl fldircol gap>
-          <input tabindex="1" autocomplete="off" crazy autofocus type=text name=name placeholder="Name" value="<?= $Log->name ?? "" ?>" />
-          <textarea tabindex="2" crazy placeholder="Beschreibuuuung" name=description><?= $Log->description ?? "" ?></textarea>
-        </div>
-      </div>
+    <div w100>
+      <input-title color=tertiary>Name</input-title>
+      <input tabindex="1" autocomplete="off" crazy autofocus type=text name=name placeholder="Name" value="<?= $Log->name ?? "" ?>" />
+    </div>
+
+    <div w100>
+      <input-title color=tertiary>Beschreibung</input-title>
+      <textarea tabindex="2" auto-resize rows=3 crazy placeholder="Beschreibuuuung" name=description><?= $Log->description ?? "" ?></textarea>
     </div>
 
     <input type=hidden name=id value=<?= $Log->id ?> />
     <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />
 
-    <div z style="position:fixed;left:2.4em;top:50%;translate:0 -50%;">
+    <div fl alic>
       <mbutton mid tabindex="3" icon-only background=red color=dark has-tooltip=right
         data-action="log:delete"
         data-id="<?= $id ?>">
         <mi>eraser_size_2</mi>
         <div ttooltip text semibold>Ne man, lass mal</div>
       </mbutton>
-    </div>
 
-    <div z style="position:fixed;right:2.4em;top:50%;translate:0 -50%;">
+      <div minline24 divide-horiz w100></div>
+
       <mbutton has-tooltip=left wide tabindex="3" icon-only background=tertiary color=tertiary-text submit-closest>
         <mi>deployed_code</mi>
         <div ttooltip text semibold>Projekt zuordnen</div>
       </mbutton>
     </div>
-  </content>
-</form>
+  </form>
+</content>

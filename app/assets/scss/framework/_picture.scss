@@ -88,10 +88,14 @@ picture {
   }
 
   img {
+    position: relative;
+    z-index: 1;
     height: 100%;
     width: 100%;
     opacity: 0;
     object-fit: cover;
+    transition: none;
+    animation: none;
 
     &[placeholder] {
       position: absolute;
@@ -100,11 +104,18 @@ picture {
       left: 0;
     }
 
-    position: relative;
-    z-index: 1;
-
     &[loaded="true"] {
       opacity: 1;
+      animation: show 0.2s linear forwards;
+
+      @keyframes show {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
     }
   }
 }

@@ -95,7 +95,6 @@ content[log] {
 current-log {
   display: block;
   width: calc(100% - $comments-width - $main-distance);
-  padding-bottom: $main-distance * 5;
   transition: width 0.6s $cubic;
 }
 
@@ -111,7 +110,7 @@ comments {
   scrollbar-width: 0px;
   margin-top: 0;
   padding-top: $main-distance;
-  padding-bottom: $main-distance;
+  padding-bottom: $main-distance + 12px;
   transition:
     translate 0.6s $cubic,
     margin 0.6s $cubic;

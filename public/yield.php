@@ -66,9 +66,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   <ajax-response></ajax-response>
 
   <background>
-    <picture>
-      <img src="/bg-colors.png" />
-    </picture>
+    <actual style="background-image: url(/bg-colors.png);"></actual>
     <blur></blur>
   </background>
 
@@ -77,7 +75,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   /**
    * + Header
    */
-  include TEMPLATE . "/global/_header.php";
+  include TEMPLATE . "/global/_sidebar.php";
 
   /**
    * + Page loader

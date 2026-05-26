@@ -2,6 +2,7 @@
 
 namespace Bruder\Controller;
 
+use Bruder\Application\Logger;
 use Bruder\Controller\Controller;
 use Bruder\Model\Project;
 
@@ -58,6 +59,32 @@ class ProjectsController extends Controller
 
     $this->authorize();
 
-    return success();
+    /**
+     * @var ?Project
+     */
+    $Project = Project::findOrReturn($this->params->id);
+
+    $Project->db_transaction();
+
+    try {
+      # ? Logs
+      $Project->logs()->each(function ($Log) {
+        $Log->comments()->delete();
+        $Log->reactions()->delete();
+        $Log->views()->delete();
+        $Log->delete();
+      });
+
+      # ? Project
+      $Project->delete();
+      $Project->db_commit();
+
+      return OK;
+    } catch (\Throwable $e) {
+      Logger::to_file($e);
+      $Project->db_rollback();
+
+      return ERROR;
+    }
   }
 }

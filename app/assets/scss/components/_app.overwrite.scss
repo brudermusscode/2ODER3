@@ -54,6 +54,12 @@ body {
       min-height: 2 * 100vh;
     }
   }
+
+  &[sidebar-hidden] {
+    main {
+      padding-inline: $main-distance;
+    }
+  }
 }
 
 img {
@@ -68,13 +74,32 @@ background {
   width: 100vw;
   height: 100%;
 
-  picture {
+  actual {
     position: absolute;
     z-index: 0;
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
+    opacity: 0;
+    transition: none;
+    animation: none;
+    background-position: 0 0;
+    background-size: cover;
+
+    &[active] {
+      opacity: 1;
+      animation: show 0.4s linear forwards;
+
+      @keyframes show {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    }
   }
 
   blur {
@@ -84,15 +109,13 @@ background {
     left: 0;
     height: 100%;
     width: 100%;
-    backdrop-filter: blur(24px);
-    background: rgba(0, 0, 0, 0.88);
     transition: none;
   }
 }
 
 main {
   padding-inline: calc($sidebar-width + $main-distance) $main-distance;
-  padding-top: $main-distance + 12px;
+  padding-block: $main-distance + 12px;
   max-width: $content-width;
   min-height: calc(100vh);
   margin-inline: auto;

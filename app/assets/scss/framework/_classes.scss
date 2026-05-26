@@ -2,6 +2,7 @@
 @use "var.colors" as *;
 @use "var.sizes" as *;
 @use "mixins" as *;
+@use "../abstract" as *;
 
 [hide-tablet] {
   @media screen and (max-width: $tablet-max-width) {
@@ -24,6 +25,26 @@
 
   &[elevated="wide"] {
     box-shadow: var(--mio-theme-elevation-3);
+  }
+}
+
+[divide-vert] {
+  width: 3px;
+  height: 38px;
+  background: $slight-light;
+
+  &[wide] {
+    height: $mbutton-wide-size - 12px;
+  }
+}
+
+[divide-horiz] {
+  width: 38px;
+  height: 3px;
+  background: $slight-light;
+
+  &[wide] {
+    width: $mbutton-wide-size - 12px;
   }
 }
 

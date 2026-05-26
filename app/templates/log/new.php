@@ -5,8 +5,9 @@ if (!authorized()) :
   include UNAVAILABLE;
 else : ?>
 
-  <form data-action="log:create" enctype="multipart/form-data">
-    <content log-new fl fldircol gap=mid>
+  <content log-new midler fl alic>
+    <form data-action="log:create" enctype="multipart/form-data"
+      fl fldircol gap=mid flone>
 
       <div fl fldircol gap=smol+>
         <p text bold smol ttup pinline24>Video-Datei auswählen</p>
@@ -26,7 +27,7 @@ else : ?>
 
       <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />
 
-      <div>
+      <div style=height:34px;>
         <progress-bar>
           <progress-track></progress-track>
         </progress-bar>
@@ -44,7 +45,7 @@ else : ?>
           <p text smol ttup bold>Wird verarbeitet bruder</p>
         </div>
       </div>
-    </content>
-  </form>
+    </form>
+  </content>
 
 <?php endif;
