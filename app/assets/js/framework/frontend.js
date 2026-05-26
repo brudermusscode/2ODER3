@@ -1,4 +1,5 @@
 import * as Responder from "./responder";
+import { clog } from "../abstract/prototypes";
 
 /**
  * Hides the sidebar to the left if param is given.
@@ -38,21 +39,25 @@ export const adjust_background = async (settings) => {
 
     if (set.image !== __page.background?.image) background_img.deactivate();
 
-    console.log(background_img);
-
     background_blur.style.display = set.blur < 1 ? "none" : "block";
     background_blur.style.backdropFilter = `blur(${set.blur}px)`;
     background_blur.style.background = set.color;
     background_img.style.backgroundImage = `url(${set.image})`;
 
+    // Create a new Image object to check for loaded
+    // state so we can fade it in when it's fully loaded.
+    let img = new Image();
+    img.src = set.image;
+
+    img.addEventListener("load", () => {
+      setTimeout(() => {
+        clog("fully loaded!");
+        background_img.activate();
+      }, 20);
+    });
+
     // Set the settings to the global __page object.
     __page.background = set;
-
-    setTimeout(() => {
-      background_img.activate();
-    }, 20);
-
-    console.log(background_img);
 
     resolve(1);
   });

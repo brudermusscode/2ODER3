@@ -35,3 +35,7 @@ Element.prototype.load = function () {
 Element.prototype.unload = function () {
   return this.removeAttribute("loading");
 };
+
+export const clog = (msg) => {
+  echo(msg);
+};
