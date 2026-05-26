@@ -29,7 +29,7 @@ export const routes = {
     mark: "login",
     hide_sidebar: true,
     background: {
-      image: "/jesus-login.png",
+      image: "/jesus-php.png",
       blur: 0,
       color: "rgba(0,0,0,.24)",
     },
