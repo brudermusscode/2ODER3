@@ -123,7 +123,9 @@ else :
     </div>
 
     <div identity>
-      <img src="<?= $Project->identity() ?>" style="width:100%;" />
+      <picture>
+        <img src="<?= $Project->identity() ?>" style="width:100%;" />
+      </picture>
     </div>
   </div>
 
