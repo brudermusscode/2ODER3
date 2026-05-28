@@ -15,7 +15,7 @@ use Bruder\Model\Project;
           </picture>
         </logo>
       </a>
-      <p smol ttup z style="text-shadow:0 -1px 3px black;">
+      <p smol ttup z style="text-shadow:0 0 1px rgba(0,0,0,.82);">
         <strong>2</strong>oder<strong>3</strong>
       </p>
     </div>
@@ -106,9 +106,11 @@ use Bruder\Model\Project;
       </a>
     <?php else : ?>
       <mbutton stdplus request="session:delete" shadow-submit full-reload responder=simple
-        background=red icon-only has-tooltip="right">
-        <mi>folded_hands</mi>
-        <div ttooltip>Ausloggääähn</div>
+        image-as-background icon-only has-tooltip="right">
+        <picture>
+          <img src="/assets/images/logout-compressed.png" />
+        </picture>
+        <div ttooltip>Amen!</div>
       </mbutton>
     <?php endif; ?>
   </div>

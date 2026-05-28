@@ -22,4 +22,11 @@ logo {
   height: $logo-size;
   width: $logo-size;
   margin-bottom: -12px;
+  transition:
+    margin-bottom 0.4s $cubic,
+    scale 0.4s $cubic;
+
+  &:hover {
+    scale: 1.04;
+  }
 }

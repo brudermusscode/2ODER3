@@ -34,12 +34,6 @@ mbutton {
     opacity: 0 !important;
   }
 
-  &[image-as-background] {
-    border: none;
-    background: none;
-    padding: 0;
-  }
-
   &[background] {
     &[background="slight-light"] {
       &:hover {
@@ -408,6 +402,26 @@ mbutton {
   &:active {
     outline: none;
     box-shadow: none;
+  }
+
+  &[image-as-background] {
+    border: none;
+    background: none;
+    padding: 0;
+
+    picture {
+      height: 100%;
+      width: 100%;
+
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    &:hover {
+      background: transparent;
+    }
   }
 
   &[no-hover-shadow] {
