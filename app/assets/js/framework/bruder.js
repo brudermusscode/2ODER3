@@ -59,18 +59,7 @@ $(function () {
 const init_application = async () => {
   let Route = await Page.get_route(window.location.pathname);
 
-  // ! Should be passed in one function.
-  Frontend.extract_exception(document.body);
-  Frontend.adjust_background(Route.background);
-  Frontend.reload_images();
-  Frontend.toggle_sidebar(
-    typeof Route.hide_sidebar === "function"
-      ? Route.hide_sidebar(window.location.pathname)
-      : Route.hide_sidebar,
-  );
-  // ! please.
-
-  document.body.setAttribute("toggled", false);
+  Frontend.set_state(Route);
 
   // TODO: Fix first page to second won't allow history
 

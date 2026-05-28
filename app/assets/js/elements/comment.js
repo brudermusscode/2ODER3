@@ -22,12 +22,6 @@ $(function () {
   //
   //
 
-  // ? Panel: Comments
-  if (localStorage.getItem("panel-comments-collapsed"))
-    document
-      .find("content[log]")
-      ?.setAttribute("panel-comments-collapsed", true);
-
   /**
    * @event click
    * @this {HTMLElement}
@@ -46,7 +40,7 @@ $(function () {
       localStorage.removeItem("panel-comments-collapsed");
     } else {
       content.setAttribute(attribute, "");
-      localStorage.setItem("panel-comments-collapsed", true);
+      localStorage.setItem("panel-comments-collapsed", Number.parseInt(1));
     }
   });
 

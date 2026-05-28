@@ -2,6 +2,35 @@ import * as Responder from "./responder";
 import { clog } from "../abstract/prototypes";
 
 /**
+ * Applies all necessary frontend related states to show
+ * everything as saved through cookies or localStorage.
+ *
+ * @param {object} Route
+ */
+export const set_state = (Route) => {
+  let content_log = document.find("content[log]");
+
+  extract_exception(document.body);
+  adjust_background(Route.background);
+  reload_images();
+  toggle_sidebar(
+    typeof Route.hide_sidebar === "function"
+      ? Route.hide_sidebar(window.location.pathname)
+      : Route.hide_sidebar,
+  );
+
+  // Collapse comments.
+  if (content_log && localStorage.getItem("panel-comments-collapsed")) {
+    content_log.setAttribute("panel-comments-collapsed", true);
+    console.log("yes");
+  }
+
+  // All fine, let's unlock the user!
+  document.body.setAttribute("initialized", true);
+  document.body.setAttribute("toggled", false);
+};
+
+/**
  * Hides the sidebar to the left if param is given.
  *
  * @param {bool} hide

@@ -6,7 +6,7 @@
 [landing] {
   position: absolute;
   width: calc(100% - 2 * $main-distance);
-  max-height: calc(100vh - $main-distance * 2);
+  max-height: calc(100vh - $main-distance - 12px);
 
   $landing-title-height: 300px;
 
@@ -39,9 +39,28 @@
   [identity] {
     height: calc(100vh - $landing-title-height);
     width: 70%;
-    border: 12px solid $slight-light;
-    border-bottom: 0;
-    border-radius: 42px 42px 0 0;
     overflow: hidden;
+
+    img {
+      border: 12px solid $slight-light;
+      border-bottom: 0;
+      border-radius: 38px 38px 0 0;
+      transition: margin 0.6s $cubic;
+
+      &[loaded="true"] {
+        animation: show-slide-up 0.6s $cubic forwards;
+
+        @keyframes show-slide-up {
+          from {
+            opacity: 0;
+            margin-top: 12px;
+          }
+          to {
+            opacity: 1;
+            margin-top: 0;
+          }
+        }
+      }
+    }
   }
 }

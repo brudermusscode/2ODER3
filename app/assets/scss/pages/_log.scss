@@ -16,6 +16,8 @@ loading {
   border-radius: 28px;
 }
 
+$comments-collapsed-width: 64px;
+
 content[log] {
   position: relative;
   display: block;
@@ -24,20 +26,18 @@ content[log] {
 
   &[panel-comments-collapsed] {
     current-log {
-      width: calc(100% - $main-distance - 32px);
+      width: calc(100% - $main-distance - $comments-collapsed-width);
     }
 
     comments {
-      translate: calc(($comments-width - 32px)) 0;
-      margin-left: calc(-1 * ($comments-width - 32px));
+      translate: calc(($comments-width - $comments-collapsed-width)) 0;
+      margin-left: calc(-1 * ($comments-width - $comments-collapsed-width));
       overflow: visible;
       padding-bottom: calc($composer-height + $main-distance + $gap-smol);
 
       &:hover {
         [panel-open] {
           mi {
-            width: calc(2em + 12px);
-            margin-left: -12px;
             padding-right: 12px;
           }
         }
@@ -53,6 +53,7 @@ content[log] {
       }
 
       [panel-open] {
+        display: flex;
         visibility: visible;
         opacity: 1;
         animation: wait 0.6s $cubic forwards;
@@ -62,7 +63,7 @@ content[log] {
             opacity: 0;
           }
 
-          90% {
+          60% {
             opacity: 0;
           }
 
@@ -75,10 +76,6 @@ content[log] {
       composer-contain {
         position: absolute;
         bottom: $main-distance;
-      }
-
-      [panel-open] {
-        display: flex;
       }
 
       [panel-close] {
@@ -135,17 +132,14 @@ comments {
     top: 0;
     left: 0;
     height: 100%;
-    width: $main-distance + 32px;
+    width: $main-distance + $comments-collapsed-width;
     z-index: 10;
     cursor: pointer;
 
     mi {
       height: 1.8em;
-      width: 2em;
+      width: 100%;
       border-radius: 12px 0 0 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition:
         padding-right 0.6s $cubic,
         width 0.6s $cubic,

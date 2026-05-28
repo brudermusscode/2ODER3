@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Bruder\Model\Project;
 use Bruder\Model\Log;
 use Bruder\Time\Time;
@@ -75,8 +73,8 @@ else :
 
       <?php if (authorized()) : ?>
         <a href="<?= $Project->link("edit"); ?>">
-          <mbutton mid icon-only background=green>
-            <mi>edit</mi>
+          <mbutton mid icon-only background=green color=dark>
+            <mi>arrow_selector_tool</mi>
           </mbutton>
         </a>
       <?php endif; ?>

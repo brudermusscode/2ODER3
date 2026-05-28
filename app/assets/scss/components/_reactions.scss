@@ -12,14 +12,14 @@ reactions {
   height: 48px;
   width: 48px;
   border-radius: 50%;
-  background: $slighter-light;
+  background: $slight-light;
 
   & > mi {
     font-size: 28px;
   }
 
   &:hover {
-    background: $slighterer-light;
+    background: $slighter-light;
   }
 
   &[active] {
@@ -44,7 +44,7 @@ reactions {
     top: 50%;
     right: 100%;
     translate: 0 -50%;
-    padding: 4px 8px;
+    padding: 4px 4px;
     opacity: 0;
     visibility: hidden;
     scale: 0.92;
@@ -134,13 +134,8 @@ outer-reaction {
   padding-inline: 13.2px 13.2px;
   display: flex;
   gap: 0.5em;
-  background: $slighterer-light;
+  background: $slight-light;
   width: auto;
-
-  reaction {
-    font-size: 24px;
-    width: 24px;
-  }
 
   &[removed] {
     animation: popout 0.4s ease forwards;
@@ -165,12 +160,23 @@ outer-reaction {
   }
 
   &[active] {
-    background: rgba(63, 240, 190, 0.12);
+    background: rgba(63, 240, 190, 0.32);
     font-weight: 600;
     color: $secondary;
 
     &:hover {
+      background: rgba(235, 50, 50, 0.32);
+    }
+  }
+
+  &:hover {
+    &:not([active]) {
       background: $slighter-light;
     }
+  }
+
+  reaction {
+    font-size: 24px;
+    width: 24px;
   }
 }

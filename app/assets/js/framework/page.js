@@ -176,25 +176,6 @@ export const get = async (
       title = main_container.find("title")?.innerHTML;
 
       /**
-       * Check for an exception and move it to a direct child of
-       * the body to be present in the very foreground.
-       */
-      Frontend.extract_exception(main_container);
-
-      // Toggle sidebar visibility.
-      Frontend.toggle_sidebar(
-        typeof Route.hide_sidebar === "function"
-          ? Route.hide_sidebar(url)
-          : Route.hide_sidebar,
-      );
-
-      // Adjust background image & blur, ….
-      await Frontend.adjust_background(Route.background);
-
-      // Load in all images with a nice effect.
-      Frontend.reload_images();
-
-      /**
        * Pushes the coming state to the browser history and sets a proper
        * title to the document.
        */
@@ -205,6 +186,9 @@ export const get = async (
             ? title
             : "Unknown Page";
       }
+
+      // Set all frontend states!
+      Frontend.set_state(Route);
 
       /**
        * Set header to scrolled.
@@ -293,11 +277,6 @@ export const get = async (
       // The previous Router, basically the router for the page
       // the user is coming from.
       let PreviousRoute = await Router.router(coming_from_path_split[1]);
-
-      /**
-       * Set the body to initialized.
-       */
-      document.body.setAttribute("initialized", true);
 
       /**
        * If a hashtag is at the end of url, search for the
