@@ -15,9 +15,12 @@ use Bruder\Model\Project;
           </picture>
         </logo>
       </a>
-      <p smol ttup z style="text-shadow:0 0 1px rgba(0,0,0,.82);">
-        <strong>2</strong>oder<strong>3</strong>
-      </p>
+      <div style="line-height:.9;" fl fldircol alic z>
+        <p text stdplus ttup style="text-shadow:0 0 1px rgba(0,0,0,.82);">
+          <strong>2</strong>oder<strong>3</strong>
+        </p>
+        <p text smoler ttup>development</p>
+      </div>
     </div>
 
     <?php if (!LOGGED) : ?>
