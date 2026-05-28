@@ -55,20 +55,31 @@ use Bruder\Model\Project;
         <div style="min-height:3px;" flone rounded background=slight-light
           minline6></div>
       </div>
-      <?php foreach ($Projects as $Project) : ?>
-        <a hoverable pl10 pr6 pblock12 rounded=mid fl alic gap=smol
+
+      <?php
+
+      # + Include projects banner.
+      foreach ($Projects as $Project) : ?>
+        <a hoverable pl10 pr6 pblock6 rounded=mid fl alic gap=smol
           page=project href="/project/<?= $Project->name ?>">
           <mi stdplus color=tertiary>deployed_code</mi>
-          <p><?= $Project->name; ?></p>
+          <div>
+            <p text std semibold><?= $Project->name; ?></p>
+          </div>
         </a>
       <?php endforeach; ?>
 
-      <?php if (authorized()) : ?>
+      <?php
+
+      # ! Only authorized.
+      if (authorized()) : ?>
         <mbutton request-get="project:new" stdplus mt12 has-icon=left background=tertiary color=tertiary-text rounded=mid fl alic gap=smol>
           <mi>add</mi>
           <p style="font-size:16px;"><semi-strong>Neue Projenkt</semi-strong></p>
-          </a>
-        <?php endif; ?>
+        </mbutton>
+      <?php endif; ?>
+
+
     </div>
 
 
