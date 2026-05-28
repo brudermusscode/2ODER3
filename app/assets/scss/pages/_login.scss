@@ -1,0 +1,11 @@
+@use "../abstract" as *;
+@use "../framework/classes" as *;
+@use "../framework/var.sizes" as *;
+@use "../framework/var.utils" as *;
+
+content[login] {
+  height: calc(100vh - 4 * $main-distance);
+  width: 100%;
+  max-width: 2000px;
+  padding-left: 142px;
+}

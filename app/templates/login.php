@@ -5,9 +5,9 @@ if (LOGGED) :
   include UNAVAILABLE;
 else : ?>
 
-  <div style="height:calc(100vh - 80px);width:100%;max-width:1100px;" fl jucend alic>
-    <div window pinline32 pblock42
-      style="max-height:calc(100vh - 24px);max-width:400px;width:100%;" ovauto">
+  <content login fl alic>
+    <div pinline32 pblock42
+      style="backdrop-filter:blur(6px);background:rgba(0,0,0,.42);border-block:1px solid rgba(255,255,255,.12);max-height:calc(100vh - 24px);max-width:380px;width:100%;" ovauto rounded=wide>
 
       <form request="session:create" full-reload redirect="/" responder=simple
         fl fldircol gap>
@@ -30,6 +30,6 @@ else : ?>
         </div>
       </form>
     </div>
-  </div>
+  </content>
 
 <?php endif; ?>

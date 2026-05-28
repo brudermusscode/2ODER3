@@ -34,6 +34,12 @@ mbutton {
     opacity: 0 !important;
   }
 
+  &[image-as-background] {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
   &[background] {
     &[background="slight-light"] {
       &:hover {
@@ -391,8 +397,8 @@ mbutton {
 
   &:hover {
     outline: none;
-    box-shadow: var(--mio-theme-elevation-3);
-    scale: 1.02;
+    box-shadow: var(--mio-theme-elevation-1);
+    scale: 1.014;
 
     &[elevated] {
       box-shadow: var(--mio-theme-elevation-3);

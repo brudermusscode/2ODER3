@@ -66,7 +66,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
   <ajax-response></ajax-response>
 
   <background>
-    <actual style="background-image: url(/bg-colors.png);"></actual>
+    <actual style="background-image: url(/cozy-room.png);"></actual>
     <blur></blur>
   </background>
 

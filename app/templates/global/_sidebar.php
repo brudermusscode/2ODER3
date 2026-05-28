@@ -11,11 +11,13 @@ use Bruder\Model\Project;
       <a fl fldircol alic jucc pinline20 href="/">
         <logo>
           <picture circled>
-            <img src="/jesus.webp" />
+            <img src="/logo.png" />
           </picture>
         </logo>
       </a>
-      <p smol ttup z style="text-shadow:0 -1px 3px black;"><span text bold>DEV</span><span text semi-bold>Log</span></p>
+      <p smol ttup z style="text-shadow:0 -1px 3px black;">
+        <strong>2</strong>oder<strong>3</strong>
+      </p>
     </div>
 
     <?php if (!LOGGED) : ?>
@@ -84,8 +86,10 @@ use Bruder\Model\Project;
   <div style="bottom:12px;" posabs pb24 pinline12 fl alic gap=smoler>
     <?php if (authorized()) : ?>
       <a href="/log/new">
-        <mbutton stdplus background=green color=dark icon-only>
-          <mi>arrow_upload_ready</mi>
+        <mbutton stdplus image-as-background icon-only>
+          <picture>
+            <img src="/assets/images/upload-compressed.png" />
+          </picture>
         </mbutton>
       </a>
 
@@ -94,9 +98,10 @@ use Bruder\Model\Project;
 
     <?php if (!LOGGED) : ?>
       <a href="/get-back">
-        <mbutton stdplus z background=primary color=primary-text icon-only has-tooltip=right>
-          <mi>key_vertical</mi>
-          <div ttooltip text semibold>Einloggen</div>
+        <mbutton stdplus z image-as-background icon-only has-tooltip=right>
+          <picture>
+            <img src="/assets/images/login-compressed.png" />
+          </picture>
         </mbutton>
       </a>
     <?php else : ?>

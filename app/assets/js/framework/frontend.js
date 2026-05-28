@@ -32,9 +32,9 @@ export const adjust_background = async (settings) => {
     let background_blur = background.find("blur");
     let background_img = background.find("actual");
     let set = {
-      image: settings?.image ?? "/bg-colors.png",
-      blur: settings?.blur ?? 12,
-      color: settings?.color ?? "rgba(0,0,0,.78)",
+      image: settings?.image ?? "/cozy-room.png",
+      blur: settings?.blur ?? 8,
+      color: settings?.color ?? "rgba(0,0,0,.64)",
     };
 
     if (set.image !== __page.background?.image) background_img.deactivate();
