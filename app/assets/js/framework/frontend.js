@@ -63,7 +63,7 @@ export const adjust_background = async (settings) => {
     let set = {
       image: settings?.image ?? "/cozy-room.png",
       blur: settings?.blur ?? 8,
-      color: settings?.color ?? "rgba(0,0,0,.64)",
+      color: settings?.color ?? "rgba(0,0,0,.84)",
     };
 
     if (set.image !== __page.background?.image) background_img.deactivate();

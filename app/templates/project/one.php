@@ -82,8 +82,9 @@ else :
 
     <div title fl fldircol alic jucc gap=smol+ posrel>
       <mi posabs color=tertiary>deployed_code</mi>
-      <p text widester bold tac><?= $Project->name ?></p>
-
+      <div style="line-height:.9;">
+        <p text widester bold tac><?= $Project->name ?></p>
+      </div>
       <div fl alic gap=smol>
 
         <?php if ($Project->logs_count) : ?>
