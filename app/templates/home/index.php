@@ -1,7 +1,9 @@
 <?php
 
 use Bruder\Model\CodingSession;
+use Bruder\Model\CodingSessionProject;
 use Bruder\Model\Project;
+use Illuminate\Support\Collection;
 
 ?>
 
@@ -9,70 +11,10 @@ use Bruder\Model\Project;
 
   <?php
 
-  /**
-   * @var ?CodingSession
-   */
-  $CodingSession = CodingSession::whereNull("finished_at")->latest()->first();
+  # + Coding Session.
+  include __DIR__ . "/_coding-session.php" ?>
 
-  if ($CodingSession) : ?>
-
-    <coding-session p24 pb48 background=hover-dark rounded=mid fl fldircol gap>
-      <?php
-
-      $session_start = $CodingSession->created_at;
-      $current_time = new DateTime("now");
-
-      $time_elapsed = $current_time->diff($session_start);
-
-      ?>
-
-      <div fl jucsb alistart>
-        <div fl alic gap=smol>
-          <mi stdplus pinline12 pblock10 rounded=std background=slighter-light>terminal_2</mi>
-          <div fl fldircol gap=smoler>
-            <p text ttup smoler>Aktive Coding Session</p>
-            <p text stdplus bold><?= $CodingSession->project->name ?></p>
-          </div>
-        </div>
-
-        <?php if (authorized()) : ?>
-          <a href="<?= $CodingSession->link("edit") ?>">
-            <mbutton std background=slighter-light has-icon=left>
-              <mi>undo</mi>
-              Projekt wechseln
-            </mbutton>
-          </a>
-        <?php endif; ?>
-      </div>
-
-      <div fl alistart jucc gap=smolest>
-        <div fl fldircol alic style=width:120px;>
-          <p h text widester bold color=primary>
-            <?= $time_elapsed->h < 10 ? "0" . $time_elapsed->h : $time_elapsed->h; ?></p>
-          <p text ttup slight style="font-size:14px;">Stunden</p>
-        </div>
-        <p text widester slight>&middot;</p>
-        <div fl fldircol alic style="width:120px;">
-          <p i text widester bold color=primary>
-            <?= $time_elapsed->i < 10 ? "0" . $time_elapsed->i : $time_elapsed->i ?></p>
-          <p text ttup slight style="font-size:14px;">Minuten</p>
-        </div>
-        <p text widester slight>&middot;</p>
-        <div fl fldircol alic style="width:120px;">
-          <p s text widester bold color=primary>
-            <?= strlen($time_elapsed->s) < 2 ? "0" . $time_elapsed->s : $time_elapsed->s ?></p>
-          <p text ttup slight style="font-size:14px;">Sekunden</p>
-        </div>
-      </div>
-
-      <?php if ($CodingSession->title) : ?>
-        <p text tac bold mt12><?= $CodingSession->title ?></p>
-      <?php endif; ?>
-    </coding-session>
-  <?php endif; ?>
-
-
-  <div fl fldircol gap>
+  <div fl fldircol gap=smol+>
     <p text smol bold ttup color=tertiary pinline12>Aktuellste Devlogs</p>
 
     <?php foreach (
@@ -150,7 +92,7 @@ use Bruder\Model\Project;
 
   ?>
 
-  <div fl fldircol gap>
+  <div fl fldircol gap=smol+>
     <p text smol bold ttup color=tertiary pinline12>Feature Tracking</p>
 
     <div fl jucsb flex-wrap>

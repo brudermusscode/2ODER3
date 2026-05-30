@@ -106,7 +106,7 @@ use Bruder\Model\User;
           <a href="<?= CodingSession::link("new") ?>">
             <mbutton stdplus has-icon=left background=primary>
               <mi>terminal_2</mi>
-              <span style="font-size:16px;">Coding session</span>
+              <span style="font-size:16px;">Coding Session</span>
             </mbutton>
           </a>
 

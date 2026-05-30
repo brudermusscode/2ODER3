@@ -4,6 +4,7 @@ namespace Bruder\Model;
 
 use Bruder\Bruder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CodingSession extends Bruder
 {
@@ -27,8 +28,34 @@ class CodingSession extends Bruder
   /**
    * @return BelongsTo<Project>
    */
-  public function project()
+  public function current_project()
   {
-    return $this->belongsTo(Project::class);
+    return $this->belongsTo(Project::class, "project_id");
+  }
+
+  /**
+   * @return HasMany<CodingSessionProject>
+   */
+  public function projects()
+  {
+    return $this->hasMany(CodingSessionProject::class);
+  }
+
+  /**
+   * Set this instance to be finished. Should not be able to be worked
+   * on anymore.
+   *
+   * @return bool
+   */
+  public function finish()
+  {
+
+    # Update all Coding Session Project history entries to be stopped.
+    $this->projects()->each(fn($CSP) => $CSP->stop());
+
+    # Set this instance to be finished.
+    return $this->update([
+      "finished_at" => CURRENT_TIMESTAMP,
+    ]);
   }
 }
