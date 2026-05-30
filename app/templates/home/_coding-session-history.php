@@ -9,7 +9,7 @@ use Bruder\Model\CodingSessionProject;
 $CSHistory = $CodingSession->projects;
 
 if ($CSHistory->count() > 1) : ?>
-  <div fl fldircol gap=smol>
+  <div fl fldircol gap=smol <?= $CodingSession->finished_at ? "style=margin-top:-12px;" : "" ?>>
     <?php if (!$CodingSession->finished_at) : ?>
       <p text smol ttup pinline32 slight>In dieser Session</p>
     <?php endif; ?>

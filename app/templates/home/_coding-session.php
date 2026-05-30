@@ -28,7 +28,7 @@
      <div fl jucsb alistart pinline32 pt32>
        <div fl alic gap=smol>
          <div fl fldircol gap=smoler>
-           <p text smol ttup slight>coding session</p>
+           <p text smol ttup color=tertiary>coding session</p>
            <div fl alic gap=smol>
              <mi mid color=tertiary>deployed_code</mi>
              <p text mid bold><?= $CodingSession->current_project->name ?></p>
@@ -66,7 +66,7 @@
 
 
      <!--- Timer + Title --->
-     <div>
+     <div mt32>
        <div fl alistart jucc gap=smolest>
          <div fl fldircol alic style=width:120px;>
            <p h text widester bold color=primary>
@@ -105,39 +105,43 @@
      </div>
    </coding-session>
  <?php else : ?>
-   <coding-session background=hover-dark rounded=mid>
-     <div pinline42 pblock32 pt42>
-       <div fl alic gap=smol text smol>
-         <p>Letzte Coding Session</p>
-         &middot;
-         <p color=primary><?= Time::ago($CodingSession->finished_at); ?></p>
-       </div>
 
-       <?php $elapsed = $CodingSession->time_elapsed(); ?>
-       <div fl alic gap=smol mt8>
-         <div lh1 fl gap=smol>
-           <p text wider bold>
-             <?= ($elapsed->h < 10 ? "0" . $elapsed->h : $elapsed->h); ?></p>
-           <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Stunden</p>
-         </div>
-         <p text wider>&middot;</p>
-         <div lh1 fl gap=smol>
-           <p text wider bold>
-             <?= ($elapsed->i < 10 ? "0" . $elapsed->i : $elapsed->i); ?></p>
-           <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Minuten</p>
-         </div>
-         <p text wider>&middot;</p>
-         <div lh1 fl gap=smol>
-           <p text wider bold>
-             <?= ($elapsed->s < 10 ? "0" . $elapsed->s : $elapsed->s); ?></p>
-           <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Sekunde</p>
-         </div>
-       </div>
+   <div fl fldircol gap=smol+>
+     <div fl alic gap=smol pinline12>
+       <p text smol bold ttup color=tertiary>Letzte Coding Session</p>
+       &middot;
+       <p><?= Time::ago($CodingSession->finished_at); ?></p>
      </div>
 
-     <?php
+     <coding-session background=hover-dark rounded=mid>
+       <div pinline42 pblock32>
 
-      # + Coding Session History.
-      include __DIR__ . "/_coding-session-history.php"; ?>
-   </coding-session>
+         <?php $elapsed = $CodingSession->time_elapsed(); ?>
+         <div fl alic gap=smol mt8>
+           <div lh1 fl gap=smol>
+             <p text wider bold>
+               <?= ($elapsed->h < 10 ? "0" . $elapsed->h : $elapsed->h); ?></p>
+             <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Stunden</p>
+           </div>
+           <p text wider>&middot;</p>
+           <div lh1 fl gap=smol>
+             <p text wider bold>
+               <?= ($elapsed->i < 10 ? "0" . $elapsed->i : $elapsed->i); ?></p>
+             <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Minuten</p>
+           </div>
+           <p text wider>&middot;</p>
+           <div lh1 fl gap=smol>
+             <p text wider bold>
+               <?= ($elapsed->s < 10 ? "0" . $elapsed->s : $elapsed->s); ?></p>
+             <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Sekunde</p>
+           </div>
+         </div>
+       </div>
+
+       <?php
+
+        # + Coding Session History.
+        include __DIR__ . "/_coding-session-history.php"; ?>
+     </coding-session>
+   </div>
  <?php endif; ?>
