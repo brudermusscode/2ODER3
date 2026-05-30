@@ -13,6 +13,37 @@ export const routes = {
     mark: "home",
     params: "/:id/:sub",
     execute_once: () => {},
+    execute_always: () => {
+      let coding_session = document.find("coding-session");
+
+      if (coding_session) {
+        let h = coding_session.find("[h]");
+        let i = coding_session.find("[i]");
+        let s = coding_session.find("[s]");
+
+        let interval_timing = 1000; // 1 second.
+
+        setInterval(() => {
+          let new_h = Number.parseInt(h.innerHTML);
+          let new_i = Number.parseInt(i.innerHTML);
+          let new_s = Number.parseInt(s.innerHTML) + 1;
+
+          if (new_s === 60) {
+            new_s = 0;
+            new_i += 1;
+          }
+
+          if (new_i === 60) {
+            new_i = 0;
+            new_h += 1;
+          }
+
+          h.innerHTML = new_h < 10 ? `0${new_h}` : new_h;
+          i.innerHTML = new_i < 10 ? `0${new_i}` : new_i;
+          s.innerHTML = new_s < 10 ? `0${new_s}` : new_s;
+        }, interval_timing);
+      }
+    },
   },
 
   project: {

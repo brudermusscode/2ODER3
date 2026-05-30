@@ -42,7 +42,7 @@ else :
       "http" => [
         "method" => "GET",
         "header" => [
-          "User-Agent: mitjesus.dev",
+          "User-Agent: 2oder3.dev",
           "Accept: application/vnd.github+json"
         ]
       ]
@@ -54,7 +54,7 @@ else :
     return $response ? json_decode($response) : null;
   }
 
-  $commits = get_commits(owner: "brudermusscode", repository: $Project->name,);
+  $commits = DEV ? null : get_commits(owner: "brudermusscode", repository: $Project->name,);
 
   /**
    * @var Collection<Log>
@@ -72,7 +72,7 @@ else :
       </a>
 
       <?php if (authorized()) : ?>
-        <a href="<?= $Project->link("edit"); ?>">
+        <a href="<?= $Project->link(action: "edit", identifier: "name"); ?>">
           <mbutton mid icon-only background=green color=dark>
             <mi>arrow_selector_tool</mi>
           </mbutton>

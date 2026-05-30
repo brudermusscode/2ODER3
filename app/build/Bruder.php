@@ -4,11 +4,68 @@ namespace Bruder;
 
 use Bruder\Trait\ProcessesRequests;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Bruder extends Model
 {
   use ProcessesRequests;
+
+  protected string $route_key = "id";
+
+  public function __call($method, $parameters)
+  {
+
+    if ($method === 'link')
+      return $this->build_link($parameters[0] ?? null, $parameters[1] ?? false);
+
+    return parent::__call($method, $parameters);
+  }
+
+  public static function __callStatic($method, $parameters)
+  {
+    if ($method === 'link')
+      return new static()->build_link($parameters[0] ?? null, $parameters[1] ?? false);
+
+    return parent::__callStatic($method, $parameters);
+  }
+
+  /**
+   * Returns the url to the given action for this instance.
+   *
+   * @param ?string $action
+   * @param bool $get
+   * @return string
+   * @throws \Exception
+   */
+  public function build_link(
+    ?string $action = null,
+    bool $get = false
+  ) {
+
+    $key_actions = ["update", "edit", "delete"];
+    $singular = Str::singular($this->getTable());
+    $base = str_replace("_", "-", $singular);
+    $seperator = !$get ? "/" : ":";
+
+    # Add a slash at the beginning for normal urls.
+    $base = !$get ? "/$base" : $base;
+
+    if (in_array($action, $key_actions) && !$this->exists)
+      throw new \Exception("Cannot accept action »{$action}« as instance of class " . get_class($this) . " doesn't exist.");
+
+    if (method_exists($this, "parent") && $this->parent())
+      $base = $this->parent()->link(get: $get) . $base;
+
+    return $base . $seperator .
+      match ($action) {
+        "new" => "new",
+        "create" => "create",
+        "update" => $this->{$this->route_key} . $seperator . "update",
+        "edit" => $this->{$this->route_key} . $seperator . "edit",
+        "delete" => $this->{$this->route_key} . $seperator . "delete",
+        default => $this->{$this->route_key},
+      };
+  }
 
   /**
    * @return ?object

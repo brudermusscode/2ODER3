@@ -12,7 +12,7 @@ $log_link = "/log/" . $id . "/edit/project";
 
 ?>
 
-<content log-new midplus>
+<content log-new mid>
   <form request="log:update" redirect="<?= $log_link ?>" responder=simple
     fl fldircol gap=mid>
 
@@ -57,11 +57,10 @@ $log_link = "/log/" . $id . "/edit/project";
     <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />
 
     <div fl alic>
-      <mbutton mid tabindex="3" icon-only background=red color=dark has-tooltip=right
+      <mbutton mid tabindex="3" icon-only background=slight-light
         data-action="log:delete"
         data-id="<?= $id ?>">
-        <mi>eraser_size_2</mi>
-        <div ttooltip text semibold>Ne man, lass mal</div>
+        <mi>delete_forever</mi>
       </mbutton>
 
       <div minline24 divide-horiz w100></div>

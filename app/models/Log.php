@@ -33,6 +33,14 @@ class Log extends Bruder
   ];
 
   /**
+   * @return Project
+   */
+  public function parent()
+  {
+    return $this->project;
+  }
+
+  /**
    * @param object $params
    * @return string
    */
@@ -119,14 +127,6 @@ class Log extends Bruder
   public function raw_file_path()
   {
     return Upload::data_save_path(for: "videos") . "/" . $this->file_name;
-  }
-
-  /**
-   * @return string
-   */
-  public function link()
-  {
-    return "/project/{$this->project->name}/log/$this->id";
   }
 
   /**

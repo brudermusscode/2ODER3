@@ -1,48 +1,76 @@
 <?php
 
-use Illuminate\Support\Collection;
-use Bruder\Model\Log;
+use Bruder\Model\CodingSession;
 use Bruder\Model\Project;
 
 ?>
 
 <div fl fldircol gap=mid>
 
-  <div style="position:sticky;top:24px;" z color=primary window pblock38 pinline42>
-    <p text tac style="text-align: justify;">
-      <strong fl alic gap=smol mb8>
-        <mi>waving_hand</mi>
-        Diese Seite ist aktuell noch im Aufbau.
-      </strong>
-      Unten findest du einige Dinge, die ich plane zu implementieren. Grundidee ist, Dir den Fortschritt meiner Projekte zu präsentieren und Dir die Möglichkeit zu geben, persönlich daran teilzuhaben.
-    </p>
-  </div>
+  <?php
 
-  <div fl fldircol gap>
-    <p text smol bold ttup color=tertiary pinline12>Geplante Features</p>
+  /**
+   * @var ?CodingSession
+   */
+  $CodingSession = CodingSession::whereNull("finished_at")->latest()->first();
 
-    <div fl jucsb flex-wrap>
-      <div background=hover-dark rounded=stdplus pblock42 tac slight mb12 style="flex-basis:49.6%;">
-        <span color=tertiary>Live-Tracking vong aktuellem Projekt</span>
+  if ($CodingSession) : ?>
+
+    <coding-session p24 pb48 background=hover-dark rounded=mid fl fldircol gap>
+      <?php
+
+      $session_start = $CodingSession->created_at;
+      $current_time = new DateTime("now");
+
+      $time_elapsed = $current_time->diff($session_start);
+
+      ?>
+
+      <div fl jucsb alistart>
+        <div fl alic gap=smol>
+          <mi stdplus pinline12 pblock10 rounded=std background=slighter-light>terminal_2</mi>
+          <div fl fldircol gap=smoler>
+            <p text ttup smoler>Aktive Coding Session</p>
+            <p text stdplus bold><?= $CodingSession->project->name ?></p>
+          </div>
+        </div>
+
+        <?php if (authorized()) : ?>
+          <a href="<?= $CodingSession->link("edit") ?>">
+            <mbutton std background=slighter-light has-icon=left>
+              <mi>undo</mi>
+              Projekt wechseln
+            </mbutton>
+          </a>
+        <?php endif; ?>
       </div>
 
-      <div background=hover-dark rounded=stdplus pblock42 tac slight mb12 style="flex-basis:49.6%;">
-        <span color=tertiary>Neuster Devlog</span>
+      <div fl alistart jucc gap=smolest>
+        <div fl fldircol alic style=width:120px;>
+          <p h text widester bold color=primary>
+            <?= $time_elapsed->h < 10 ? "0" . $time_elapsed->h : $time_elapsed->h; ?></p>
+          <p text ttup slight style="font-size:14px;">Stunden</p>
+        </div>
+        <p text widester slight>&middot;</p>
+        <div fl fldircol alic style="width:120px;">
+          <p i text widester bold color=primary>
+            <?= $time_elapsed->i < 10 ? "0" . $time_elapsed->i : $time_elapsed->i ?></p>
+          <p text ttup slight style="font-size:14px;">Minuten</p>
+        </div>
+        <p text widester slight>&middot;</p>
+        <div fl fldircol alic style="width:120px;">
+          <p s text widester bold color=primary>
+            <?= strlen($time_elapsed->s) < 2 ? "0" . $time_elapsed->s : $time_elapsed->s ?></p>
+          <p text ttup slight style="font-size:14px;">Sekunden</p>
+        </div>
       </div>
 
-      <div background=hover-dark rounded=stdplus pblock42 tac slight mb12 style="flex-basis:49.6%;">
-        <span color=tertiary>Bible Daily</span>
-      </div>
+      <?php if ($CodingSession->title) : ?>
+        <p text tac bold mt12><?= $CodingSession->title ?></p>
+      <?php endif; ?>
+    </coding-session>
+  <?php endif; ?>
 
-      <div background=hover-dark rounded=stdplus pblock42 tac slight mb12 style="flex-basis:49.6%;">
-        <span color=tertiary>Twitch Stream</span>
-      </div>
-
-      <div background=hover-dark rounded=stdplus pblock42 tac slight mb12 style="flex-basis:49.6%;">
-        <span color=tertiary>Trending Projekte</span>
-      </div>
-    </div>
-  </div>
 
   <div fl fldircol gap>
     <p text smol bold ttup color=tertiary pinline12>Aktuellste Devlogs</p>
@@ -107,5 +135,48 @@ use Bruder\Model\Project;
       </div>
 
     <?php endforeach ?>
+  </div>
+
+
+  <?php
+
+  $features = [
+    "Live-Tracking vong aktuellem Projekt" => 1,
+    "Neuster Devlog" => 0,
+    "Bible Daily" => 0,
+    "Twitch Stream" => 0,
+    "Trending Projekte" => 0,
+  ];
+
+  ?>
+
+  <div fl fldircol gap>
+    <p text smol bold ttup color=tertiary pinline12>Feature Tracking</p>
+
+    <div fl jucsb flex-wrap>
+      <?php foreach ($features as $feature => $done) : ?>
+        <div background=hover-dark rounded=stdplus pblock42 tac slight mb12
+          style="flex-basis:49.6%;">
+          <p fl alic gap=smol jucc>
+            <?php if ($done) : ?>
+              <mi color=green midler>done</mi>
+            <?php endif; ?>
+            <span <?= $done ? "color=green" : "" ?>><?= $feature; ?></span>
+          </p>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+
+
+  <div style="position:sticky;top:36px;" z window p32>
+    <p text tac style="text-align: justify;">
+      <strong fl alic gap=smol mb8>
+        <mi>waving_hand</mi>
+        Diese Seite ist aktuell noch im Aufbau.
+      </strong>
+      Unten findest du einige Dinge, die ich plane zu implementieren. Grundidee ist, Dir den Fortschritt meiner Projekte zu präsentieren und Dir die Möglichkeit zu geben, persönlich daran teilzuhaben.
+    </p>
   </div>
 </div>

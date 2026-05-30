@@ -213,8 +213,11 @@ class Controller
 
     # Build the controller name.
     $ControllerName = "Bruder\\Controller\\";
+
     foreach ($dir_split as $dir) {
-      $ControllerName .= ucfirst($dir);
+      $dir_split2 = explode("-", $dir);
+      foreach ($dir_split2 as $dirnamepart)
+        $ControllerName .= ucfirst($dirnamepart);
     }
     $ControllerName .= "sController";
 

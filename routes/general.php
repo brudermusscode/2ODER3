@@ -86,3 +86,10 @@ $Router->post("/user/update", "user/update", return: "JSON");
 # ? UserVerifications
 $Router->post("/user/verification/create", "user/verification/create", return: "JSON");
 $Router->post("/user/verification/update", "user/verification/update", return: "JSON");
+
+# ? Coding Sessions
+$Router->get("/coding-session/:id/edit", "coding-session/edit", title: "Coding Session bearbeiten?");
+$Router->get("/coding-session/new", "coding-session/new", title: "Im Tunnel?");
+# TODO: Use the route param for identification of the model instance.
+$Router->post("/coding-session/:id/update", "coding-session/update", return: "JSON");
+$Router->post("/coding-session/create", "coding-session/create", return: "JSON");

@@ -17,7 +17,8 @@
     "paragonie/constant_time_encoding": "^3.0",
     "dev-kraken/env-validator": "^1.0",
     "php-ffmpeg/php-ffmpeg": "^1.4",
-    "intervention/image": "^4.0"
+    "intervention/image": "^4.0",
+    "illuminate/support": "^11.51"
   },
   "autoload": {
     "files": [

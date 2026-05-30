@@ -109,6 +109,7 @@ textarea {
     color: white;
     background: $slight-light;
     border-radius: 24px;
+    resize: none;
 
     &:not(:placeholder-shown),
     &:focus {

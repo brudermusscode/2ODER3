@@ -10,7 +10,7 @@ else : ?>
       fl fldircol gap=mid flone>
 
       <div fl fldircol gap=smol+>
-        <p text bold smol ttup pinline24>Video-Datei auswählen</p>
+        <input-title color=tertiary>Video-Datei auswählen</input-title>
 
         <div posrel h100 w100>
           <media-select trigger-file-input>

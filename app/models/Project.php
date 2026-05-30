@@ -5,6 +5,7 @@ namespace Bruder\Model;
 use Bruder\Application\Logger;
 use Bruder\Bruder;
 use Bruder\File\Upload;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
@@ -21,6 +22,8 @@ class Project extends Bruder
     "url",
     "identity",
   ];
+
+  protected string $route_key = "name";
 
   /**
    * @param object $params
@@ -87,23 +90,19 @@ class Project extends Bruder
   }
 
   /**
-   * @param ?string $action
-   * @return string
-   */
-  public function link(?string $action = null)
-  {
-    return match ($action) {
-      "edit" => "/project/{$this->name}/edit",
-      default => "/project/{$this->name}",
-    };
-  }
-
-  /**
-   * @return Collection<Log>
+   * @return HasMany<Log>
    */
   public function logs()
   {
     return $this->hasMany(Log::class);
+  }
+
+  /**
+   * @return HasMany<CodingSession>
+   */
+  public function coding_sessions()
+  {
+    return $this->hasMany(CodingSession::class);
   }
 
   /**

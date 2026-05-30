@@ -15,48 +15,51 @@ $log_link = "/log/" . $id . "/edit/project";
 ?>
 
 <content log-new mid>
-  <form data-action="log:finalize" fl fldircol gap=smol+>
-    <p text bold smol slight ttup pinline24>Projekt nicht vergessen</p>
+  <form data-action="log:finalize" fl fldircol gap=mid>
 
-    <add-new request-get="project:new">
-      <mi>deployed_code</mi>
-      <div fl alic jucsb flone pr18 pb12>
-        <p text midplus semibold>Neues erstellen</p>
-        <mi mid semibold>orders</mi>
+    <div fl fldircol gap=smol+>
+      <p text bold smol slight ttup pinline24>Projenkt nicht vergessen</p>
+
+      <add-new request-get="project:new">
+        <mi>deployed_code</mi>
+        <div fl alic jucsb flone pr18 pb12>
+          <p text midplus semibold>Neues erstellen</p>
+          <mi mid semibold>orders</mi>
+        </div>
+      </add-new>
+
+      <div fl alic jucc pblock12 w100>
+        <mi mid semibold slighter>expand_circle_down</mi>
       </div>
-    </add-new>
 
-    <div fl alic jucc pblock12 w100>
-      <mi mid semibold slighter>expand_circle_down</mi>
-    </div>
+      <choose-option fl fldircol gap=smol+>
+        <?php foreach (Project::with("logs")->get() as $Project) :
 
-    <choose-option fl fldircol gap=smol+>
-      <?php foreach (Project::with("logs")->get() as $Project) :
+          $ProjectLogs = $Project->logs;
+          $ProjectLatestLog = $Project->logs()->latest()->first() ?? null;
 
-        $ProjectLogs = $Project->logs;
-        $ProjectLatestLog = $Project->logs()->latest()->first() ?? null;
-
-      ?>
-        <coption
-          <?= $Log->project?->is($Project) ? "active" : "" ?>
-          data-value="<?= $Project->id ?>" background=slight-light rounded p42>
-          <div fl fldircol>
-            <p text midler bold><?= $Project->name ?></p>
-            <div fl alic gap=smol>
-              <?php if ($ProjectLogs->count()) : ?>
-                <p text smol slight><?= $ProjectLogs->count() ?> logs</p>
-                <p text smol slight>
-                  Letzter Log &middot; <?= Time::ago($ProjectLatestLog->created_at) ?></p>
-              <?php else : ?>
-                <p text smol slight>Keine Logs</p>
-              <?php endif ?>
+        ?>
+          <coption
+            <?= $Log->project?->is($Project) ? "active" : "" ?>
+            data-value="<?= $Project->id ?>" background=slight-light rounded p42>
+            <div fl fldircol>
+              <p text midler bold><?= $Project->name ?></p>
+              <div fl alic gap=smol>
+                <?php if ($ProjectLogs->count()) : ?>
+                  <p text smol slight><?= $ProjectLogs->count() ?> logs</p>
+                  <p text smol slight>
+                    Letzter Log &middot; <?= Time::ago($ProjectLatestLog->created_at) ?></p>
+                <?php else : ?>
+                  <p text smol slight>Keine Logs</p>
+                <?php endif ?>
+              </div>
             </div>
-          </div>
-        </coption>
-      <?php endforeach ?>
+          </coption>
+        <?php endforeach ?>
 
-      <input type=hidden name=project_id value />
-    </choose-option>
+        <input type=hidden name=project_id value />
+      </choose-option>
+    </div>
 
     <input type=hidden name=id value=<?= $Log->id ?> />
     <input type=hidden name=__admin_key value="<?= _env("WEB_ADMIN_KEY") ?>" />

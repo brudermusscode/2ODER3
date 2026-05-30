@@ -61,6 +61,9 @@ const init_application = async () => {
 
   Frontend.set_state(Route);
 
+  // Execute router functions.
+  if (typeof Route.execute_always === "function") Route.execute_always();
+
   // TODO: Fix first page to second won't allow history
 
   console.log(

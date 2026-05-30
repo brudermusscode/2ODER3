@@ -1,7 +1,10 @@
 <?php
 
+use Bruder\Model\CodingSession;
+use Bruder\Model\Log;
 use Illuminate\Support\Collection;
 use Bruder\Model\Project;
+use Bruder\Model\User;
 
 ?>
 
@@ -25,7 +28,7 @@ use Bruder\Model\Project;
 
     <?php if (!LOGGED) : ?>
       <div pinline12>
-        <mbutton request-get="user:new" stdplus background=secondary color=secondary-text has-icon=left>
+        <mbutton request-get="<?= User::link("new", true) ?>" stdplus background=secondary color=secondary-text has-icon=left>
           <mi>crowdsource</mi>
           Hierbleiben
         </mbutton>
@@ -61,7 +64,7 @@ use Bruder\Model\Project;
       # + Include projects banner.
       foreach ($Projects as $Project) : ?>
         <a hoverable pl10 pr6 pblock6 rounded=mid fl alic gap=smol
-          page=project href="/project/<?= $Project->name ?>">
+          page=project href="<?= $Project->link() ?>">
           <mi stdplus color=tertiary>deployed_code</mi>
           <div>
             <p text std semibold><?= $Project->name; ?></p>
@@ -73,7 +76,7 @@ use Bruder\Model\Project;
 
       # ! Only authorized.
       if (authorized()) : ?>
-        <mbutton request-get="project:new" stdplus mt12 has-icon=left background=tertiary color=tertiary-text rounded=mid fl alic gap=smol>
+        <mbutton request-get="<?= Project::link("new", true) ?>" stdplus mt12 has-icon=left background=tertiary color=tertiary-text rounded=mid>
           <mi>add</mi>
           <p style="font-size:16px;"><semi-strong>Neue Projenkt</semi-strong></p>
         </mbutton>
@@ -83,33 +86,44 @@ use Bruder\Model\Project;
     </div>
 
 
-    <div style="min-height:3px;" flone rounded background=slight-light
-      minline24></div>
+    <div style="min-height:3px;" flone rounded background=slight-light minline24></div>
 
-    <div pinline12>
+    <div pinline12 fl fldircol gap=smoler>
       <a href="https://github.com/brudermusscode" extern target="_blank">
         <mbutton stdplus has-icon=left background=slight-light>
           <img style="height:24px;" src="/assets/images/github-white.svg" />
           <p text style="font-size:14px;">@brudermusscode</p>
         </mbutton>
       </a>
+
+      <?php
+
+      # ! Only authorized.
+      if (authorized()) : ?>
+        <div mt24 fl fldircol gap=smoler>
+          <p text smoler semibold pinline12 mb6 ttup slight>Erstellen</p>
+
+          <a href="<?= CodingSession::link("new") ?>">
+            <mbutton stdplus has-icon=left background=primary>
+              <mi>terminal_2</mi>
+              <span style="font-size:16px;">Coding session</span>
+            </mbutton>
+          </a>
+
+          <a href="<?= Log::link("new") ?>">
+            <mbutton stdplus has-icon=left background=green color=dark>
+              <mi>arrow_upload_ready</mi>
+              <span style="font-size:16px;">Neuer Devlog</span>
+            </mbutton>
+          </a>
+        </div>
+      <?php endif; ?>
+
     </div>
   </div>
 
   <!--- Bottom --->
   <div style="bottom:12px;" posabs pb24 pinline12 fl alic gap=smoler>
-    <?php if (authorized()) : ?>
-      <a href="/log/new">
-        <mbutton stdplus image-as-background icon-only>
-          <picture>
-            <img src="/assets/images/upload-compressed.png" />
-          </picture>
-        </mbutton>
-      </a>
-
-      <div style="min-width:3px;height:38px;" minline6 rounded background=slight-light></div>
-    <?php endif; ?>
-
     <?php if (!LOGGED) : ?>
       <a href="/get-back">
         <mbutton stdplus z image-as-background icon-only has-tooltip=right>
