@@ -226,7 +226,7 @@ mbutton {
 
     i:not([size]),
     mi:not([size]) {
-      font-size: $font-size-mid;
+      font-size: $font-size-midler;
     }
 
     &:not([icon-only]) {
@@ -238,7 +238,7 @@ mbutton {
       gap: 8px;
 
       &[has-icon="left"] {
-        padding-inline: 10px 24px;
+        padding-inline: 14px 24px;
 
         &[show-text-active] {
           &:not([active]) {

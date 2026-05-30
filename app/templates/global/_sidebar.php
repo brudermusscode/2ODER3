@@ -53,10 +53,9 @@ use Bruder\Model\User;
     ?>
 
     <div pinline12 fl fldircol gap=smoler>
-      <div fl alic gap=smol pinline10 posrel mb12>
+      <div fl alic pinline10 posrel mb12>
         <p text smoler ttup semibold color=tertiary>Projekte</p>
-        <div style="min-height:3px;" flone rounded background=slight-light
-          minline6></div>
+        <div style="min-height:3px;" flone rounded background=slight-light ml12></div>
       </div>
 
       <?php
@@ -101,7 +100,10 @@ use Bruder\Model\User;
       # ! Only authorized.
       if (authorized()) : ?>
         <div mt24 fl fldircol gap=smoler>
-          <p text smoler semibold pinline12 mb6 ttup slight>Erstellen</p>
+          <div fl alic mb6 pinline10>
+            <p text smoler ttup slight>Erstellen</p>
+            <div style="min-height:3px;" flone rounded background=slight-light ml12></div>
+          </div>
 
           <a href="<?= CodingSession::link("new") ?>">
             <mbutton stdplus has-icon=left background=primary>

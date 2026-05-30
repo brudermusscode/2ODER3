@@ -1,0 +1,10 @@
+@use "../abstract" as *;
+@use "../framework/classes" as *;
+@use "../framework/var.sizes" as *;
+@use "../framework/var.utils" as *;
+
+coding-session {
+  &[active] {
+    min-height: calc(100vh - 2 * ($main-distance + 12px));
+  }
+}

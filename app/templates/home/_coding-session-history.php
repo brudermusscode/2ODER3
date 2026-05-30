@@ -11,7 +11,7 @@ $CSHistory = $CodingSession->projects;
 if ($CSHistory->count() > 1) : ?>
   <div fl fldircol gap=smol>
     <?php if (!$CodingSession->finished_at) : ?>
-      <p text smoler ttup pinline32>In dieser Session</p>
+      <p text smol ttup pinline32 slight>In dieser Session</p>
     <?php endif; ?>
     <div in-this-session fl alic gap=smol ovauto pinline32 pb32 no-scrollbars>
       <?php foreach ($CSHistory as $key => $CSProject) : ?>
@@ -22,7 +22,7 @@ if ($CSHistory->count() > 1) : ?>
           <?php if ($CSProject->stopped_at) : ?>
             <p text smolplus semibold>
               <?= $CSProject->project->name ?></p>
-            <p text smoler><?= $CSProject->time_elapsed() ?></p>
+            <p text smoler>Für <?= $CSProject->time_elapsed() ?></p>
           <?php else : ?>
             <p text smolplus bold>
               <?= $CSProject->project->name ?></p>
