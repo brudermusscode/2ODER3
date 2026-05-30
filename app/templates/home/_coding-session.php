@@ -94,13 +94,24 @@
        </div>
 
        <?php $elapsed = $CodingSession->time_elapsed(); ?>
-       <div fl alic gap=smol>
-         <p text wider bold>
-           <?= ($elapsed->h < 10 ? "0" . $elapsed->h : $elapsed->h) . " &middot; "; ?></p>
-         <p text wider bold>
-           <?= ($elapsed->i < 10 ? "0" . $elapsed->i : $elapsed->i) . " &middot; "; ?></p>
-         <p text wider bold>
-           <?= ($elapsed->s < 10 ? "0" . $elapsed->s : $elapsed->s); ?></p>
+       <div fl alic gap=smol mt8>
+         <div lh1 fl gap=smol>
+           <p text wider bold>
+             <?= ($elapsed->h < 10 ? "0" . $elapsed->h : $elapsed->h); ?></p>
+           <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Stunden</p>
+         </div>
+         <p text wider>&middot;</p>
+         <div lh1 fl gap=smol>
+           <p text wider bold>
+             <?= ($elapsed->i < 10 ? "0" . $elapsed->i : $elapsed->i); ?></p>
+           <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Minuten</p>
+         </div>
+         <p text wider>&middot;</p>
+         <div lh1 fl gap=smol>
+           <p text wider bold>
+             <?= ($elapsed->s < 10 ? "0" . $elapsed->s : $elapsed->s); ?></p>
+           <p text smoler ttup slight style=rotate:90deg;margin-left:-42px;>Sekunde</p>
+         </div>
        </div>
      </div>
 

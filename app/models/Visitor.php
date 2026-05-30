@@ -125,6 +125,9 @@ class Visitor extends Bruder
   public function new()
   {
 
+    /**
+     * @var self
+     */
     $Visitor = self::make();
 
     # ? Agent
@@ -300,7 +303,8 @@ class Visitor extends Bruder
   {
 
     # Nothing to do when there's a nickname already.
-    if ($this->nickname) return true;
+    if ($this->nickname && $this->nickname !== $this->attributes["nickname"])
+      return true;
 
     # No valid name by now, add a number at the end.
     if (!$this->while_exists_by_nickname(return_at_count: 625))

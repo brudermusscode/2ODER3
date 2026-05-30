@@ -1,13 +1,12 @@
 <?php
 
-use Bruder\Model\CodingSession;
-use Bruder\Model\CodingSessionProject;
-use Bruder\Model\Project;
 use Illuminate\Support\Collection;
+use Bruder\Model\Project;
+use Bruder\Model\Log;
 
 ?>
 
-<div fl fldircol gap=mid>
+<content fl fldircol gap=mid+>
 
   <?php
 
@@ -26,37 +25,30 @@ use Illuminate\Support\Collection;
         ->get() as $Project
     ) : ?>
 
-      <div>
-        <div pb12 fl alic jucsb>
-          <div fl alic gap=smol>
-            <div circled window style="height:38px;width:38px;" fl alic jucc>
-              <mi color=tertiary midler>deployed_code</mi>
+      <?php if ($Project->logs_count) : ?>
+        <div>
+          <div pb12 fl alic jucsb>
+            <div fl alic gap=smol>
+              <div circled window style="height:38px;width:38px;" fl alic jucc>
+                <mi color=tertiary midler>deployed_code</mi>
+              </div>
+
+              <p text mid bold><?= $Project->name ?></p>
             </div>
 
-            <p text mid bold><?= $Project->name ?></p>
+            <a fl alic gap=smol href="<?= $Project->logs->first()?->link() ?? $Project->link() ?>">
+              <div background=quadro color=quadro-text rounded=smolplus pinline10 pblock6>
+                <p text smol semibold ttup>
+                  <strong><?= $Project->logs_count ?></strong> logs
+                </p>
+              </div>
+
+              <mi>arrow_forward</mi>
+            </a>
           </div>
 
-          <a fl alic gap=smol href="<?= $Project->logs->first()?->link() ?? $Project->link() ?>">
-            <div background=quadro color=quadro-text rounded=smolplus pinline10 pblock6>
-              <p text smol semibold ttup>
-                <strong><?= $Project->logs_count ?></strong> logs
-              </p>
-            </div>
-
-            <mi>arrow_forward</mi>
-          </a>
-        </div>
-
-        <div fl alic gap=smol>
-          <?php
-
-          if (!$Project->logs_count) : ?>
-
-            <div w100 rounded background=hover-dark pblock62 tac>
-              <p text bold smol ttup>Noch Keine Logs &nbsp; 🦕</p>
-            </div>
-
-            <?php else :
+          <div fl alic gap=smol>
+            <?php
 
             /**
              * @var Collection<Log>
@@ -67,15 +59,14 @@ use Illuminate\Support\Collection;
               <div style="flex-basis:25%;max-width:25%;">
                 <?php include TEMPLATE . "/log/_log.php" ?>
               </div>
-          <?php endforeach;
+            <?php endforeach;
 
             unset($Logs);
 
-          endif;
-          ?>
+            ?>
+          </div>
         </div>
-      </div>
-
+      <?php endif; ?>
     <?php endforeach ?>
   </div>
 
@@ -121,4 +112,4 @@ use Illuminate\Support\Collection;
       Unten findest du einige Dinge, die ich plane zu implementieren. Grundidee ist, Dir den Fortschritt meiner Projekte zu präsentieren und Dir die Möglichkeit zu geben, persönlich daran teilzuhaben.
     </p>
   </div>
-</div>
+  </div>
