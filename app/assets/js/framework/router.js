@@ -15,22 +15,18 @@ export const routes = {
     execute_once: () => {},
     execute_always: () => {
       let coding_session = document.find("coding-session");
+      let in_this_session = coding_session.find("[in-this-session]");
 
-      if (coding_session) {
-        let in_this_session = coding_session.find("[in-this-session]");
+      in_this_session?.scrollTo({
+        left: in_this_session.scrollWidth,
+        top: 0,
+        behaviour: "smooth",
+      });
 
-        console.log(in_this_session.scrollWidth);
-
-        in_this_session?.scrollTo({
-          left: in_this_session.scrollWidth,
-          top: 0,
-          behaviour: "smooth",
-        });
-
+      if (coding_session && coding_session.hasAttribute("active")) {
         let h = coding_session.find("[h]");
         let i = coding_session.find("[i]");
         let s = coding_session.find("[s]");
-
         let interval_timing = 1000; // 1 second.
 
         setInterval(() => {

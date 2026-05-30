@@ -3,6 +3,7 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -57,5 +58,13 @@ class CodingSession extends Bruder
     return $this->update([
       "finished_at" => CURRENT_TIMESTAMP,
     ]);
+  }
+
+  /**
+   * @return object
+   */
+  public function time_elapsed()
+  {
+    return $this->created_at->diff(new DateTime($this->finished_at));
   }
 }
