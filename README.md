@@ -1,12 +1,8 @@
-## Devlogs-Web
+## 2ODER3.dev
 
-Das Web-Interface für meine Devlogs, in denen ich in kurzen und
-handlichen Videos zeige, was mein aktuelles Projekt oder auch
-meine aktuellen
-Projekte für Fortschritte machen. Das wird euch sicher
-interessieren!
+Meine ursprüngliche Devlogs Webseite, die nun als allgemeine Seite für den Fortschritt all meiner Projekte dient. Das wird euch sicher interessieren!
 
-Schaut vorbei auf <a href="https://www.heia.kim"
+Schaut vorbei auf <a href="https://www.2oder3.dev"
 target="_blank">www.heia.kim</a> und last euch inspirieren.
 
 <br>
@@ -15,7 +11,7 @@ target="_blank">www.heia.kim</a> und last euch inspirieren.
 <p align="center">…………… 👀 ……………</p>
 
 >[!Note]
->Mit viel ☕ und höchst verfügbarer ❤️ gebaut! Ich übernehme keine Verantwortung für Over-Engineering und/oder schlechte Performance 😘.</p>
+>Mit viel ☕ und höchst verfügbarer ❤️ gebaut! Ich übernehme keine Verantwortung für Over-Engineering und/oder schlechte Performance und einen eventuell überschwinglich christlichen Touch 😘✝️.</p>
 
 <br>
 
