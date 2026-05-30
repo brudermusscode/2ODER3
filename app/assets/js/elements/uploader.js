@@ -82,7 +82,7 @@ $(function () {
 
     let button = this.find("[submit-closest]");
     let formdata = new FormData(this);
-    let url = __env === "dev" ? "/log/create" : "https://uploads.heia.kim";
+    let url = __env === "dev" ? "/log/create" : "https://uploads.2oder3.dev";
 
     button.disable();
 

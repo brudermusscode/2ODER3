@@ -117,7 +117,7 @@
        <div pinline42 pblock32>
 
          <?php $elapsed = $CodingSession->time_elapsed(); ?>
-         <div fl alic gap=smol mt8>
+         <div fl alic gap=smol>
            <div lh1 fl gap=smol>
              <p text wider bold>
                <?= ($elapsed->h < 10 ? "0" . $elapsed->h : $elapsed->h); ?></p>

@@ -37,6 +37,6 @@ if ($CSHistory->count() > 1) : ?>
       <?php endforeach; ?>
     </div>
   </div>
-<?php elseif (!$CodingSession->title) : ?>
+<?php elseif (!$CodingSession->title && !$CodingSession->finished_at) : ?>
   <div pblock42></div>
 <?php endif; ?>

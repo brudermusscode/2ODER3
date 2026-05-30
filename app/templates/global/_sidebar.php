@@ -128,10 +128,8 @@ use Bruder\Model\User;
   <div style="bottom:12px;" posabs pb24 pinline12 fl alic gap=smoler>
     <?php if (!LOGGED) : ?>
       <a href="/get-back">
-        <mbutton stdplus z image-as-background icon-only has-tooltip=right>
-          <picture>
-            <img src="/assets/images/login-compressed.png" />
-          </picture>
+        <mbutton stdplus z icon-only has-tooltip=right background=light color=dark>
+          <mi>login</mi>
         </mbutton>
       </a>
     <?php else : ?>
