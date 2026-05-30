@@ -4,6 +4,16 @@
 @use "mixins" as *;
 @use "../abstract" as *;
 
+[no-scrollbars] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-color: transparent transparent;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 [hide-tablet] {
   @media screen and (max-width: $tablet-max-width) {
     display: none !important;

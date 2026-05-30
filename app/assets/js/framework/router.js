@@ -17,6 +17,16 @@ export const routes = {
       let coding_session = document.find("coding-session");
 
       if (coding_session) {
+        let in_this_session = coding_session.find("[in-this-session]");
+
+        console.log(in_this_session.scrollWidth);
+
+        in_this_session?.scrollTo({
+          left: in_this_session.scrollWidth,
+          top: 0,
+          behaviour: "smooth",
+        });
+
         let h = coding_session.find("[h]");
         let i = coding_session.find("[i]");
         let s = coding_session.find("[s]");

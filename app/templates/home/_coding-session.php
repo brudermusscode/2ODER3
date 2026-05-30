@@ -15,7 +15,7 @@
 
   if ($CodingSession) : ?>
    <div fl fldircol gap=smol>
-     <coding-session p32 background=hover-dark rounded=mid fl fldircol gap>
+     <coding-session background=hover-dark rounded=mid>
        <?php
 
         $session_start = $CodingSession->created_at;
@@ -25,7 +25,7 @@
 
         ?>
 
-       <div fl jucsb alistart>
+       <div fl jucsb alistart p32>
          <div fl alic gap=smol>
            <div fl fldircol gap=smoler>
              <p text smoler ttup>Aktive coding session</p>
@@ -76,7 +76,7 @@
        </div>
 
        <?php if ($CodingSession->title) : ?>
-         <p text tac semibold mt12 mb12><?= $CodingSession->title ?></p>
+         <p text tac semibold mblock32 pinline32><?= $CodingSession->title ?></p>
        <?php endif; ?>
 
 
@@ -89,15 +89,22 @@
 
         if ($CSHistory->count() > 1) : ?>
          <div fl fldircol gap=smol>
-           <p text smoler ttup>In dieser Session</p>
-           <div fl alic gap=smol>
+           <p text smoler ttup pinline32>In dieser Session</p>
+           <div in-this-session fl alic gap=smol ovauto pinline32 pb32 no-scrollbars>
              <?php foreach ($CSHistory as $CSProject) : ?>
-               <div flone p24 background=slight-light rounded>
-                 <p text smol semibold><?= $CSProject->project->name ?></p>
-                 <p text smoler>
-                   <?= $CSProject->stopped_at
-                      ? $CSProject->time_elapsed()
-                      : "<span color=tertiary>Aktuell</span>" ?></p>
+               <div flone p24 pl42
+                 background=<?= $CSProject->stopped_at ? "slight-light" : "slighter-green" ?>
+                 rounded ovhid posrel style="min-width:200px;">
+                 <mi style="font-size:72px;bottom:-18px;left:-12px;z-index:-1;" color=<?= $CSProject->stopped_at ? "tertiary" : "light" ?> slighter posabs>folder_data</mi>
+                 <?php if ($CSProject->stopped_at) : ?>
+                   <p text smolplus semibold>
+                     <?= $CSProject->project->name ?></p>
+                   <p text smoler><?= $CSProject->time_elapsed() ?></p>
+                 <?php else : ?>
+                   <p text smolplus bold>
+                     <?= $CSProject->project->name ?></p>
+                   <p text smoler color=tertiary>Aktuell dabei</p>
+                 <?php endif; ?>
                </div>
                <?php if ($CSProject->stopped_at) : ?>
                  <mi>arrow_right</mi>
@@ -106,7 +113,7 @@
            </div>
          </div>
        <?php elseif (!$CodingSession->title) : ?>
-         <div pblock12></div>
+         <div pblock42></div>
        <?php endif; ?>
      </coding-session>
    </div>

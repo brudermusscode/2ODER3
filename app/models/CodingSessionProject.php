@@ -56,6 +56,8 @@ class CodingSessionProject extends Bruder
 
     $diff = $start_time->diff($end_time);
 
-    return $diff;
+    return $diff->h > 0 ? $diff->h . " Std" : (
+      $diff->i > 0 ? $diff->i . " Min" : $diff->s . " Sek"
+    );
   }
 }
