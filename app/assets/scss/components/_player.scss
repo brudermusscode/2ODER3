@@ -9,8 +9,8 @@ body {
     video-wrapper:not([prevent-cinema-mode]) {
       background: rgba(0, 0, 0, 0.98);
       position: absolute;
-      top: -$main-distance;
-      left: calc(-1 * (($main-distance / 2) + $sidebar-width));
+      top: -($main-distance + 12px);
+      left: calc(-1 * ($sidebar-width + $main-distance));
       height: 100vh;
       width: 100vw;
       z-index: 1000;
