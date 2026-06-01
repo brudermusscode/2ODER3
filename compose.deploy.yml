@@ -6,17 +6,13 @@ networks:
     name: devlog
 
 x-web: &x-web # <<: *x-env
-  build:
-    context: .
-    dockerfile: Dockerfile
+  build: .
   restart: on-failure
   tty: true
 
 services:
   php:
-    build:
-      context: ./docker/deploy/php
-      dockerfile: Dockerfile
+    build: ./docker/deploy/php
     volumes:
       - .:/data
 

@@ -163,7 +163,8 @@ class Request
   }
 
   /**
-   * Return real estate client ip
+   * Return real estate client IP.
+   *
    * @return string
    */
   public static function get_remote_address()

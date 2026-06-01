@@ -10,6 +10,8 @@ foreach (
       ->orderBy("created_at", "DESC");
   }])
     ->withCount("logs")
+    ->withMax('logs', 'created_at')
+    ->orderByDesc('logs_max_created_at')
     ->get() as $Project
 ) : ?>
 

@@ -4,6 +4,7 @@ namespace Bruder\Utils;
 
 class Arr
 {
+
   /**
    * Sanitized a multi-dimensional array's values.
    *
@@ -12,6 +13,7 @@ class Arr
    */
   public static function sanitize_special_chars(array $array, array $skip_keys = [])
   {
+
     $filtered = [];
 
     foreach ($array as $key => $value) {

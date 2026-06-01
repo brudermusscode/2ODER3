@@ -126,6 +126,7 @@ class Controller
     array $optional,
     ?array $input_params = null,
   ) {
+
     /**
      * @var ?object
      */
@@ -159,27 +160,22 @@ class Controller
     array $post_params,
     array $optional = [],
   ) {
-    /**
-     * @var array
-     */
+
     $always_pass = self::$valid_passthrough_keys;
 
     // Check if all required parameters are set in the post request
-    foreach ($necessary as $param) {
+    foreach ($necessary as $param)
       if (!isset($post_params[$param]))
         return null;
-    }
 
     // Check if any parameter in the post request is not in the required or optional arrays
-    foreach ($post_params as $key => $value) {
+    foreach ($post_params as $key => $value)
       if (
         !in_array($key, $necessary) &&
         !in_array($key, $optional) &&
         !in_array($key, $always_pass)
-      ) {
+      )
         return null;
-      }
-    }
 
     $final = (object) Arr::sanitize_special_chars($post_params, skip_keys: ["Client"]);
 
